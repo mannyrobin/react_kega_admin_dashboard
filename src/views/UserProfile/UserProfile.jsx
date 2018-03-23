@@ -1,8 +1,6 @@
-import React, { Component } from 'react';
-import {
-    Grid, Row, Col,
-    FormGroup, ControlLabel, FormControl
-} from 'react-bootstrap';
+import React, {Component} from 'react';
+import { Grid, Row, Col, FormGroup, ControlLabel, FormControl } from 'react-bootstrap';
+import axios from "axios";
 
 import {Card} from 'components/Card/Card.jsx';
 import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
@@ -12,145 +10,78 @@ import Button from 'elements/CustomButton/CustomButton.jsx';
 import avatar from "assets/img/faces/face-3.jpg";
 
 class UserProfile extends Component {
+    constructor (props) {
+        super(props);
+    }
+
+    sendContactData () {
+        console.log("111111111111111111")
+        axios({
+            method:'get',
+            url:'https://jsonplaceholder.typicode.com/users',
+            responseType:'json'
+        }).then(function(response) {
+            console.log(">>>>>>>>>>>>>>  ", response);
+          })
+        .catch(function(error){
+            console.log("++++++++++++++  ", error)
+        })
+    }
+
     render() {
         return (
             <div className="content">
                 <Grid fluid>
                     <Row>
-                        <Col md={8}>
+                        <Col md={12}>
                             <Card
-                                title="Edit Profile"
+                                title="если у вас есть вопросы свяжитесь с нами через фирму ниже"
                                 content={
-                                    <form>
-                                        <FormInputs
-                                            ncols = {["col-md-5" , "col-md-3" , "col-md-4"]}
-                                            proprieties = {[
-                                                {
-                                                 label : "Company (disabled)",
-                                                 type : "text",
-                                                 bsClass : "form-control",
-                                                 placeholder : "Company",
-                                                 defaultValue : "Creative Code Inc.",
-                                                 disabled : true
-                                                },
-                                                {
-                                                 label : "Username",
-                                                 type : "text",
-                                                 bsClass : "form-control",
-                                                 placeholder : "Username",
-                                                 defaultValue : "michael23"
-                                                },
-                                                {
-                                                 label : "Email address",
-                                                 type : "email",
-                                                 bsClass : "form-control",
-                                                 placeholder : "Email"
-                                                }
-                                            ]}
-                                        />
-                                        <FormInputs
-                                            ncols = {["col-md-6" , "col-md-6"]}
-                                            proprieties = {[
-                                                {
-                                                 label : "First name",
-                                                 type : "text",
-                                                 bsClass : "form-control",
-                                                 placeholder : "First name",
-                                                 defaultValue : "Mike"
-                                                },
-                                                {
-                                                 label : "Last name",
-                                                 type : "text",
-                                                 bsClass : "form-control",
-                                                 placeholder : "Last name",
-                                                 defaultValue : "Andrew"
-                                                }
-                                            ]}
-                                        />
-                                        <FormInputs
-                                            ncols = {["col-md-12"]}
-                                            proprieties = {[
-                                                {
-                                                    label : "Adress",
-                                                    type : "text",
-                                                    bsClass : "form-control",
-                                                    placeholder : "Home Adress",
-                                                    defaultValue : "Bld Mihail Kogalniceanu, nr. 8 Bl 1, Sc 1, Ap 09"
-                                                }
-                                            ]}
-                                        />
-                                        <FormInputs
-                                            ncols = {["col-md-4","col-md-4","col-md-4"]}
-                                            proprieties = {[
-                                                {
-                                                    label : "City",
-                                                    type : "text",
-                                                    bsClass : "form-control",
-                                                    placeholder : "City",
-                                                    defaultValue : "Mike"
-                                                },
-                                                {
-                                                    label : "Country",
-                                                    type : "text",
-                                                    bsClass : "form-control",
-                                                    placeholder : "Country",
-                                                    defaultValue : "Andrew"
-                                                },
-                                                {
-                                                    label : "Postal Code",
-                                                    type : "number",
-                                                    bsClass : "form-control",
-                                                    placeholder : "ZIP Code"
-                                                }
-                                            ]}
-                                        />
+                                    <form className="custom-contact" onSubmit={()=>{return false}}>
+                                        <Col md={6}>
+                                            <div className="form-group">
+                                                <label className="col-md-4" htmlFor="usr">Name:</label>
+                                                <input type="text" className="form-control col-md-8" id="usr"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-md-4" htmlFor="usr">Name:</label>
+                                                <input type="text" className="form-control col-md-8" id="usr"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-md-4" htmlFor="usr">Name:</label>
+                                                <input type="text" className="form-control  col-md-8" id="usr"/>
+                                            </div>
+                                            <div className="form-group">
+                                                <label className="col-md-4" htmlFor="sel1">Select list:</label>
+                                                <select className="form-control col-md-8" id="sel1">
+                                                    <option>1</option>
+                                                    <option>2</option>
+                                                    <option>3</option>
+                                                    <option>4</option>
+                                                </select>
+                                            </div>
+                                        </Col>
+                                        <Col md={6}>
+                                            <div className="form-group">
+                                                <textarea className="form-control" rows="5" id="comment">
 
-                                        <Row>
-                                            <Col md={12}>
-                                                <FormGroup controlId="formControlsTextarea">
-                                                    <ControlLabel>About Me</ControlLabel>
-                                                    <FormControl rows="5" componentClass="textarea" bsClass="form-control" placeholder="Here can be your description" defaultValue="Lamborghini Mercy, Your chick she so thirsty, I'm in that two seat Lambo."/>
-                                                </FormGroup>
-                                            </Col>
-                                        </Row>
-                                        <Button
-                                            bsStyle="info"
-                                            pullRight
-                                            fill
-                                            type="submit"
-                                        >
-                                            Update Profile
-                                        </Button>
+                                                </textarea>
+                                            </div>
+                                        </Col>
+                                        <div className="form-group col-md-12 custom-upload">
+                                            <span className="custom-name">text</span>
+                                            <label className="btn" htmlFor="my-file-selector">
+                                                <input id="my-file-selector" type="file" />
+                                                Button Text Here
+                                            </label>
+                                            <span className="custom-description">texttexttext</span>
+                                        </div>
+                                        <button type="submit" onClick={this.sendContactData} className="custom-violet-btn btn">Button</button>
                                         <div className="clearfix"></div>
                                     </form>
                                 }
                             />
                         </Col>
-                        <Col md={4}>
-                            <UserCard
-                                bgImage="https://ununsplash.imgix.net/photo-1431578500526-4d9613015464?fit=crop&fm=jpg&h=300&q=75&w=400"
-                                avatar={avatar}
-                                name="Mike Andrew"
-                                userName="michael24"
-                                description={
-                                    <span>
-                                        "Lamborghini Mercy
-                                        <br />
-                                        Your chick she so thirsty
-                                        <br />
-                                        I'm in that two seat Lambo"
-                                    </span>
-                                }
-                                socials={
-                                    <div>
-                                        <Button simple><i className="fa fa-facebook-square"></i></Button>
-                                        <Button simple><i className="fa fa-twitter"></i></Button>
-                                        <Button simple><i className="fa fa-google-plus-square"></i></Button>
-                                    </div>
-                                }
-                            />
-                        </Col>
-
                     </Row>
                 </Grid>>
             </div>

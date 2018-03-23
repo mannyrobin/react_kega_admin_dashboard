@@ -8,14 +8,15 @@ import Notifications from 'views/Notifications/Notifications';
 import Upgrade from 'views/Upgrade/Upgrade';
 
 const appRoutes = [
-    { path: "/dashboard", name: "Dashboard", icon: "pe-7s-graph", component: Dashboard },
-    { path: "/user", name: "User Profile", icon: "pe-7s-user", component: UserProfile },
-    { path: "/table", name: "Table List", icon: "pe-7s-note2", component: TableList },
-    { path: "/typography", name: "Typography", icon: "pe-7s-news-paper", component: Typography },
+    { path: "/dashboard", name: "Рабочий стол", icon: "fa fa-dashboard", component: Dashboard },
+    { path: "/add-action", name: "Добавить акцию", icon: "pe-7s-plus", component: UserProfile },
+    { path: "/your-actions", name: "Ваши акции", icon: "pe-7s-note2", component: TableList },
+    { path: "/goods-requests", name: "Заявки на товары", icon: "pe-7s-news-paper", component: Typography },
+    { path: "/req-stats", name: "Статистика запросв", icon: "pe-7s-news-paper", component: Typography },
+    { path: "/corp-profile", name: "Профиль компании", icon: "pe-7s-news-paper", component: UserProfile },
+    { path: "/contact", name: "Связь с разработчиками", icon: "pe-7s-news-paper", component: UserProfile },
+    { path: "/logout", name: "Выход", icon: "pe-7s-power", component: UserProfile },
     { path: "/icons", name: "Icons", icon: "pe-7s-science", component: Icons },
-    { path: "/maps", name: "Maps", icon: "pe-7s-map-marker", component: Maps },
-    { path: "/notifications", name: "Notifications", icon: "pe-7s-bell", component: Notifications },
-    { upgrade: true, path: "/upgrade", name: "Upgrade to PRO", icon: "pe-7s-rocket", component: Upgrade },
     { redirect: true, path:"/", to:"/dashboard", name: "Dashboard" }
 ];
 

@@ -31,7 +31,7 @@ class Sidebar extends Component{
         };
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
-                <div className="sidebar-background" style={sidebarBackground}></div>
+                <div className="sidebar-background"></div>
                     <div className="logo">
                         <a href="https://www.creative-tim.com" className="simple-text logo-mini">
                             <div className="logo-img">
@@ -47,10 +47,10 @@ class Sidebar extends Component{
                     <ul className="nav">
                         { this.state.width <= 991 ? (<HeaderLinks />):null }
                         {
-                            appRoutes.map((prop,key) => {
+                            appRoutes.map((prop, index) => {
                                 if(!prop.redirect)
                                     return (
-                                        <li className={prop.upgrade ? "active active-pro":this.activeRoute(prop.path)} key={key}>
+                                        <li className={prop.upgrade ? "active active-pro":this.activeRoute(prop.path)} key={index}>
                                             <NavLink to={prop.path} className="nav-link" activeClassName="active">
                                                 <i className={prop.icon}></i>
                                                 <p>{prop.name}</p>
