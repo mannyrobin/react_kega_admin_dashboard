@@ -106,7 +106,7 @@ Light Bootstrap Dashboard React
         ├── Typography
         │   └── Typography.jsx
         └── UserProfile
-            └── UserProfile.jsx
+            └── CorpProfile.jsx
 ```
 ## Useful Links
 

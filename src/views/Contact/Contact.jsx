@@ -9,7 +9,7 @@ import Button from 'elements/CustomButton/CustomButton.jsx';
 
 import avatar from "assets/img/faces/face-3.jpg";
 
-class UserProfile extends Component {
+class Contact extends Component {
     constructor (props) {
         super(props);
     }
@@ -89,4 +89,4 @@ class UserProfile extends Component {
     }
 }
 
-export default UserProfile;
+export default Contact;
