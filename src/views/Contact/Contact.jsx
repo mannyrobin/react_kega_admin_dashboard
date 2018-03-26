@@ -12,20 +12,68 @@ import avatar from "assets/img/faces/face-3.jpg";
 class Contact extends Component {
     constructor (props) {
         super(props);
+        this.sendContactData = this.sendContactData.bind(this);
+        this.onChangeHandler = this.onChangeHandler.bind(this);
+        this.uploadFiles = this.uploadFiles.bind(this);
+        this.state = {
+            name: "",
+            phone: "",
+            email: "",
+            description: "",
+            topic: "1",
+            files: null
+        }
     }
 
-    sendContactData () {
-        console.log("111111111111111111")
+    onChangeHandler (e) {
+        this.setState({
+            [e.target.name]: e.target.value
+        });
+    }
+
+    sendContactData (e) {
+        e.preventDefault();
         axios({
-            method:'get',
-            url:'https://jsonplaceholder.typicode.com/users',
+            method:'post',
+            url: "http://httpbin.org/post",
+            // url:'https://jsonplaceholder.typicode.com/users',
+            data: {
+                name: this.state.name,
+                phone: this.state.phone,
+                email: this.state.email,
+                description: this.state.description,
+                topic: this.state.topic,
+                files: this.state.files
+            },
+
             responseType:'json'
         }).then(function(response) {
             console.log(">>>>>>>>>>>>>>  ", response);
           })
         .catch(function(error){
-            console.log("++++++++++++++  ", error)
-        })
+            throw new Error(error);
+        });
+    }
+
+    uploadFiles (e) {
+        let files = e.target.files,
+            maxSize = 20971520,
+            sizeSum = 0;
+
+        for (let key in files) {
+            debugger
+            if (Number.isFinite(parseInt(key))) {
+                sizeSum += files[key].size;
+            }
+        }
+
+        if (sizeSum > maxSize) {
+            alert("erorrrrrrrrrrrrrrrr")
+        } else {
+            this.setState({
+                [e.target.name]: e.target.files
+            })
+        }
     }
 
     render() {
@@ -37,23 +85,23 @@ class Contact extends Component {
                             <Card
                                 title="если у вас есть вопросы свяжитесь с нами через фирму ниже"
                                 content={
-                                    <form className="custom-contact" onSubmit={()=>{return false}}>
+                                    <form className="custom-contact" onSubmit={this.sendContactData}>
                                         <Col md={6}>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                <input type="text" className="form-control col-md-8" id="usr"/>
+                                                <label className="col-md-4" htmlFor="name">Ваше имя:</label>
+                                                <input type="text" className="form-control col-md-8" id="name" onChange={this.onChangeHandler} name="name" value={this.state.name} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                <input type="text" className="form-control col-md-8" id="usr"/>
+                                                <label className="col-md-4" htmlFor="phone">Ваш телефон?:</label>
+                                                <input type="number" className="form-control col-md-8" id="phone" onChange={this.onChangeHandler} name="phone" value={this.state.phone} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                <input type="text" className="form-control  col-md-8" id="usr"/>
+                                                <label className="col-md-4" htmlFor="email">Ваш е-mail:</label>
+                                                <input type="email" className="form-control  col-md-8" id="email" onChange={this.onChangeHandler} name="email" value={this.state.email} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="sel1">Select list:</label>
-                                                <select className="form-control col-md-8" id="sel1">
+                                                <label className="col-md-4" htmlFor="topic">Тема обращения:</label>
+                                                <select className="form-control col-md-8" id="topic" name="topic" selected={this.state.topic} onChange={this.onChangeHandler}>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
@@ -63,21 +111,21 @@ class Contact extends Component {
                                         </Col>
                                         <Col md={6}>
                                             <div className="form-group">
-                                                <textarea className="custom-textarea form-control" rows="5" id="comment">
+                                                <textarea className="custom-textarea form-control" rows="5" id="comment" name="description" onChange={this.onChangeHandler} value={this.state.description} placeholder="Опишите проблему" required>
 
                                                 </textarea>
                                             </div>
                                         </Col>
                                         <div className="form-group col-md-12 custom-upload">
-                                            <span className="custom-name">text</span>
+                                            <span className="custom-name">Присоедините файл</span>
                                             <label className="btn" htmlFor="my-file-selector">
-                                                <input id="my-file-selector" type="file" />
-                                                Button Text Here
+                                                <input id="my-file-selector" type="file" name="files" multiple onChange={this.uploadFiles}/>
+                                                загрузить
                                             </label>
-                                            <span className="custom-description">texttexttext</span>
+                                            <span className="custom-description">максимум 10 файлов общим размером до 20 Мб</span>
                                         </div>
                                         <div className="clearfix"></div>
-                                        <button type="submit" onClick={this.sendContactData} className="custom-violet-btn btn">Button</button>
+                                        <button type="submit" className="custom-violet-btn btn">Button</button>
                                         <div className="clearfix"></div>
                                     </form>
                                 }

@@ -43,10 +43,7 @@
     color: #fff;
     border-radius: 25px;
 }
-.custom-violet-btn:hover {
-    color: #fff;
-    background-color: #860086;
-}
+
 #my-file-selector {
     display: none;
 }
@@ -64,11 +61,18 @@
     color: #990033;
     text-transform: uppercase;
     font-weight: 700;
+    padding-left: 6px;
 }
+.check-in-map,
 .add-input {
     float: right;
+    cursor: pointer;
     font-size: 14px;
     color: #990033;
+}
+.check-in-map:hover,
+.add-input:hover {
+    color: #993936;
 }
 .custom-hr {
     margin: 30px auto;
@@ -77,11 +81,59 @@
     border: 0;
     border-top: 1px solid #e3e3e3;
 }
-
+label.btn {
+    font-size: 14px;
+    color: #333333;
+    background-color: #f2f2f2;
+    border-color: #e3e3e3;
+}
+.upload-img {
+    color: #a6a6a6;
+    margin-top: 25px;
+    font-size: 16px;
+}
+.img-size {
+    color: #333333;
+    font-size: 14px;
+}
+.img-block {
+    width: 143px;
+    height: 140px;
+    float: left;
+    margin-right: 25px;
+    background: url("../img/img1.jpg") 50% 50% / contain no-repeat;
+}
+.img-large {
+    width: 249px;
+    height: 140px;
+    background: url("../img/img2.jpg") 50% 50% / contain no-repeat;
+}
+.remove-block {
+    float: right;
+    color: #a9a9a9;
+    font-size: 21px;
+    cursor: pointer;
+}
+.remove-block:hover {
+    color: #000;
+}
+.add-filial {
+    text-align: center;
+    display: block;
+    color: #990033;
+    cursor: pointer;
+    font-size: 18px;
+}
+.add-filial:hover {
+    color: #993936;
+}
 @media screen and (max-width: 980px) {
     .form-group input.col-md-8,
     .form-group select.col-md-8 {
         width: 100%;
+    }
+    .custom-contact h4 {
+        padding: 0 15px;
     }
 }
 
