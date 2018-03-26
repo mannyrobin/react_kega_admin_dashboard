@@ -63,7 +63,7 @@ class Contact extends Component {
                                         </Col>
                                         <Col md={6}>
                                             <div className="form-group">
-                                                <textarea className="form-control" rows="5" id="comment">
+                                                <textarea className="custom-textarea form-control" rows="5" id="comment">
 
                                                 </textarea>
                                             </div>
@@ -76,6 +76,7 @@ class Contact extends Component {
                                             </label>
                                             <span className="custom-description">texttexttext</span>
                                         </div>
+                                        <div className="clearfix"></div>
                                         <button type="submit" onClick={this.sendContactData} className="custom-violet-btn btn">Button</button>
                                         <div className="clearfix"></div>
                                     </form>
@@ -83,7 +84,7 @@ class Contact extends Component {
                             />
                         </Col>
                     </Row>
-                </Grid>>
+                </Grid>
             </div>
         );
     }

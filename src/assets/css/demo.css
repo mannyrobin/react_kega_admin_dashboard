@@ -1,9 +1,93 @@
+.card .content {
+    padding: 0;
+}
+.custom-contact .form-group {
+    margin-bottom: 15px;
+    font-size: 16px;
+}
+.custom-contact .form-group:after {
+    content: '';
+    clear: both;
+    display: block;
+}
+.custom-contact .custom-block {
+    padding: 0 15px;
+}
+.card form .form-group label.col-md-4 {
+    color: #a6a6a6;
+    width: 33.33333333%;
+    padding-left: 0;
+    padding-top: 12px;
+}
+.custom-name {
+    color: #a6a6a6;
+    padding-top: 12px;
+    padding-left: 9px;
+    width: 17.5%;
+    display: inline-block;
+}
+.form-group input.col-md-8,
+.form-group select.col-md-8 {
+    width: 66.66666667%;
+}
+.form-group .custom-textarea {
+    height: 205px;
+    resize: none;
+}
+.custom-violet-btn {
+    padding: 15px 40px;
+    margin: auto;
+    display: block;
+    background-color: #330033;
+    border: none;
+    color: #fff;
+    border-radius: 25px;
+}
+.custom-violet-btn:hover {
+    color: #fff;
+    background-color: #860086;
+}
+#my-file-selector {
+    display: none;
+}
+.custom-description {
+    padding-left: 15px;
+    display: inline-block;
+}
 .fixed-plugin li > a,
 .fixed-plugin .badge{
     transition: all .34s;
     -webkit-transition: all .34s;
     -moz-transition: all .34s;
 }
+.custom-contact h4 {
+    color: #990033;
+    text-transform: uppercase;
+    font-weight: 700;
+}
+.add-input {
+    float: right;
+    font-size: 14px;
+    color: #990033;
+}
+.custom-hr {
+    margin: 30px auto;
+    display: block;
+    height: 1px;
+    border: 0;
+    border-top: 1px solid #e3e3e3;
+}
+
+@media screen and (max-width: 980px) {
+    .form-group input.col-md-8,
+    .form-group select.col-md-8 {
+        width: 100%;
+    }
+}
+
+
+
+
 
 .all-icons [class*="pe-"]{
     font-size: 40px;
