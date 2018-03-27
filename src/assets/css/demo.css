@@ -44,7 +44,12 @@
     border-radius: 25px;
 }
 
-#my-file-selector {
+.custom-violet-btn:hover {box-shadow: 0 0 0; }
+
+#my-file-selector1 {
+    display: none;
+}
+#my-file-selector2 {
     display: none;
 }
 .custom-description {
@@ -91,6 +96,16 @@ label.btn {
     color: #a6a6a6;
     margin-top: 25px;
     font-size: 16px;
+}
+#littleImg {
+    width: 143px;
+    height: 140px;
+    border: none;
+}
+#largeImg {
+    width: 249px;
+    height: 140px;
+    border: none;
 }
 .img-size {
     color: #333333;

@@ -61,7 +61,6 @@ class Contact extends Component {
             sizeSum = 0;
 
         for (let key in files) {
-            debugger
             if (Number.isFinite(parseInt(key))) {
                 sizeSum += files[key].size;
             }
@@ -76,7 +75,7 @@ class Contact extends Component {
         }
     }
 
-    render() {
+    render () {
         return (
             <div className="content">
                 <Grid fluid>
@@ -89,15 +88,15 @@ class Contact extends Component {
                                         <Col md={6}>
                                             <div className="form-group">
                                                 <label className="col-md-4" htmlFor="name">Ваше имя:</label>
-                                                <input type="text" className="form-control col-md-8" id="name" onChange={this.onChangeHandler} name="name" value={this.state.name} required/>
+                                                <input type="text" className="form-control col-md-8" id="name" placeholder="name" onChange={this.onChangeHandler} name="name" value={this.state.name} required/>
                                             </div>
                                             <div className="form-group">
                                                 <label className="col-md-4" htmlFor="phone">Ваш телефон?:</label>
-                                                <input type="number" className="form-control col-md-8" id="phone" onChange={this.onChangeHandler} name="phone" value={this.state.phone} required/>
+                                                <input type="number" className="form-control col-md-8" id="phone" placeholder="phone" onChange={this.onChangeHandler} name="phone" value={this.state.phone} required/>
                                             </div>
                                             <div className="form-group">
                                                 <label className="col-md-4" htmlFor="email">Ваш е-mail:</label>
-                                                <input type="email" className="form-control  col-md-8" id="email" onChange={this.onChangeHandler} name="email" value={this.state.email} required/>
+                                                <input type="email" className="form-control  col-md-8" id="email" placeholder="email" onChange={this.onChangeHandler} name="email" value={this.state.email} required/>
                                             </div>
                                             <div className="form-group">
                                                 <label className="col-md-4" htmlFor="topic">Тема обращения:</label>
