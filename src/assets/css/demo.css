@@ -42,9 +42,9 @@
     border: none;
     color: #fff;
     border-radius: 25px;
-}
-
-.custom-violet-btn:hover {box-shadow: 0 0 0; }
+}#my-file-selector {
+     display: none;
+ }
 
 #my-file-selector1 {
     display: none;
@@ -52,6 +52,17 @@
 #my-file-selector2 {
     display: none;
 }
+#littleImg {
+    width: 143px;
+    height: 140px;
+    border: none;
+}
+#largeImg {
+    width: 249px;
+    height: 140px;
+    border: none;
+}
+
 .custom-description {
     padding-left: 15px;
     display: inline-block;
@@ -97,16 +108,6 @@ label.btn {
     margin-top: 25px;
     font-size: 16px;
 }
-#littleImg {
-    width: 143px;
-    height: 140px;
-    border: none;
-}
-#largeImg {
-    width: 249px;
-    height: 140px;
-    border: none;
-}
 .img-size {
     color: #333333;
     font-size: 14px;
@@ -141,6 +142,31 @@ label.btn {
 }
 .add-filial:hover {
     color: #993936;
+}
+.icon-block {
+    display: block;
+    width: 71px;
+    height: 71px;
+    background: url("../img/sprite-home-top.png") no-repeat;
+}
+.icon-block.dollar-block {
+    background-position: -94px 0;
+}
+.icon-block.user-block {
+    background-position: -188px 0;
+}
+.icon-block.message-block {
+    background-position: -283px 0;
+}
+.header-custom-block .col-lg-3.col-sm-6 .card-stats {
+    padding: 17px 12px;
+    border-radius: 5px;
+}
+.header-custom-block .col-md-8 .card > .header {
+    background-color: #fafafa;
+    color: #a2a0a0;
+    padding: 15px;
+    font-size: 19px;
 }
 @media screen and (max-width: 980px) {
     .form-group input.col-md-8,

@@ -36,34 +36,34 @@ class Dashboard extends Component {
     }
     render() {
         return (
-            <div className="content">
+            <div className="content header-custom-block">
                 <Grid fluid>
                     <Row>
                         <Col lg={3} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
-                                statsText="****"
+                                bigIcon={<span className="icon-block twitter-block"></span>}
+                                statsText="400"
                                 statsValue="Mentioned"
                             />
                         </Col>
                         <Col lg={3} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
-                                statsText="*****"
+                                bigIcon={<span className="icon-block dollar-block"></span>}
+                                statsText="13140 $"
                                 statsValue="Today Sales"
                             />
                         </Col>
                         <Col lg={3} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
-                                statsText="****"
+                                bigIcon={<span className="icon-block user-block"></span>}
+                                statsText="9001"
                                 statsValue="Today Visitors"
                             />
                         </Col>
                         <Col lg={3} sm={6}>
                             <StatsCard
-                                bigIcon={<i className="fa fa-twitter text-info"></i>}
-                                statsText="****"
+                                bigIcon={<span className="icon-block message-block"></span>}
+                                statsText="350"
                                 statsValue="New messages"
                             />
                         </Col>
@@ -74,7 +74,6 @@ class Dashboard extends Component {
                                 statsIcon="fa fa-history"
                                 id="chartHours"
                                 title="Users Behavior"
-                                category="24 Hours performance"
                                 stats="Updated 3 minutes ago"
                                 content={
                                     <div className="ct-chart">
