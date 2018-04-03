@@ -6,6 +6,7 @@ import {Card} from 'components/Card/Card.jsx';
 import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
 import {UserCard} from 'components/UserCard/UserCard.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
+import  Filials from "./Filials";
 
 import avatar from "assets/img/faces/face-3.jpg";
 
@@ -13,6 +14,11 @@ class CorpProfile extends Component {
     constructor (props) {
         super(props);
         this.showImg = this.showImg.bind(this);
+        this.removeFilial = this.removeFilial.bind(this);
+        this.addFilial = this.addFilial.bind(this);
+        this.state = {
+            filials: [1, 2, 3]
+        }
     }
 
     showImg(e) {
@@ -44,6 +50,18 @@ class CorpProfile extends Component {
             };
             img.src = _URL.createObjectURL(files[0]);
         }
+    }
+
+    addFilial () {
+        let newFilials = this.state.filials;
+        newFilials.push(newFilials.length + 1);
+        debugger
+        this.setState({filials: newFilials})
+    }
+
+    removeFilial (item) {
+        let index = this.state.filials.indexOf(item);
+        this.setState((state) => { filials: state.filials.splice(index, 1) });
     }
 
     render() {
@@ -142,89 +160,16 @@ class CorpProfile extends Component {
                                             </Col>
                                             <div className="clearfix"></div>
                                         </div>
-                                        <hr className="custom-hr"/>
                                         <div className="custom-block filials">
-                                            <h4>Филиалы
-                                                <a className="remove-block"><i className="pe-7s-trash"></i></a>
-                                            </h4>
-                                            <Col md={6}>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="sel1">Select list:</label>
-                                                    <select className="form-control col-md-8" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <a className="check-in-map">проверить на карте</a>
-                                            </Col>
-                                            <Col md={6}>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control  col-md-8" id="usr"/>
-                                                </div>
-                                            </Col>
-                                            <div className="clearfix"></div>
+                                            <h4>Филиалы</h4>
                                         </div>
                                         <hr className="custom-hr"/>
-                                        <div className="custom-block filials">
-                                            <h4>
-                                                <a className="remove-block"><i className="pe-7s-trash"></i></a>
-                                            </h4>
-                                            <Col md={6}>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="sel1">Select list:</label>
-                                                    <select className="form-control col-md-8" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <a className="check-in-map">проверить на карте</a>
-                                            </Col>
-                                            <Col md={6}>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
-                                                </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="usr">Name:</label>
-                                                    <input type="text" className="form-control  col-md-8" id="usr"/>
-                                                </div>
-                                            </Col>
-                                            <div className="clearfix"></div>
-                                            <a className="add-filial">+ Добавить еще один</a>
-                                        </div>
+                                        {
+                                            this.state.filials.map((item) => {
+                                                return <Filials item={item} addFilial={this.addFilial} removeFilial={this.removeFilial} key={item} />
+                                            })
+                                        }
+                                        <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
                                         <hr className="custom-hr"/>
                                         <button type="submit" onClick={this.sendContactData}
                                                 className="custom-violet-btn btn">SAVE

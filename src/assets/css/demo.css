@@ -1,3 +1,6 @@
+a, img {
+    outline: 0;
+}
 .card .content {
     padding: 0;
 }
@@ -26,43 +29,38 @@
     width: 17.5%;
     display: inline-block;
 }
-.form-group input.col-md-8,
-.form-group select.col-md-8 {
-    width: 66.66666667%;
-}
-.form-group .custom-textarea {
-    height: 205px;
-    resize: none;
-}
-.custom-violet-btn {
-    padding: 15px 40px;
-    margin: auto;
-    display: block;
-    background-color: #330033;
-    border: none;
-    color: #fff;
-    border-radius: 25px;
-}#my-file-selector {
-     display: none;
- }
-
 #my-file-selector1 {
     display: none;
 }
 #my-file-selector2 {
     display: none;
 }
-#littleImg {
-    width: 143px;
-    height: 140px;
-    border: none;
+.form-group input.col-md-8,
+.form-group select.col-md-8 {
+    width: 66.66666667%;
 }
-#largeImg {
-    width: 249px;
-    height: 140px;
-    border: none;
+.form-group .custom-textarea {
+    width: 100%;
+    height: 180px;
+    resize: none;
 }
-
+.custom-violet-btn {
+    margin-top: 30px;
+    padding: 15px 40px;
+    margin: auto;
+    display: block;
+    background-color: #f9b852;
+    border: none;
+    color: #fff;
+    border-radius: 25px;
+}
+.custom-violet-btn:hover {
+    color: #fff;
+    background-color: #cc904d;
+}
+#my-file-selector {
+    display: none;
+}
 .custom-description {
     padding-left: 15px;
     display: inline-block;
@@ -74,9 +72,11 @@
     -moz-transition: all .34s;
 }
 .custom-contact h4 {
-    color: #990033;
-    text-transform: uppercase;
+    color: #e8b75a;
+    font-size: 16px;
+    margin-top: 20px;
     font-weight: 700;
+    text-transform: uppercase;
     padding-left: 6px;
 }
 .check-in-map,
@@ -84,18 +84,21 @@
     float: right;
     cursor: pointer;
     font-size: 14px;
-    color: #990033;
+    color: #e8b75a;
 }
 .check-in-map:hover,
 .add-input:hover {
-    color: #993936;
+    color: #cca04f;
 }
 .custom-hr {
-    margin: 30px auto;
+    margin: 30px auto 0;
     display: block;
     height: 1px;
     border: 0;
     border-top: 1px solid #e3e3e3;
+}
+.margin-bottom-30 {
+    margin-bottom: 30px;
 }
 label.btn {
     font-size: 14px;
@@ -111,6 +114,16 @@ label.btn {
 .img-size {
     color: #333333;
     font-size: 14px;
+}
+#littleImg {
+    width: 143px;
+    height: 140px;
+    border: none;
+}
+#largeImg {
+    width: 249px;
+    height: 140px;
+    border: none;
 }
 .img-block {
     width: 143px;
@@ -136,12 +149,12 @@ label.btn {
 .add-filial {
     text-align: center;
     display: block;
-    color: #990033;
+    color: #e8b75a;
     cursor: pointer;
     font-size: 18px;
 }
 .add-filial:hover {
-    color: #993936;
+    color: #ce9d55;
 }
 .icon-block {
     display: block;
@@ -167,6 +180,70 @@ label.btn {
     color: #a2a0a0;
     padding: 15px;
     font-size: 19px;
+}
+.main-panel > .content {
+    padding: 0;
+}
+.sidebar .logo,
+.main-panel .navbar {
+    background-color: #261404;
+}
+.sidebar .sidebar-background {
+    background-color: #190e05;
+}
+.container-fluid {
+    padding-right: 0;
+    padding-left: 0;
+}
+h2.custom-header-h2 {
+    font-size: 16px;
+    margin: 25px 0 20px 45px;
+    font-weight: 700;
+    color: #333333;
+    border-bottom: 1px solid #e3e3e3;
+}
+h2.custom-header-h2.custom-dashboard-header {
+    background-color: #fff;
+    margin: 0;
+    padding: 8px 0 8px 45px;
+}
+h2.custom-header-h2.custom-dashboard-header span {
+    line-height: 32px;
+}
+.custom-contact {
+    padding: 0 15px;
+}
+.card .header {
+    padding: 15px 30px 0;
+}
+.custom-dashboard-header .custom-select {
+    float: right;
+    display: flex;
+    align-items: center;
+}
+.custom-select {
+
+}
+.custom-select label {
+    color: #333333;
+    font-weight: 700;
+    font-size: 12px;
+}
+.custom-select .form-control {
+
+}
+.form-control {
+    background-color: #FFFFFF;
+    border: 1px solid #E3E3E3;
+    border-radius: 4px;
+    color: #565656;
+    padding: 8px 12px;
+    height: 32px;
+    -webkit-box-shadow: none;
+    box-shadow: none;
+}
+.orders-block {
+    margin: 15px 0;
 }
 @media screen and (max-width: 980px) {
     .form-group input.col-md-8,

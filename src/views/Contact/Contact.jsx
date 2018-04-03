@@ -87,20 +87,20 @@ class Contact extends Component {
                                     <form className="custom-contact" onSubmit={this.sendContactData}>
                                         <Col md={6}>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="name">Ваше имя:</label>
-                                                <input type="text" className="form-control col-md-8" id="name" placeholder="name" onChange={this.onChangeHandler} name="name" value={this.state.name} required/>
+                                                <label className="col-md-3" htmlFor="name">Ваше имя:</label>
+                                                <input type="text" className="form-control col-md-9" id="name" placeholder="name" onChange={this.onChangeHandler} name="name" value={this.state.name} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="phone">Ваш телефон?:</label>
-                                                <input type="number" className="form-control col-md-8" id="phone" placeholder="phone" onChange={this.onChangeHandler} name="phone" value={this.state.phone} required/>
+                                                <label className="col-md-3" htmlFor="phone">Ваш телефон?:</label>
+                                                <input type="number" className="form-control col-md-9" id="phone" placeholder="phone" onChange={this.onChangeHandler} name="phone" value={this.state.phone} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="email">Ваш е-mail:</label>
-                                                <input type="email" className="form-control  col-md-8" id="email" placeholder="email" onChange={this.onChangeHandler} name="email" value={this.state.email} required/>
+                                                <label className="col-md-3" htmlFor="email">Ваш е-mail:</label>
+                                                <input type="email" className="form-control  col-md-9" id="email" placeholder="email" onChange={this.onChangeHandler} name="email" value={this.state.email} required/>
                                             </div>
                                             <div className="form-group">
-                                                <label className="col-md-4" htmlFor="topic">Тема обращения:</label>
-                                                <select className="form-control col-md-8" id="topic" name="topic" selected={this.state.topic} onChange={this.onChangeHandler}>
+                                                <label className="col-md-3" htmlFor="topic">Тема обращения:</label>
+                                                <select className="form-control col-md-9" id="topic" name="topic" selected={this.state.topic} onChange={this.onChangeHandler}>
                                                     <option>1</option>
                                                     <option>2</option>
                                                     <option>3</option>
