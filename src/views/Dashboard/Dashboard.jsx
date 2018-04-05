@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ChartistGraph from 'react-chartist';
-import { Grid, Row, Col } from 'react-bootstrap';
+import {Grid, Row, Col} from 'react-bootstrap';
 
 
 import {Card} from 'components/Card/Card.jsx';
@@ -20,10 +20,10 @@ import {
 } from 'variables/Variables.jsx';
 
 class Dashboard extends Component {
-    createLegend(json){
+    createLegend(json) {
         var legend = [];
-        for(var i = 0; i < json["names"].length; i++){
-            var type = "fa fa-circle text-"+json["types"][i];
+        for (var i = 0; i < json["names"].length; i++) {
+            var type = "fa fa-circle text-" + json["types"][i];
             legend.push(
                 <i className={type} key={i}></i>
             );
@@ -34,127 +34,123 @@ class Dashboard extends Component {
         }
         return legend;
     }
+
     render() {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <Row>
-                        <Col lg={3} sm={6}>
-                            <StatsCard
-                                bigIcon={<span className="icon-block twitter-block"></span>}
-                                statsText="400"
-                                statsValue="Mentioned"
-                            />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <StatsCard
-                                bigIcon={<span className="icon-block dollar-block"></span>}
-                                statsText="13140 $"
-                                statsValue="Today Sales"
-                            />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <StatsCard
-                                bigIcon={<span className="icon-block user-block"></span>}
-                                statsText="9001"
-                                statsValue="Today Visitors"
-                            />
-                        </Col>
-                        <Col lg={3} sm={6}>
-                            <StatsCard
-                                bigIcon={<span className="icon-block message-block"></span>}
-                                statsText="350"
-                                statsValue="New messages"
-                            />
-                        </Col>
-                    </Row>
-                    <Row>
-                        <Col md={8}>
-                            <Card
-                                statsIcon="fa fa-history"
-                                id="chartHours"
-                                title="Users Behavior"
-                                stats="Updated 3 minutes ago"
-                                content={
-                                    <div className="ct-chart">
-                                        <ChartistGraph
-                                            data={dataSales}
-                                            type="Line"
-                                            options={optionsSales}
-                                            responsiveOptions={responsiveSales}
-                                        />
-                                    </div>
-                                    }
-                                legend={
-                                    <div className="legend">
-                                        {this.createLegend(legendSales)}
-                                    </div>
-                                }
-                            />
-                        </Col>
-                        <Col md={4}>
-                            <Card
-                                statsIcon="fa fa-clock-o"
-                                title="Email Statistics"
-                                category="Last Campaign Performance"
-                                stats="Campaign sent 2 days ago"
-                                content={
-                                    <div id="chartPreferences" className="ct-chart ct-perfect-fourth">
-                                        <ChartistGraph data={dataPie} type="Pie"/>
-                                    </div>
-                                }
-                                legend={
-                                    <div className="legend">
-                                        {this.createLegend(legendPie)}
-                                    </div>
-                                }
-                            />
-                        </Col>
-                    </Row>
+                    <h2 className="custom-header-h2 custom-dashboard-header">
+                        <span>ЗАКАЗЫ</span>
+                        <div className="custom-select col-md-4">
+                            <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
+                            <select className="form-control col-md-7" id="sel1">
+                                <option>1</option>
+                                <option>2</option>
+                                <option>3</option>
+                                <option>4</option>
+                            </select>
+                        </div>
+                        <div className="clearfix"></div>
+                    </h2>
+                    <div className="orders-block">
+                        <div className="col-md-7">
+                            <button type="button" className="btn btn-default active">новые заказы</button>
+                            <button type="button" className="btn btn-default">выполненные заказы</button>
+                            <button type="button" className="btn btn-default">выполняется доставка</button>
+                            <button type="button" className="btn btn-default">в обработке</button>
+                        </div>
+                        <div className="choose-date col-md-5">
+                            <label className="col-md-4" htmlFor="usr">
+                                Выберите дату:
+                            </label>
+                            <div className="col-md-4">
+                                <input type="text" className="form-control" id="usr"/>
+                            </div>
+                            <div className="col-md-4">
+                                <input type="text" className="form-control" id="usr"/>
+                            </div>
+                        </div>
+                        <div className="clearfix"></div>
+                    </div>
 
-                    <Row>
-                        <Col md={6}>
-                            <Card
-                                id="chartActivity"
-                                title="2014 Sales"
-                                category="All products including Taxes"
-                                stats="Data information certified"
-                                statsIcon="fa fa-check"
-                                content={
-                                    <div className="ct-chart">
-                                        <ChartistGraph
-                                            data={dataBar}
-                                            type="Bar"
-                                            options={optionsBar}
-                                            responsiveOptions={responsiveBar}
-                                        />
-                                    </div>
-                                }
-                                legend={
-                                    <div className="legend">
-                                        {this.createLegend(legendBar)}
-                                    </div>
-                                }
-                            />
-                        </Col>
-
-                        <Col md={6}>
-                            <Card
-                                title="Tasks"
-                                category="Backend development"
-                                stats="Updated 3 minutes ago"
-                                statsIcon="fa fa-history"
-                                content={
-                                    <div className="table-full-width">
-                                        <table className="table">
-                                            <Tasks />
-                                        </table>
-                                    </div>
-                                }
-                            />
-                        </Col>
-                    </Row>
-
+                    <div>
+                        <div className="custom-table">
+                            <table className="table">
+                                <thead>
+                                <tr>
+                                    <th>номер заказа</th>
+                                    <th>время поступления</th>
+                                    <th>время доставки</th>
+                                    <th>сумма</th>
+                                    <th>имя</th>
+                                    <th>тел. заказчика</th>
+                                    <th>статус</th>
+                                    <th>подробности</th>
+                                </tr>
+                                </thead>
+                                <tbody>
+                                <tr>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>
+                                        <select className="form-control new-order">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </td>
+                                    <td><a href="#">Подробнее</a></td>
+                                </tr>
+                                <tr>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>
+                                        <select className="form-control processing">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </td>
+                                    <td><a href="#">Подробнее</a></td>
+                                </tr>
+                                <tr>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>John</td>
+                                    <td>
+                                        <select className="form-control delivery">
+                                            <option>1</option>
+                                            <option>2</option>
+                                            <option>3</option>
+                                            <option>4</option>
+                                        </select>
+                                    </td>
+                                    <td><a href="#">Подробнее</a></td>
+                                </tr>
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                    <div>
+                        <div className="pagination-block">
+                            <a className="active" href="#">1</a>
+                            <a href="#">2</a>
+                            <a href="#">3</a>
+                        </div>
+                    </div>
                 </Grid>
             </div>
         );
