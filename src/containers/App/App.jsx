@@ -18,9 +18,22 @@ import Login from "../../views/Typography/Login";
 class App extends Component {
     constructor(props){
         super(props);
-        this.componentDidMount = this.componentDidMount.bind(this);
+        this.state = {
+            loggedIn: false
+        };
+        this.doLogin = this.doLogin.bind(this);
+        this.doLogOut = this.doLogOut.bind(this);
         this.handleNotificationClick = this.handleNotificationClick.bind(this);
     }
+
+    doLogin () {
+        this.setState({loggedIn: true})
+    }
+
+    doLogOut () {
+        this.setState({loggedIn: false})
+    }
+
     handleNotificationClick(position){
         var color = Math.floor((Math.random() * 4) + 1);
         var level;
@@ -51,16 +64,15 @@ class App extends Component {
         }
     }
     render() {
-        if (true) {
+        if (!this.state.loggedIn) {
             return (
-                <Login/>
+                <Login doLogin={this.doLogin}/>
             )
         }
         return (
-
                 <div className="wrapper">
                     <NotificationSystem ref="notificationSystem" style={style}/>
-                    <Sidebar {...this.props} />
+                    <Sidebar {...this.props} doLogOut={this.doLogOut} />
                     <div id="main-panel" className="main-panel">
                         <Header {...this.props}/>
                             <Switch>
@@ -83,12 +95,11 @@ class App extends Component {
                                                 <Redirect from={prop.path} to={prop.to} key={key}/>
                                             );
                                         return (
-                                            <Route path={prop.path} component={prop.component} key={key}/>
+                                            <Route path={prop.path} component={prop.component} key={key} />
                                         );
                                     })
                                 }
                             </Switch>
-                        <Footer />
                     </div>
                 </div>
         );

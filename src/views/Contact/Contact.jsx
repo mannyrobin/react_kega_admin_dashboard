@@ -124,7 +124,7 @@ class Contact extends Component {
                                             <span className="custom-description">максимум 10 файлов общим размером до 20 Мб</span>
                                         </div>
                                         <div className="clearfix"></div>
-                                        <button type="submit" className="custom-violet-btn btn">Button</button>
+                                        <button type="submit" className="custom-violet-btn">Отправить</button>
                                         <div className="clearfix"></div>
                                     </form>
                                 }

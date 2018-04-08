@@ -39,9 +39,10 @@ a, img {
     padding-top: 12px;
 }
 .custom-name {
+    max-width: 160px;
     color: #a6a6a6;
     padding-top: 12px;
-    padding-left: 9px;
+    padding-left: 22px;
     width: 17.5%;
     display: inline-block;
 }
@@ -49,8 +50,13 @@ a, img {
 .form-group select.col-md-8 {
     width: 66.66666667%;
 }
+.logOut {
+    margin-left: 10%;
+    cursor: pointer;
+}
 .form-group .custom-textarea {
-    height: 205px;
+    width: 100%;
+    height: 180px;
     resize: none;
 }
 .custom-violet-btn {
@@ -297,6 +303,11 @@ td > a {
 .custom-table select {
     font-size: 12px;
 }
+.orders {
+    margin-top: 6px;
+    min-height: 24px;
+    background: url("../img/comment.png") 50% 50% / cover no-repeat;
+}
 .custom-table select.new-order {
     color: #669900;
 }
@@ -402,7 +413,7 @@ td > a {
 
 .custom-select select {
     outline: 0;
-    border: 0;
+    border: 1px solid #E3E3E3;
 }
 
 .main-page .main-cont form .custom-select select option {
@@ -428,9 +439,10 @@ td > a {
     width: 100%;
     text-align: center;
     text-align-last:center;
-    text-transform: uppercase;
 }
-
+.header-bottom {
+    margin-top: 4px;
+}
 .main-page .main-cont form .custom-select select {
     width: 310px;
     /*text-indent: 82px;*/
@@ -705,7 +717,7 @@ input:focus {
     top: 0;
     bottom: 0;
     left: 0;
-    width: 260px;
+    width: 24%;
     display: block;
     z-index: 1;
     color: #fff;
@@ -938,12 +950,13 @@ body > .navbar-collapse[data-color="purple"]:after {
     background: rgba(203, 203, 210, 0.15);
     position: relative;
     float: right;
-    width: calc(100% - 260px); }
+    width: 76%; }
 .main-panel > .content {
     min-height: calc(100% - 123px); }
 .main-panel > .footer {
     border-top: 1px solid #e7e7e7; }
 .main-panel .navbar {
+    margin-top: 0;
     margin-bottom: 0; }
 
 .sidebar,
@@ -2223,7 +2236,7 @@ fieldset[disabled] .btn-neutral.active {
     border-radius: 4px;
     box-shadow: 0 1px 2px rgba(0, 0, 0, 0.05), 0 0 0 1px rgba(63, 63, 68, 0.1);
     background-color: #FFFFFF;
-    margin-bottom: 30px; }
+     }
 .card .image {
     width: 100%;
     overflow: hidden;
@@ -3111,7 +3124,7 @@ fieldset[disabled] .btn-neutral.active {
         display: block;
         top: 0;
         height: 100%;
-        width: 260px;
+        width: 24%;
         right: 0;
         left: auto;
         z-index: 1032;

@@ -55,7 +55,6 @@ class CorpProfile extends Component {
     addFilial () {
         let newFilials = this.state.filials;
         newFilials.push(newFilials.length + 1);
-        debugger
         this.setState({filials: newFilials})
     }
 
@@ -125,7 +124,7 @@ class CorpProfile extends Component {
                                             </Col>
                                             <div className="clearfix"></div>
                                             <button type="submit" onClick={this.sendContactData}
-                                                    className="custom-violet-btn btn">SAVE
+                                                    className="custom-violet-btn">Сохранить
                                             </button>
                                         </div>
                                         <hr className="custom-hr"/>
@@ -172,7 +171,7 @@ class CorpProfile extends Component {
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
                                         <hr className="custom-hr"/>
                                         <button type="submit" onClick={this.sendContactData}
-                                                className="custom-violet-btn btn">SAVE
+                                                className="custom-violet-btn">Сохранить
                                         </button>
                                     </form>
                                 }

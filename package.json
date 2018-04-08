@@ -9,6 +9,7 @@
     "google-maps-react": "^1.1.0",
     "node-sass-chokidar": "0.0.3",
     "npm-run-all": "^4.1.1",
+    "querystring": "^0.2.0",
     "react": "^15.6.1",
     "react-bootstrap": "^0.31.1",
     "react-chartist": "^0.13.0",
