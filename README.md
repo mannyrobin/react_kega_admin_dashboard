@@ -104,7 +104,7 @@ Light Bootstrap Dashboard React
         ├── TableList
         │   └── TableList.jsx
         ├── Typography
-        │   └── Typography.jsx
+        │   └── Login.jsx
         └── UserProfile
             └── CorpProfile.jsx
 ```

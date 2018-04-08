@@ -50,8 +50,7 @@ a, img {
     width: 66.66666667%;
 }
 .form-group .custom-textarea {
-    width: 100%;
-    height: 189px;
+    height: 205px;
     resize: none;
 }
 .custom-violet-btn {
@@ -191,7 +190,6 @@ label.btn {
     background-color: #190e05;
 }
 .container-fluid {
-    padding-bottom: 1px;
     padding-right: 0;
     padding-left: 0;
 }
@@ -283,7 +281,7 @@ h2.custom-header-h2.custom-dashboard-header span {
 }
 .table>thead:first-child>tr:first-child>th {
     text-align: center;
-    padding: 12px 0;
+    padding: 9px 0;
     border-right: 1px solid #fff;
     border-left: 1px solid #fff;
     color: #fff;
@@ -320,7 +318,7 @@ td > a {
 }
 .pagination-block {
     text-align: center;
-    margin-bottom: 20px;
+    margin: 20px 0;
 }
 .pagination-block a {
     font-weight: 700;
@@ -335,6 +333,154 @@ td > a {
 .pagination-block a.active {
     color: #fff;
     background-color: #e8b75a;
+}
+.table>tbody>tr>td.select-td {
+    padding: 0;
+}
+.products-filter {
+    padding: 15px;
+}
+.search-block input {
+    width: 100%;
+}
+.search-block {
+    position: relative;
+}
+.search-block .btn {
+    border-radius: 4px;
+    border: 1px solid #e3e3e3;
+    background-color: #f2f2f2;
+    position: absolute;
+    padding: 6px 28px;
+    right: 15px;
+    top: 0;
+}
+.prod-filters-select select {
+    width: 100%;
+}
+/* Main Page */
+.main-page {
+    position: relative;
+    text-align: center;
+    min-height: 500px;
+
+}
+
+.main-page .main-cont {
+    padding: 132px 0;
+}
+
+.main-page .bg-block {
+    width: 100%;
+    min-height: 100%;
+    position: absolute;
+    background: url("../img/main-bg.jpg") 50% 50% / cover no-repeat;
+}
+
+.main-page .logo-block {
+    min-height: 150px;
+    max-height: 204px;
+    margin-bottom: 48px;
+    background: url("../img/main-logo.png") 50% 50% / contain no-repeat;
+}
+
+.main-page .main-cont {
+    position: relative;
+    z-index: 9;
+}
+
+.main-page .main-cont form {
+    display: inline-block;
+    width: 287px;
+}
+
+.custom-select,
+.custom-select select {
+    width: 100%;
+    overflow: hidden;
+}
+
+.custom-select select {
+    outline: 0;
+    border: 0;
+}
+
+.main-page .main-cont form .custom-select select option {
+    background-color: #1e1005;
+    color: #a3aab4;
+}
+
+.main-page .main-cont form .custom-select {
+    /*background: url("../img/arrow.png") no-repeat right 16px center;*/
+}
+
+.main-page .main-cont form p {
+    margin-bottom: 0;
+}
+
+.main-page .main-cont form .custom-select select,
+.main-page .main-cont form input {
+    font-size: 18px;
+    box-sizing: border-box;
+    padding: 14px 16px;
+    border: 0;
+    outline: 0;
+    width: 100%;
+    text-align: center;
+    text-align-last:center;
+    text-transform: uppercase;
+}
+
+.main-page .main-cont form .custom-select select {
+    width: 310px;
+    /*text-indent: 82px;*/
+}
+
+.main-page .main-cont form .custom-select select,
+.main-page .main-cont form input::placeholder,
+.main-page .main-cont form input::-ms-input-placeholder {
+    font-size: 18px;
+    color: #a3aab4;
+}
+.main-page .main-cont form input,
+.main-page .main-cont form .custom-select select {
+    border-bottom: 1px solid rgba(163, 170, 180, .5);
+    background-color: transparent;
+    color: #a3aab4;
+}
+
+.main-page form button {
+    margin-top: 32px;
+    font-size: 16.47px;
+    padding: 12px 68px;
+}
+.product-table .prod-img {
+    padding: 0;
+}
+.product-table .prod-img div{
+    width: 62px;
+    height: 62px;
+    /*background: url("../img/prod-img.jpg") 50% 50% / contain no-repeat;*/
+}
+.product-table tr td {
+    color: #333;
+}
+.product-table .no-in-stock td {
+    color: #adadad;
+}
+.trash {
+    font-size: 24px;
+    color: #a6a6a6;
+    padding-left: 19px;
+}
+.edit {
+    display: inline-block;
+    width: 18px;
+    height: 21px;
+    background: url("../img/edit.png") 50% 50% / contain no-repeat;
+}
+.product-table td select {
+    height: 40px;
 }
 @media screen and (max-width: 991px) {
     h2.custom-header-h2.custom-dashboard-header {
@@ -1140,7 +1286,7 @@ fieldset[disabled] .btn-neutral.active {
     border-radius: 4px;
     color: #565656;
     padding: 8px 12px;
-    height: 36px;
+    height: 34px;
     -webkit-box-shadow: none;
     box-shadow: none; }
 .form-control:focus {
@@ -1324,16 +1470,15 @@ fieldset[disabled] .btn-neutral.active {
 .table > thead > tr > td,
 .table > tbody > tr > td,
 .table > tfoot > tr > td {
-    padding: 12px 8px;
+    padding: 10px 8px 9px;
     vertical-align: middle; }
 
 .table > tbody > tr > td {
-    font-size: 14px; }
+    font-size: 12px; }
 
 .table > thead > tr > th {
-    border-bottom-width: 1px;
+    border-bottom-width: 0;
     font-size: 12px;
-    text-transform: uppercase;
     color: #9A9A9A;
     font-weight: 400;
     padding-bottom: 5px; }
@@ -1731,7 +1876,7 @@ fieldset[disabled] .btn-neutral.active {
 .navbar .btn-simple {
     font-size: 16px; }
 .navbar.fixed {
-    width: calc(100% - $sidebar-width);
+   /* width: calc(100% - $sidebar-width);*/
     right: 0;
     left: auto;
     border-radius: 0; }
