@@ -10,11 +10,11 @@ class Filials extends Component {
                 </h4>
                 <Col md={6}>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="usr">Name:</label>
+                        <label className="col-md-4" htmlFor="usr">Название филиала</label>
                         <input type="text" className="form-control col-md-8" id="usr"/>
                     </div>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="sel1">Select list:</label>
+                        <label className="col-md-4" htmlFor="sel1">Выберите город</label>
                         <select className="form-control col-md-8" id="sel1">
                             <option>1</option>
                             <option>2</option>
@@ -23,22 +23,22 @@ class Filials extends Component {
                         </select>
                     </div>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="usr">Name:</label>
+                        <label className="col-md-4" htmlFor="usr">Адрес филиала</label>
                         <input type="text" className="form-control col-md-8" id="usr"/>
                     </div>
                     <a className="check-in-map">проверить на карте</a>
                 </Col>
                 <Col md={6}>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="usr">Name:</label>
+                        <label className="col-md-4" htmlFor="usr">Контактное лицо</label>
                         <input type="text" className="form-control col-md-8" id="usr"/>
                     </div>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="usr">Name:</label>
+                        <label className="col-md-4" htmlFor="usr">Контактный телефон</label>
                         <input type="text" className="form-control col-md-8" id="usr"/>
                     </div>
                     <div className="form-group">
-                        <label className="col-md-4" htmlFor="usr">Name:</label>
+                        <label className="col-md-4" htmlFor="usr">Контактный e-mail</label>
                         <input type="text" className="form-control  col-md-8" id="usr"/>
                     </div>
                 </Col>

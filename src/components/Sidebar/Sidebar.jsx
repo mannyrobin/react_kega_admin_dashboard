@@ -32,13 +32,13 @@ class Sidebar extends Component{
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background"></div>
-                    <div className="logo">
-                        <a href="https://www.creative-tim.com" className="simple-text logo-normal">
-                            <div className="logo-img">
-                                <img src={logo} alt="logo_image"/>
-                            </div>
-                        </a>
-                    </div>
+                <div className="logo">
+                    <a href="https://www.creative-tim.com" className="simple-text logo-normal">
+                        <div className="logo-img">
+                            <img src={logo} alt="logo_image"/>
+                        </div>
+                    </a>
+                </div>
                 <div className="sidebar-wrapper">
                     <ul className="nav">
                         { this.state.width <= 991 ? (<HeaderLinks />):null }
@@ -57,7 +57,7 @@ class Sidebar extends Component{
                             })
                         }
                         <li>
-                            <a className="nav-link logOut" activeClassName="active" onClick={this.props.doLogOut}>
+                            <a className="nav-link logOut" onClick={this.props.doLogOut}>
                                 <i className="pe-7s-power"></i>
                                 <p>Выход</p>
                             </a>

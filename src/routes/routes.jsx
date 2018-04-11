@@ -10,7 +10,7 @@ import CorpProfile from "../views/CorpProfile/CorpProfile";
 
 const appRoutes = [
     { path: "/dashboard", name: "Заказы", icon: "orders", component: Dashboard },
-    // { path: "/add-action", name: "Добавить акцию", icon: "pe-7s-plus", component: Contact },
+    { path: "/add-action", name: "Меню и товары", icon: "pe-7s-plus", component: Contact },
     // { path: "/your-actions", name: "Ваши акции", icon: "pe-7s-note2", component: TableList },
     // { path: "/goods-requests", name: "Заявки на товары", icon: "pe-7s-news-paper", component: Login },
     // { path: "/req-stats", name: "Статистика запросв", icon: "pe-7s-news-paper", component: Login },

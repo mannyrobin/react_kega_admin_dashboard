@@ -64,44 +64,44 @@ class App extends Component {
         }
     }
     render() {
-        if (!this.state.loggedIn) {
-            return (
-                <Login doLogin={this.doLogin}/>
-            )
-        }
+        // if (!this.state.loggedIn) {
+        //     return (
+        //         <Login doLogin={this.doLogin}/>
+        //     )
+        // }
         return (
-                <div className="wrapper">
-                    <NotificationSystem ref="notificationSystem" style={style}/>
-                    <Sidebar {...this.props} doLogOut={this.doLogOut} />
-                    <div id="main-panel" className="main-panel">
-                        <Header {...this.props}/>
-                            <Switch>
-                                {
-                                    appRoutes.map((prop,key) => {
-                                        if(prop.name === "Notifications")
-                                            return (
-                                                <Route
-                                                    path={prop.path}
-                                                    key={key}
-                                                    render={routeProps =>
-                                                       <prop.component
-                                                           {...routeProps}
-                                                           handleClick={this.handleNotificationClick}
-                                                       />}
-                                                />
-                                            );
-                                        if(prop.redirect)
-                                            return (
-                                                <Redirect from={prop.path} to={prop.to} key={key}/>
-                                            );
-                                        return (
-                                            <Route path={prop.path} component={prop.component} key={key} />
-                                        );
-                                    })
-                                }
-                            </Switch>
-                    </div>
+            <div className="wrapper">
+                <NotificationSystem ref="notificationSystem" style={style}/>
+                <Sidebar {...this.props} doLogOut={this.doLogOut} />
+                <div id="main-panel" className="main-panel">
+                    <Header {...this.props}/>
+                    <Switch>
+                        {
+                            appRoutes.map((prop,key) => {
+                                if(prop.name === "Notifications")
+                                    return (
+                                        <Route
+                                            path={prop.path}
+                                            key={key}
+                                            render={routeProps =>
+                                                <prop.component
+                                                    {...routeProps}
+                                                    handleClick={this.handleNotificationClick}
+                                                />}
+                                        />
+                                    );
+                                if(prop.redirect)
+                                    return (
+                                        <Redirect from={prop.path} to={prop.to} key={key}/>
+                                    );
+                                return (
+                                    <Route path={prop.path} component={prop.component} key={key} />
+                                );
+                            })
+                        }
+                    </Switch>
                 </div>
+            </div>
         );
     }
 }
