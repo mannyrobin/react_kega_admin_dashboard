@@ -9,7 +9,7 @@ import Upgrade from 'views/Upgrade/Upgrade';
 import CorpProfile from "../views/CorpProfile/CorpProfile";
 
 const appRoutes = [
-    { path: "/dashboard", name: "закази", icon: "orders", component: Dashboard },
+    { path: "/dashboard", name: "Заказы", icon: "orders", component: Dashboard },
     // { path: "/add-action", name: "Добавить акцию", icon: "pe-7s-plus", component: Contact },
     // { path: "/your-actions", name: "Ваши акции", icon: "pe-7s-note2", component: TableList },
     // { path: "/goods-requests", name: "Заявки на товары", icon: "pe-7s-news-paper", component: Login },

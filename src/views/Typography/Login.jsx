@@ -73,7 +73,7 @@ class Login extends Component {
                 <div className="main-cont">
                     <div className="logo-block"></div>
                     <form onSubmit={this.submit}>
-                        <div className="custom-select">
+                        <div className="custom-select-spec">
                             <select ref="select">
                                 {Object.keys(this.state.response.data).map(item => {
                                     let network = this.state.response.data[item];

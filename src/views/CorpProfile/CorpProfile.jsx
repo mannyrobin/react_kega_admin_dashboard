@@ -111,20 +111,10 @@ class CorpProfile extends Component {
                                                     <label className="col-md-4" htmlFor="usr">ОГРН:</label>
                                                     <input type="text" className="form-control  col-md-8" id="usr"/>
                                                 </div>
-                                                <div className="form-group">
-                                                    <label className="col-md-4" htmlFor="sel1">Сфера деятельности:</label>
-                                                    <select className="form-control col-md-8" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
-                                                    </select>
-                                                </div>
-                                                <a className="add-input">+ добавить еще</a>
                                             </Col>
                                             <div className="clearfix"></div>
                                             <button type="submit" onClick={this.sendContactData}
-                                                    className="custom-violet-btn">Сохранить
+                                                    className="custom-violet-btn btn">Сохранить
                                             </button>
                                         </div>
                                         <hr className="custom-hr"/>
@@ -159,10 +149,10 @@ class CorpProfile extends Component {
                                             </Col>
                                             <div className="clearfix"></div>
                                         </div>
+                                        <hr className="custom-hr"/>
                                         <div className="custom-block filials">
                                             <h4>Филиалы</h4>
                                         </div>
-                                        <hr className="custom-hr"/>
                                         {
                                             this.state.filials.map((item) => {
                                                 return <Filials item={item} addFilial={this.addFilial} removeFilial={this.removeFilial} key={item} />
@@ -171,7 +161,7 @@ class CorpProfile extends Component {
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
                                         <hr className="custom-hr"/>
                                         <button type="submit" onClick={this.sendContactData}
-                                                className="custom-violet-btn">Сохранить
+                                                className="custom-violet-btn btn">Сохранить
                                         </button>
                                     </form>
                                 }

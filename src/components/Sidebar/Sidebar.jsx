@@ -57,10 +57,10 @@ class Sidebar extends Component{
                             })
                         }
                         <li>
-                            <div className="nav-link logOut" activeClassName="active" onClick={this.props.doLogOut}>
+                            <a className="nav-link logOut" activeClassName="active" onClick={this.props.doLogOut}>
                                 <i className="pe-7s-power"></i>
                                 <p>Выход</p>
-                            </div>
+                            </a>
                         </li>
                     </ul>
                 </div>
