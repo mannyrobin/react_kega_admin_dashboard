@@ -56,13 +56,14 @@ class Header extends Component{
         return name;
     }
     render(){
+        console.log("+++++++++++++++++++++  ", this.props.props)
         return (
             <Navbar fluid>
                 <Navbar.Header>
                     <Navbar.Toggle onClick={this.mobileSidebarToggle}/>
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <HeaderLinks />
+                    <HeaderLinks props={this.props.props} />
                 </Navbar.Collapse>
             </Navbar>
         );

@@ -745,12 +745,11 @@ li.submenu a:after {
     margin: 0 20px 0 30px;
 }
 
-.user-icon:before {
+#userIcon {
     content: '';
     display: inline-block;
-    background: url("../img/user-logo.png") 50% 50% no-repeat;
-    width: 50px;
-    height: 50px;
+    max-width: 50px;
+    max-height: 50px;
     border-radius: 50%
 }
 

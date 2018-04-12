@@ -7,7 +7,7 @@ import imagine from 'assets/img/sidebar-3.jpg';
 import logo from 'assets/img/logo_image.png';
 
 import appRoutes from 'routes/routes.jsx';
-import {Redirect} from "react-router";
+import  { Redirect } from 'react-router-dom';
 
 class Sidebar extends Component{
     constructor(props){
@@ -30,15 +30,17 @@ class Sidebar extends Component{
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
     dropDown () {
-        // if (!this.state.dropDowned) {
-        //     window.location = "http://localhost:3000/#/menu/all_categories";
-        // }
+        debugger
+        if (!this.state.dropDowned) {
+            window.location.href = "http://localhost:3000/#/all_categories";
+        }
         this.setState(() => ({dropDowned: !this.state.dropDowned, dropDownArrow: !this.state.dropDownArrow}))
     }
     render(){
         const sidebarBackground = {
             backgroundImage: 'url(' + imagine + ')'
         };
+
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background"></div>
@@ -60,7 +62,7 @@ class Sidebar extends Component{
                                     }
                                     return (
                                         <li className={prop.child ? "submenu" : ""}
-                                            key={index} onClick={() => {prop.openDropDown && this.dropDown()}}>
+                                            key={index} onClick={() => {this.dropDown}}>
                                             <NavLink to={prop.path} className="nav-link"
                                                      activeClassName={`${prop.dropDown && this.state.dropDownArrow ? "open" : ""} active`}>
                                                 <i className={prop.icon}></i>

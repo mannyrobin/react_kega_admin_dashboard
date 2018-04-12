@@ -3,47 +3,22 @@ import { NavItem, Nav, NavDropdown, MenuItem } from 'react-bootstrap';
 
 
 class HeaderLinks extends Component{
+    constructor (props) {
+        super(props);
+    }
+
+    componentDidMount () {
+        // document.getElementById("userIcon").style.background = "url()"
+    }
+
     render(){
-        const notification = (
-            <div>
-                <i className="fa fa-globe"></i>
-                <b className="caret"></b>
-                <span className="notification">5</span>
-                <p className="hidden-lg hidden-md">Notification</p>
-            </div>
-        );
+        console.log("}}}}}}}}}}}}}}}}}}}}}}}}}  ", this.props.props)
         return (
             <div className="header-bottom">
-                {/*<Nav>*/}
-                    {/*<NavItem eventKey={1} href="#">*/}
-                        {/*<i className="fa fa-dashboard"></i>*/}
-                        {/*<p className="hidden-lg hidden-md">Dashboard</p>*/}
-                    {/*</NavItem>*/}
-                    {/*<NavDropdown eventKey={2} title={notification} noCaret id="basic-nav-dropdown">*/}
-                        {/*<MenuItem eventKey={2.1}>Notification 1</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.2}>Notification 2</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.3}>Notification 3</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.4}>Notification 4</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.5}>Another notifications</MenuItem>*/}
-                    {/*</NavDropdown>*/}
-                    {/*<NavItem eventKey={3} href="#">*/}
-                        {/*<i className="fa fa-search"></i>*/}
-                        {/*<p className="hidden-lg hidden-md">Search</p>*/}
-                    {/*</NavItem>*/}
-                {/*</Nav>*/}
                 <Nav pullRight>
                     <NavItem eventKey={1} href="#" className="icon-notification"></NavItem>
                     <NavItem eventKey={1} href="#" className="icon-messages"></NavItem>
-                    {/*<NavDropdown eventKey={2} title="Dropdown" id="basic-nav-dropdown-right">*/}
-                        {/*<MenuItem eventKey={2.1}>Action</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.2}>Another action</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.3}>Something</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.4}>Another action</MenuItem>*/}
-                        {/*<MenuItem eventKey={2.5}>Something</MenuItem>*/}
-                        {/*<MenuItem divider />*/}
-                        {/*<MenuItem eventKey={2.5}>Separated link</MenuItem>*/}
-                    {/*</NavDropdown>*/}
-                    <NavItem eventKey={3} href="#" className="user-icon"><span>Vansdorf</span></NavItem>
+                    <NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url}/><span>Vansdorf</span></NavItem>
                 </Nav>
             </div>
         );

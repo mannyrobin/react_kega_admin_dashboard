@@ -12,9 +12,9 @@ import CorpProfile from "../views/CorpProfile/CorpProfile";
 const appRoutes = [
     { path: "/dashboard", name: "Заказы", icon: "orders", component: Dashboard },
     { path: "/menu", name: "Меню и товары", dropDown: true, openDropDown: true, icon: "pe-7s-plus" },
-    { path: "/menu/all_categories", child: true, name: "все товары", component: ProductCat },
-    { path: "/menu/add_category", child: true, name: "добавить товар", component: ProductCat },
-    { path: "/menu/category", child: true, name: "категории товаров", component: ProductCat },
+    { path: "/all_categories", child: true, name: "все товары", component: ProductCat },
+    { path: "/add_category", child: true, name: "добавить товар", component: ProductCat },
+    { path: "/category", child: true, name: "категории товаров", component: ProductCat },
     // { path: "/goods-requests", name: "Заявки на товары", icon: "pe-7s-news-paper", component: Login },
     // { path: "/req-stats", name: "Статистика запросв", icon: "pe-7s-news-paper", component: Login },
     { path: "/corp-profile", name: "Профиль компании", icon: "pe-7s-config", component: CorpProfile },

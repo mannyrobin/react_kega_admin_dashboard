@@ -33,7 +33,7 @@ class Login extends Component {
         }).then(function(response) {
             console.log(">>>>>>>>>>>>>>  ", response);
             if (!response.data.error) {
-                self.props.doLogin();
+                self.props.doLogin(response);
             } else {
                 alert("wrong username or password");
             }

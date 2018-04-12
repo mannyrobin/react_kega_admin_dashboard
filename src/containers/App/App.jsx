@@ -19,62 +19,33 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            loggedIn: false
+            loggedIn: false,
+            props: null
         };
         this.doLogin = this.doLogin.bind(this);
         this.doLogOut = this.doLogOut.bind(this);
-        this.handleNotificationClick = this.handleNotificationClick.bind(this);
     }
 
-    doLogin () {
-        this.setState({loggedIn: true})
+    doLogin (response) {
+        this.setState({loggedIn: true, props: response});
     }
 
     doLogOut () {
         this.setState({loggedIn: false})
     }
 
-    handleNotificationClick(position){
-        var color = Math.floor((Math.random() * 4) + 1);
-        var level;
-        switch (color) {
-            case 1:
-                level = 'success';
-                break;
-            case 2:
-                level = 'warning';
-                break;
-            case 3:
-                level = 'error';
-                break;
-            case 4:
-                level = 'info';
-                break;
-            default:
-                break;
-        }
-    }
-    componentDidMount(){
-
-
-    }
-    componentDidUpdate(e){
-        if(window.innerWidth < 993 && e.history.location.pathname !== e.location.pathname && document.documentElement.className.indexOf('nav-open') !== -1){
-            document.documentElement.classList.toggle('nav-open');
-        }
-    }
     render() {
-        // if (!this.state.loggedIn) {
-        //     return (
-        //         <Login doLogin={this.doLogin}/>
-        //     )
-        // }
+        if (!this.state.loggedIn) {
+            return (
+                <Login doLogin={this.doLogin}/>
+            )
+        }
         return (
             <div className="wrapper">
                 <NotificationSystem ref="notificationSystem" style={style}/>
                 <Sidebar {...this.props} doLogOut={this.doLogOut} />
                 <div id="main-panel" className="main-panel">
-                    <Header {...this.props}/>
+                    <Header {...this.props} props={this.state.props}/>
                     <Switch>
                         {
                             appRoutes.map((prop,key) => {

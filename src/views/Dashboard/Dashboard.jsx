@@ -20,19 +20,11 @@ import {
 } from 'variables/Variables.jsx';
 
 class Dashboard extends Component {
-    createLegend(json) {
-        var legend = [];
-        for (var i = 0; i < json["names"].length; i++) {
-            var type = "fa fa-circle text-" + json["types"][i];
-            legend.push(
-                <i className={type} key={i}></i>
-            );
-            legend.push(" ");
-            legend.push(
-                json["names"][i]
-            );
-        }
-        return legend;
+    constructor (props) {
+        super(props);
+    }
+
+    componentDidMount () {
     }
 
     render() {
@@ -44,10 +36,10 @@ class Dashboard extends Component {
                         <div className="custom-select col-md-4">
                             <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
                             <select className="form-control col-md-7" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
+                                {this.props.props.data.arr && this.props.props.data.arr.map(item => {
+                                    console.log("?????????????????  ", item)
+                                    return <option key={item.sub_market_id}>{item.sub_market_name}</option>
+                                })}
                             </select>
                         </div>
                         <div className="clearfix"></div>
