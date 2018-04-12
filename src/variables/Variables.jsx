@@ -395,7 +395,7 @@ const iconsArray = [
     "pe-7s-moon",
     "pe-7s-monitor",
     "pe-7s-micro",
-    "pe-7s-menu",
+    "pe-7s-Menu",
     "pe-7s-map",
     "pe-7s-map-marker",
     "pe-7s-mail",

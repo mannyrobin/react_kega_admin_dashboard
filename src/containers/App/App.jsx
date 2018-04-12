@@ -95,7 +95,7 @@ class App extends Component {
                                         <Redirect from={prop.path} to={prop.to} key={key}/>
                                     );
                                 return (
-                                    <Route path={prop.path} component={prop.component} key={key} />
+                                    <Route path={prop.path} component={prop.component} key={key}  />
                                 );
                             })
                         }

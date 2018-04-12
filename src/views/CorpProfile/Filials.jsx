@@ -26,7 +26,7 @@ class Filials extends Component {
                         <label className="col-md-4" htmlFor="usr">Адрес филиала</label>
                         <input type="text" className="form-control col-md-8" id="usr"/>
                     </div>
-                    <a className="check-in-map">проверить на карте</a>
+                    <a className="check-in-map" >проверить на карте</a>
                 </Col>
                 <Col md={6}>
                     <div className="form-group">
