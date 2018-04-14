@@ -9,7 +9,7 @@ import {UserCard} from 'components/UserCard/UserCard.jsx';
 import avatar from "assets/img/faces/face-3.jpg";
 
 class Add_product extends Component {
-    constructor (props) {
+    constructor(props) {
         super(props);
         this.showImg = this.showImg.bind(this);
         this.removeFilial = this.removeFilial.bind(this);
@@ -27,14 +27,14 @@ class Add_product extends Component {
 
 
             let img = new Image();
-            img.onload = function() {
+            img.onload = function () {
                 let reader = new FileReader(),
                     imgWidth = this.width,
                     imgHeight = this.height,
                     maxImgWidth = currentImg === "littleImg" ? 355 : (currentImg === "largeImg") ? 640 : null,
                     maxImgheight = currentImg === "littleImg" ? 355 : (currentImg === "largeImg") ? 640 : null
 
-                reader.onload = function(event) {
+                reader.onload = function (event) {
                     if (imgWidth < maxImgWidth || imgHeight < maxImgheight) {
                         alert("dimensions error");
                         return
@@ -43,22 +43,24 @@ class Add_product extends Component {
                 };
                 reader.readAsDataURL(files[0]);
             };
-            img.onerror = function() {
-                alert( "not a valid file: " + files[0].type);
+            img.onerror = function () {
+                alert("not a valid file: " + files[0].type);
             };
             img.src = _URL.createObjectURL(files[0]);
         }
     }
 
-    addFilial () {
+    addFilial() {
         let newFilials = this.state.filials;
         newFilials.push(newFilials.length + 1);
         this.setState({filials: newFilials})
     }
 
-    removeFilial (item) {
+    removeFilial(item) {
         let index = this.state.filials.indexOf(item);
-        this.setState((state) => { filials: state.filials.splice(index, 1) });
+        this.setState((state) => {
+            filials: state.filials.splice(index, 1)
+        });
     }
 
     render() {
@@ -83,7 +85,7 @@ class Add_product extends Component {
                             <Card
                                 title="Описание товара"
                                 content={
-                                    <form className="custom-contact" >
+                                    <form className="custom-contact">
                                         <div className="add-product-block custom-block">
                                             <h4>Данные организации</h4>
                                             <div className="add-product-sub-block1">
@@ -109,11 +111,13 @@ class Add_product extends Component {
                                             <div className="add-product-sub-block2">
                                                 <div className="form-group">
                                                     <label htmlFor="count-or-weight">Введите кол-во</label>
-                                                    <input className="form-control" type="text" name="count-or-weight" placeholder="Вес или объем" id="count-or-weight"/>
+                                                    <input className="form-control" type="text" name="count-or-weight"
+                                                           placeholder="Вес или объем" id="count-or-weight"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="unit-measurements">Единица измерения</label>
-                                                    <select className="form-control" name="unit-measurements" id="unit-measurements" placeholder="Единица измерения">
+                                                    <select className="form-control" name="unit-measurements"
+                                                            id="unit-measurements" placeholder="Единица измерения">
                                                         <option>1</option>
                                                         <option>2</option>
                                                         <option>3</option>
@@ -122,13 +126,23 @@ class Add_product extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="price">Цена, руб</label>
-                                                    <input className="form-control" type="text" name="price" id="price" />
+                                                    <input className="form-control" type="text" name="price"
+                                                           id="price"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="alcohol">Алкоголь, %</label>
-                                                    <input className="form-control" type="text" name="alcohol" id="alcohol"/>
+                                                    <input className="form-control" type="text" name="alcohol"
+                                                           id="alcohol"/>
                                                 </div>
                                                 <div className="clearfix"></div>
+                                            </div>
+                                            <div className="add-product-sub-block1">
+                                                <div className="col-md-custom">
+                                                    <div className="form-group">
+                                                        <label htmlFor="usr">Наименование компании:</label>
+                                                        <input type="text" className="form-control" id="usr"/>
+                                                    </div>
+                                                </div>
                                             </div>
                                             <div className="clearfix"></div>
                                         </div>
@@ -142,7 +156,8 @@ class Add_product extends Component {
                                                 <div>
                                                     <p className="upload-img">Загрузите логотип</p>
                                                     <label className="btn" htmlFor="my-file-selector1">
-                                                        <input id="my-file-selector1" name="littleImg" type="file" accept=".jpg" onChange={this.showImg}/>
+                                                        <input id="my-file-selector1" name="littleImg" type="file"
+                                                               accept=".jpg" onChange={this.showImg}/>
                                                         Загрузить
                                                     </label>
                                                     <p className="img-size">Минимум 350х350 пикс. в формате jpg
@@ -156,7 +171,8 @@ class Add_product extends Component {
                                                 <div>
                                                     <p className="upload-img">Загрузите логотип</p>
                                                     <label className="btn" htmlFor="my-file-selector2">
-                                                        <input id="my-file-selector2" name="largeImg" type="file" accept=".jpg" onChange={this.showImg}/>
+                                                        <input id="my-file-selector2" name="largeImg" type="file"
+                                                               accept=".jpg" onChange={this.showImg}/>
                                                         Загрузить
                                                     </label>
                                                     <p className="img-size">Минимум 640х355 пикс. в формате jpg</p>
