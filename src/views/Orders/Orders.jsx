@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ChartistGraph from 'react-chartist';
+import Order from './Order';
 import {Grid, Row, Col} from 'react-bootstrap';
 
 
@@ -19,15 +19,25 @@ import {
     legendBar
 } from 'variables/Variables.jsx';
 
-class Dashboard extends Component {
+class Orders extends Component {
     constructor (props) {
         super(props);
+        this.moreDetails = this.moreDetails.bind(this);
+        this.state = {
+            openOrderMoreDetails: false
+        }
     }
 
-    componentDidMount () {
+    moreDetails () {
+
     }
 
     render() {
+        if (this.state.clickedOreder) {
+            return (
+                <Order />
+            )
+        }
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
@@ -149,4 +159,4 @@ class Dashboard extends Component {
     }
 }
 
-export default Dashboard;
+export default Orders;

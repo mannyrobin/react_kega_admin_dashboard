@@ -37,7 +37,7 @@ class Sidebar extends Component{
             } else {
                 this.setState(() => ({dropDowned: false, dropDownArrow: false}))
             }
-            window.location.href = "http://localhost:3000/#/all_categories";
+            window.location.href = "http://localhost:3000/#/add_product";
         } else if (!child) {
             this.setState(() => ({dropDowned: false, dropDownArrow: false}))
         }
@@ -69,7 +69,7 @@ class Sidebar extends Component{
                                             <NavLink to={prop.path} className={`nav-link ${prop.dropDown && this.state.dropDownArrow ? "open" : ""}`}
                                                      activeClassName="active">
                                                 <i className={prop.icon}></i>
-                                                <p>{prop.name}</p>
+                                                <p className="circle-number">{prop.name}<span>11</span></p>
                                             </NavLink>
                                         </li>
                                     );

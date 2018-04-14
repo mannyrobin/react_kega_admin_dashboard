@@ -8,7 +8,7 @@ import {UserCard} from 'components/UserCard/UserCard.jsx';
 
 import avatar from "assets/img/faces/face-3.jpg";
 
-class Add_product extends Component {
+class AddProduct extends Component {
     constructor(props) {
         super(props);
         this.showImg = this.showImg.bind(this);
@@ -195,4 +195,4 @@ class Add_product extends Component {
     }
 }
 
-export default Add_product;
+export default AddProduct;

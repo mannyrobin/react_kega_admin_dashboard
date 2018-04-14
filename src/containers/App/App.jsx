@@ -1,19 +1,9 @@
 import React, { Component } from 'react';
-import {
-    Route,
-    Switch,
-    Redirect
-} from 'react-router-dom';
-import NotificationSystem from 'react-notification-system';
-
+import { Route, Switch, Redirect } from 'react-router-dom';
 import Header from 'components/Header/Header';
-import Footer from 'components/Footer/Footer';
 import Sidebar from 'components/Sidebar/Sidebar';
-
-import {style} from "variables/Variables.jsx";
-
 import appRoutes from 'routes/routes.jsx';
-import Login from "../../views/Typography/Login";
+import Login from "../../views/Login/Login";
 
 class App extends Component {
     constructor(props){
@@ -35,14 +25,13 @@ class App extends Component {
     }
 
     render() {
-        // if (!this.state.loggedIn) {
-        //     return (
-        //         <Login doLogin={this.doLogin}/>
-        //     )
-        // }
+        if (!this.state.loggedIn) {
+            return (
+                <Login doLogin={this.doLogin}/>
+            )
+        }
         return (
             <div className="wrapper">
-                <NotificationSystem ref="notificationSystem" style={style}/>
                 <Sidebar {...this.props} doLogOut={this.doLogOut} />
                 <div id="main-panel" className="main-panel">
                     <Header {...this.props} props={this.state.props}/>

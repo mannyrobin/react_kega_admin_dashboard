@@ -16,8 +16,11 @@ class CorpProfile extends Component {
         this.showImg = this.showImg.bind(this);
         this.removeFilial = this.removeFilial.bind(this);
         this.addFilial = this.addFilial.bind(this);
+        this.openMapPopup = this.openMapPopup.bind(this);
+        this.closeMapPopup = this.closeMapPopup.bind(this);
         this.state = {
-            filials: [1, 2, 3]
+            filials: [1, 2, 3],
+            openMap: false
         }
     }
 
@@ -50,6 +53,14 @@ class CorpProfile extends Component {
             };
             img.src = _URL.createObjectURL(files[0]);
         }
+    }
+
+    openMapPopup () {
+        this.setState({openMap: true})
+    }
+
+    closeMapPopup () {
+        this.setState({openMap: false})
     }
 
     addFilial () {
@@ -155,7 +166,7 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((item) => {
-                                                return <Filials item={item} addFilial={this.addFilial} removeFilial={this.removeFilial} key={item} />
+                                                return <Filials item={item} addFilial={this.addFilial} removeFilial={this.removeFilial} key={item} openMapPopup={this.openMapPopup} closeMapPopup={this.closeMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>

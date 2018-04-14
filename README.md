@@ -94,7 +94,7 @@ Light Bootstrap Dashboard React
     │   └── Variables.jsx
     └── views
         ├── Dashboard
-        │   └── Dashboard.jsx
+        │   └── Orders.jsx
         ├── Icons
         │   └── Icons.jsx
         ├── Maps

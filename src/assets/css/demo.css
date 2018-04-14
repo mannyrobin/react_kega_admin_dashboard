@@ -7,6 +7,10 @@ body {
     font-family: "Helvetica Neue";
 }*/
 
+a, img, button {
+    outline: 0;
+}
+
 #main-panel > .content {
     padding-top: 61px;
 }
@@ -729,12 +733,12 @@ li.submenu a:after {
 
 .icon-notification {
     background: url("../img/notification.png") 50% 50% no-repeat;
-    padding: 10px;
+    padding: 10px 15px;
 }
 
 .icon-messages {
     background: url("../img/message.png") 50% 50% no-repeat;
-    padding: 10px;
+    padding: 10px 15px;
 }
 
 .user-icon {
@@ -756,6 +760,10 @@ li.submenu a:after {
 .user-icon a,
 .user-icon a > span {
     color: #fff;
+}
+
+.user-icon a > span {
+    padding-left: 12px;
 }
 
 li.user-icon > a {
@@ -800,6 +808,52 @@ li.user-icon > a {
 
 .add-product-block .add-product-sub-block1 .col-md-custom {
     margin-top: 21px;
+}
+
+.header-bottom .nav.navbar-nav.navbar-right {
+    display: flex;
+}
+
+p.circle-number {
+    position: relative;
+
+}
+
+p.circle-number > span,
+.circle-number a > span {
+    display: block;
+    position: absolute;
+    top: -7px;
+    right: -11px;
+    background: #f9b852;
+    min-width: 9px;
+    min-height: 13px;
+    line-height: 11px;
+    text-align: center;
+    padding: 2px;
+    color: #000;
+    font-size: 10px;
+    border-radius: 50%;
+
+}
+
+p.circle-number > span {
+    font-size: 12px;
+    min-width: 20px;
+    height: 18px;
+    top: 5px;
+    right: 10px;
+    line-height: 19px;
+    padding: 0 2px;
+    border-radius: 7px;
+}
+
+body .sidebar .nav li > a {
+    opacity: .7;
+}
+
+.sidebar .nav li > a.active {
+    opacity: 1;
 }
 
 @media  screen and (max-width: 1500px) {
@@ -1321,7 +1375,7 @@ input:focus {
     margin-top: 20px;
 }
 
- .sidebar .nav li > a{
+.sidebar .nav li > a{
     color: #FFFFFF;
     margin: 5px 15px;
     opacity: .86;
@@ -1344,8 +1398,7 @@ input:focus {
     margin: 0;
     line-height: 30px;
     font-size: 12px;
-    font-weight: 600;
-    text-transform: uppercase;
+    font-weight: 400;
 }
 
 .sidebar .nav .caret {
@@ -2701,7 +2754,7 @@ fieldset[disabled] .btn-neutral.active {
 }
 
 .navbar .navbar-nav > li > a {
-    padding: 10px 15px;
+    padding: 0 15px 0 0;
     margin: 10px 3px;
     position: relative;
 }
