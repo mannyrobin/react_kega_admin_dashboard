@@ -35,11 +35,11 @@ class App extends Component {
     }
 
     render() {
-        if (!this.state.loggedIn) {
-            return (
-                <Login doLogin={this.doLogin}/>
-            )
-        }
+        // if (!this.state.loggedIn) {
+        //     return (
+        //         <Login doLogin={this.doLogin}/>
+        //     )
+        // }
         return (
             <div className="wrapper">
                 <NotificationSystem ref="notificationSystem" style={style}/>

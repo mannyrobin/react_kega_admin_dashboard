@@ -16,7 +16,7 @@ class Sidebar extends Component{
         this.state = {
             width: window.innerWidth,
             dropDowned: false,
-            dropDownArrow: true
+            dropDownArrow: false
         }
     }
     activeRoute(routeName) {
@@ -29,18 +29,21 @@ class Sidebar extends Component{
         this.updateDimensions();
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
-    dropDown () {
-        debugger
-        if (!this.state.dropDowned) {
+    dropDown (dropDown, child) {
+
+        if (dropDown) {
+            if (!this.state.dropDowned) {
+                this.setState(() => ({dropDowned: true, dropDownArrow: true}))
+            } else {
+                this.setState(() => ({dropDowned: false, dropDownArrow: false}))
+            }
             window.location.href = "http://localhost:3000/#/all_categories";
+        } else if (!child) {
+            this.setState(() => ({dropDowned: false, dropDownArrow: false}))
         }
-        this.setState(() => ({dropDowned: !this.state.dropDowned, dropDownArrow: !this.state.dropDownArrow}))
     }
     render(){
-        const sidebarBackground = {
-            backgroundImage: 'url(' + imagine + ')'
-        };
-
+        let self = this;
         return (
             <div id="sidebar" className="sidebar" data-color="black" data-image={imagine}>
                 <div className="sidebar-background"></div>
@@ -62,9 +65,9 @@ class Sidebar extends Component{
                                     }
                                     return (
                                         <li className={prop.child ? "submenu" : ""}
-                                            key={index} onClick={() => {this.dropDown}}>
-                                            <NavLink to={prop.path} className="nav-link"
-                                                     activeClassName={`${prop.dropDown && this.state.dropDownArrow ? "open" : ""} active`}>
+                                            key={index} onClick={() => {self.dropDown(prop.dropDown, prop.child)}}>
+                                            <NavLink to={prop.path} className={`nav-link ${prop.dropDown && this.state.dropDownArrow ? "open" : ""}`}
+                                                     activeClassName="active">
                                                 <i className={prop.icon}></i>
                                                 <p>{prop.name}</p>
                                             </NavLink>

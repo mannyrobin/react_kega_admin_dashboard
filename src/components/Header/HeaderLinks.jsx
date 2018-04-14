@@ -12,13 +12,13 @@ class HeaderLinks extends Component{
     }
 
     render(){
-        console.log("}}}}}}}}}}}}}}}}}}}}}}}}}  ", this.props.props)
+        // console.log("}}}}}}}}}}}}}}}}}}}}}}}}}  ", this.props.props)
         return (
             <div className="header-bottom">
                 <Nav pullRight>
                     <NavItem eventKey={1} href="#" className="icon-notification"></NavItem>
                     <NavItem eventKey={1} href="#" className="icon-messages"></NavItem>
-                    <NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url}/><span>Vansdorf</span></NavItem>
+                    {/*<NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url}/><span>Vansdorf</span></NavItem>*/}
                 </Nav>
             </div>
         );

@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import Add_Category from "../Add_category/Add_Category";
+import Add_Category from "../Add_product/Add_product";
 import All_Products from "../All_products/All_Products";
 
 import {Card} from 'components/Card/Card.jsx';

@@ -7,13 +7,14 @@ import Icons from 'views/Icons/Icons';
 import Maps from 'views/Maps/Maps';
 import Notifications from 'views/Notifications/Notifications';
 import ProductCat from 'views/product_cat/ProductCat';
+import Add_product from 'views/Add_product/Add_product';
 import CorpProfile from "../views/CorpProfile/CorpProfile";
 
 const appRoutes = [
     { path: "/dashboard", name: "Заказы", icon: "orders", component: Dashboard },
     { path: "/menu", name: "Меню и товары", dropDown: true, openDropDown: true, icon: "pe-7s-plus" },
     { path: "/all_categories", child: true, name: "все товары", component: ProductCat },
-    { path: "/add_category", child: true, name: "добавить товар", component: ProductCat },
+    { path: "/add_category", child: true, name: "добавить товар", component: Add_product },
     { path: "/category", child: true, name: "категории товаров", component: ProductCat },
     // { path: "/goods-requests", name: "Заявки на товары", icon: "pe-7s-news-paper", component: Login },
     // { path: "/req-stats", name: "Статистика запросв", icon: "pe-7s-news-paper", component: Login },

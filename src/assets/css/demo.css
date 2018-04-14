@@ -658,8 +658,8 @@ td > a {
     background: url("../img/arr-right.png") center no-repeat;
 }
 
-.sidebar .nav li > a.open:after {
-    background: url("../img/arr-bottom.png") center no-repeat;
+.sidebar .sidebar-wrapper .nav li > a.open:after {
+    background: url("../img/arr-bottom.png") center no-repeat !important;
 }
 
 .card > .header {
@@ -760,6 +760,90 @@ li.submenu a:after {
 
 li.user-icon > a {
     margin: 0!important;
+}
+
+/* Add Product */
+.add-product-block input,
+.add-product-block select {
+    height: 40px;
+}
+.add-product-block .add-product-sub-block2 select,
+.add-product-block .add-product-sub-block2 input,
+.add-product-block .add-product-sub-block1 select,
+.add-product-block .add-product-sub-block1 input {
+    float:left;
+    width: calc(100% - 140px);
+}
+
+.add-product-block .add-product-sub-block2 {
+    padding: 0 7px 0 8px;
+}
+
+.add-product-block .add-product-sub-block2 .form-group {
+    width: calc(25% - 20px);
+    float: left;
+    margin: 0 10px;
+}
+
+.add-product-block .add-product-sub-block2 > .form-group:first-child,
+.add-product-block .add-product-sub-block2 > .form-group:nth-last-child(2) {
+    margin: 0;
+    width: 25%;
+}
+
+.add-product-block .add-product-sub-block1 .form-group label,
+.add-product-block .add-product-sub-block2 .form-group label {
+    float: left;
+    width: 140px;
+}
+
+@media  screen and (max-width: 1500px) {
+    /* Add Product */
+
+    .add-product-block .add-product-sub-block1 select,
+    .add-product-block .add-product-sub-block1 input,
+    .add-product-block .add-product-sub-block2 select,
+    .add-product-block .add-product-sub-block2 input{
+        width: calc(100% - 120px);
+    }
+
+    .add-product-block .add-product-sub-block1 .form-group label,
+    .add-product-block .add-product-sub-block2 .form-group label {
+        width: 120px;
+    }
+}
+
+@media  screen and (max-width: 1300px) {
+    /* Add Product */
+
+    .add-product-block .add-product-sub-block1 select,
+    .add-product-block .add-product-sub-block1 input,
+    .add-product-block .add-product-sub-block2 select,
+    .add-product-block .add-product-sub-block2 input{
+        width: calc(100% - 80px);
+    }
+
+    .add-product-block .add-product-sub-block1 .form-group label,
+    .add-product-block .add-product-sub-block2 .form-group label {
+        width: 80px;
+    }
+}
+
+
+@media  screen and (max-width: 1100px) {
+    /* Add Product */
+
+    .add-product-block .add-product-sub-block1 select,
+    .add-product-block .add-product-sub-block1 input,
+    .add-product-block .add-product-sub-block2 select,
+    .add-product-block .add-product-sub-block2 input{
+        width: calc(100% - 70px);
+    }
+
+    .add-product-block .add-product-sub-block1 .form-group label,
+    .add-product-block .add-product-sub-block2 .form-group label {
+        width: 70px;
+    }
 }
 
 @media screen and (min-width: 992px) {
