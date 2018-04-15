@@ -7,6 +7,7 @@ import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
 import {UserCard} from 'components/UserCard/UserCard.jsx';
 
 import avatar from "assets/img/faces/face-3.jpg";
+import ChooseFilials from "../ChooseFilials/ChooseFilials";
 
 class AddProduct extends Component {
     constructor(props) {
@@ -64,22 +65,11 @@ class AddProduct extends Component {
     }
 
     render() {
+        console.log(":::::::::::::::::::::::::  ", this.props)
         return (
             <div className="content">
                 <Grid fluid>
-                    <h2 className="custom-header-h2 custom-dashboard-header">
-                        <span>ДОБАВЛЕНИЕ ТОВАРА</span>
-                        <div className="custom-select col-md-4">
-                            <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
-                            <select className="form-control col-md-7" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                        <div className="clearfix"></div>
-                    </h2>
+                    <ChooseFilials props={this.props.props} />
                     <Row>
                         <Col md={12}>
                             <Card

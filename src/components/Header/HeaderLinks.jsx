@@ -14,9 +14,9 @@ class HeaderLinks extends Component{
         return (
             <div className="header-bottom">
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="#" className="icon-notification circle-number"><span>11</span></NavItem>
-                    <NavItem eventKey={1} href="#" className="icon-messages circle-number"><span>11</span></NavItem>
-                    <NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url}/><span>Vansdorf</span></NavItem>
+                    <NavItem eventKey={1} href="#" className="icon-notification circle-number"><span>{this.props.props.data.notification_count && this.props.props.data.notification_count}</span></NavItem>
+                    <NavItem eventKey={1} href="#" className="icon-messages circle-number"><span>{this.props.props.data.message_count && this.props.props.data.message_count}</span></NavItem>
+                    <NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props.props.data.name && this.props.props.data.name}</span></NavItem>
                 </Nav>
             </div>
         );

@@ -4,6 +4,7 @@ import Header from 'components/Header/Header';
 import Sidebar from 'components/Sidebar/Sidebar';
 import appRoutes from 'routes/routes.jsx';
 import Login from "../../views/Login/Login";
+import ChooseFilials from "../../views/ChooseFilials/ChooseFilials";
 
 class App extends Component {
     constructor(props){
@@ -55,7 +56,10 @@ class App extends Component {
                                         <Redirect from={prop.path} to={prop.to} key={key}/>
                                     );
                                 return (
-                                    <Route path={prop.path} component={prop.component} key={key}  />
+                                    <Route path={prop.path} component={() => {
+                                        return <prop.component props={this.state.props} />
+                                    }
+                                    } key={key} />
                                 );
                             })
                         }

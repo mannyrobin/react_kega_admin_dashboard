@@ -1,39 +1,34 @@
 import React, {Component} from 'react';
 import Order from './Order';
-import {Grid, Row, Col} from 'react-bootstrap';
-
-
-import {Card} from 'components/Card/Card.jsx';
-import {StatsCard} from 'components/StatsCard/StatsCard.jsx';
-import {Tasks} from 'components/Tasks/Tasks.jsx';
-import {
-    dataPie,
-    legendPie,
-    dataSales,
-    optionsSales,
-    responsiveSales,
-    legendSales,
-    dataBar,
-    optionsBar,
-    responsiveBar,
-    legendBar
-} from 'variables/Variables.jsx';
+import Info from './Info';
+import { Grid } from 'react-bootstrap';
+import ChooseFilials from "../ChooseFilials/ChooseFilials";
 
 class Orders extends Component {
     constructor (props) {
         super(props);
         this.moreDetails = this.moreDetails.bind(this);
         this.state = {
-            openOrderMoreDetails: false
+            openOrderMoreDetails: false,
+            info: [],
+            pages: []
         }
     }
 
     moreDetails () {
+        this.setState({openOrderMoreDetails: true});
+    }
 
+    componentDidMount () {
+        let pages = [];
+        for (let i = 0; i < parseInt(this.props.props.data.arr.length / 15); ++i) {
+            pages.push(1)
+        }
+        this.setState({pages: pages})
     }
 
     render() {
-        if (this.state.clickedOreder) {
+        if (this.state.openOrderMoreDetails) {
             return (
                 <Order />
             )
@@ -41,19 +36,7 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <h2 className="custom-header-h2 custom-dashboard-header">
-                        <span>ЗАКАЗЫ</span>
-                        <div className="custom-select col-md-4">
-                            <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
-                            <select className="form-control col-md-7" id="sel1">
-                                {/*{this.props.props.data.arr && this.props.props.data.arr.map(item => {*/}
-                                    {/*console.log("?????????????????  ", item)*/}
-                                    {/*return <option key={item.sub_market_id}>{item.sub_market_name}</option>*/}
-                                {/*})}*/}
-                            </select>
-                        </div>
-                        <div className="clearfix"></div>
-                    </h2>
+                    <ChooseFilials props={this.props.props} />
                     <div className="orders-block">
                         <div className="col-md-7">
                             <button type="button" className="btn btn-default active">новые заказы</button>
@@ -91,68 +74,23 @@ class Orders extends Component {
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>
-                                        <select className="form-control new-order">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </td>
-                                    <td><a href="#">Подробнее</a></td>
-                                </tr>
-                                <tr>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>
-                                        <select className="form-control processing">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </td>
-                                    <td><a href="#">Подробнее</a></td>
-                                </tr>
-                                <tr>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>John</td>
-                                    <td>
-                                        <select className="form-control delivery">
-                                            <option>1</option>
-                                            <option>2</option>
-                                            <option>3</option>
-                                            <option>4</option>
-                                        </select>
-                                    </td>
-                                    <td><a href="#">Подробнее</a></td>
-                                </tr>
+                                {
+                                    this.state.info.map(item => {
+                                        <Info item={item} moreDetails={this.moreDetails}/>
+                                    })
+                                }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <div>
-                        <div className="pagination-block">
-                            <a className="active" href="#">1</a>
-                            <a href="#">2</a>
-                            <a href="#">3</a>
-                        </div>
-                    </div>
+                            <div>
+                                <div className="pagination-block">
+                                    <a className="active" href="#">1</a>
+                                    <a href="#">2</a>
+                                    <a href="#">3</a>
+                                </div>
+                            </div>
+
                 </Grid>
             </div>
         );

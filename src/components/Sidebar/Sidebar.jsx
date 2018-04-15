@@ -30,7 +30,6 @@ class Sidebar extends Component{
         window.addEventListener("resize", this.updateDimensions.bind(this));
     }
     dropDown (dropDown, child) {
-
         if (dropDown) {
             if (!this.state.dropDowned) {
                 this.setState(() => ({dropDowned: true, dropDownArrow: true}))
@@ -69,7 +68,7 @@ class Sidebar extends Component{
                                             <NavLink to={prop.path} className={`nav-link ${prop.dropDown && this.state.dropDownArrow ? "open" : ""}`}
                                                      activeClassName="active">
                                                 <i className={prop.icon}></i>
-                                                <p className="circle-number">{prop.name}<span>11</span></p>
+                                                <p className={`${prop.count ? "circle-number" : ""}`}>{prop.name}{prop.count ? <span>11</span> : null}</p>
                                             </NavLink>
                                         </li>
                                     );

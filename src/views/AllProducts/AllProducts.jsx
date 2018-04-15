@@ -3,25 +3,18 @@ import {Grid, Row, Col, Table} from 'react-bootstrap';
 
 import Card from 'components/Card/Card.jsx';
 import {thArray, tdArray} from 'variables/Variables.jsx';
+import ChooseFilials from "../ChooseFilials/ChooseFilials";
 
 class AllProducts extends Component {
+    constructor (props) {
+        super(props);
+    }
+
     render() {
         return (
             <div className="content">
                 <Grid fluid>
-                    <h2 className="custom-header-h2 custom-dashboard-header">
-                        <span>ВСЕ ТОВАРЫ</span>
-                        <div className="custom-select col-md-4">
-                            <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
-                            <select className="form-control col-md-7" id="sel1">
-                                <option>1</option>
-                                <option>2</option>
-                                <option>3</option>
-                                <option>4</option>
-                            </select>
-                        </div>
-                        <div className="clearfix"></div>
-                    </h2>
+                    <ChooseFilials props={this.props.props} />
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
                             <label className="col-md-4" htmlFor="usr">
@@ -69,6 +62,7 @@ class AllProducts extends Component {
                                     <td className="prod-img" width="62px"><div></div></td>
                                     <td>Наименование</td>
                                     <td>Категория</td>
+                                    <td>Запасы</td>
                                     <td className="select-td">
                                         <select className="form-control">
                                             <option>Нет в наличии</option>
@@ -77,13 +71,13 @@ class AllProducts extends Component {
                                             <option>4</option>
                                         </select>
                                     </td>
-                                    <td>Запасы</td>
                                     <td><span className="edit"></span><span className="trash pe-7s-trash"></span></td>
                                 </tr>
                                 <tr>
                                     <td className="prod-img" width="62px"><div className="prod-img"></div></td>
                                     <td>Наименование</td>
                                     <td>Категория</td>
+                                    <td>Запасы</td>
                                     <td className="select-td">
                                         <select className="form-control">
                                             <option>В наличии</option>
@@ -92,7 +86,6 @@ class AllProducts extends Component {
                                             <option>4</option>
                                         </select>
                                     </td>
-                                    <td>Запасы</td>
                                     <td><span className="edit"></span><span className="trash pe-7s-trash"></span></td>
                                 </tr>
                                 </tbody>

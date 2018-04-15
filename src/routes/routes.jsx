@@ -4,10 +4,11 @@ import ProductCat from 'views/productCat/ProductCat';
 import AllProducts from 'views/AllProducts/AllProducts';
 import AddProduct from 'views/AddProduct/AddProduct';
 import CorpProfile from "../views/CorpProfile/CorpProfile";
+import Menu from "../views/Menu/Menu";
 
 const appRoutes = [
-    { path: "/orders", name: "Заказы", icon: "orders", component: Orders },
-    { path: "/menu", name: "Меню и товары", dropDown: true, openDropDown: true, icon: "pe-7s-plus"},
+    { path: "/orders", name: "Заказы", icon: "orders", count: true, component: Orders },
+    { path: "/menu", name: "Меню и товары", dropDown: true, openDropDown: true, icon: "pe-7s-plus", component: Menu},
     { path: "/add_product", child: true, name: "Добавить товар", component: AddProduct },
     { path: "/all_products", child: true, name: "Все товары", component: AllProducts },
     { path: "/category", child: true, name: "Категории товаров", component: ProductCat },

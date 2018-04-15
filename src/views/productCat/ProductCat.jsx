@@ -8,6 +8,7 @@ import {UserCard} from 'components/UserCard/UserCard.jsx';
 import Button from 'elements/CustomButton/CustomButton.jsx';
 
 import avatar from "assets/img/faces/face-3.jpg";
+import ChooseFilials from "../ChooseFilials/ChooseFilials";
 
 class Contact extends Component {
     constructor(props) {
@@ -20,19 +21,7 @@ class Contact extends Component {
                 <Grid fluid>
                     <Row>
                         <div className="col-md-12 add-stock">
-                            <h2 className="custom-header-h2 custom-dashboard-header">
-                                <span>КАТЕГОРИИ</span>
-                                <div className="custom-select col-md-4">
-                                    <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
-                                    <select className="form-control col-md-7" id="sel1">
-                                        <option>1</option>
-                                        <option>2</option>
-                                        <option>3</option>
-                                        <option>4</option>
-                                    </select>
-                                </div>
-                                <div className="clearfix"></div>
-                            </h2>
+                            <ChooseFilials props={this.props.props} />
                             <div className="col-md-5">
                                 <h3>Категории</h3>
                                 <div className="name-and-edit-prod">

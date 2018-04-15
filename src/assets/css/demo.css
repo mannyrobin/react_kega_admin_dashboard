@@ -856,6 +856,62 @@ body .sidebar .nav li > a {
     opacity: 1;
 }
 
+/* main-order-page */
+
+.main-order-page h3 {
+    font-size: 14px;
+    color: #333;
+    padding: 14px 15px;
+    background-color: #e5e5e5;
+}
+
+.main-order-page p {
+    font-size: 14px;
+    color: #a6a6a6;
+}
+
+.main-order-page span {
+    color: #333;
+}
+
+.main-order-page .col-md-12.order-composition,
+.main-order-page .add-new-cat .col-md-12 {
+    padding: 0 15px;
+}
+
+.order-composition .product-row {
+    height: 63px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    border-bottom: 1px solid #f0f0f0;
+}
+
+.order-composition .product-row span {
+    font-size: 16px;
+    color: #333;
+}
+
+.order-composition .product-row .prod-name {
+    font-weight: 600;
+}
+
+.order-composition .product-row:last-child {
+    margin-bottom: 25px;
+}
+
+.order-composition .product-row .prod-img-block {
+    display: inline-block;
+    width: 63px;
+    max-height: 63px;
+    overflow: hidden;
+}
+
+.order-composition .product-row .prod-img-block img {
+    max-width: 63px;
+    max-height: 63px;
+}
+
 @media  screen and (max-width: 1500px) {
     /* Add Product */
 

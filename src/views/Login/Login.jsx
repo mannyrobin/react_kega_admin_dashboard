@@ -32,7 +32,7 @@ class Login extends Component {
             responseType:'json'
         }).then(function(response) {
             console.log(">>>>>>>>>>>>>>  ", response);
-            if (!response.data.error) {
+            if (response.data && !response.data.error) {
                 self.props.doLogin(response);
             } else {
                 alert("wrong username or password");
@@ -67,6 +67,7 @@ class Login extends Component {
                 <div>Loading...</div>
             )
         }
+        let network = null;
         return (
             <div className="content main-page">
                 <div className="bg-block"></div>
@@ -76,7 +77,7 @@ class Login extends Component {
                         <div className="custom-select-spec">
                             <select ref="select">
                                 {Object.keys(this.state.response.data).map(item => {
-                                    let network = this.state.response.data[item];
+                                    network = this.state.response.data[item];
                                     return <option key={network.id}>{network.name}</option>
                                 })}
                             </select>
