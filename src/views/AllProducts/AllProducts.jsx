@@ -14,11 +14,11 @@ class AllProducts extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials props={this.props.props} />
+                    <ChooseFilials title="Все товары " props={this.props.props} />
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
                             <label className="col-md-4" htmlFor="usr">
-                                Выберите дату:
+                                фильтр товаров:
                             </label>
                             <div className="col-md-4">
                                 <select className="form-control processing">
@@ -38,13 +38,12 @@ class AllProducts extends Component {
                             </div>
                         </div>
                         <div className="search-block col-md-6">
-                            <input className="form-control" type="search"/>
+                            <input className="form-control" placeholder="Поиск по товаром" type="search"/>
                             <button className="btn btn-default">Найти</button>
                         </div>
                         <div className="clearfix"></div>
                     </div>
                     <Col md={12}>
-
                         <div className="custom-table product-table">
                             <Table striped hover>
                                 <thead>

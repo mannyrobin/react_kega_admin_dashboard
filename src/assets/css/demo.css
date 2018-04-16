@@ -140,6 +140,10 @@ a, img {
     padding-left: 6px;
 }
 
+.uppercase {
+    text-transform: uppercase;
+}
+
 .check-in-map,
 .add-input {
     float: right;
@@ -622,6 +626,7 @@ td > a {
 .add-stock h3 {
     margin: 23px 0 0 0;
     font-size: 14px;
+    font-weight: 700;
     color: #333333;
     padding: 14px 20px;
     background-color: #e5e5e5;
@@ -3401,7 +3406,6 @@ fieldset[disabled] .btn-neutral.active {
 
 .card label {
     font-size: 12px;
-    text-transform: uppercase;
 }
 
 .card .title {

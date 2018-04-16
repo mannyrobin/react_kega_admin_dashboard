@@ -81,6 +81,12 @@ class Contact extends Component {
                 <Grid fluid>
                     <Row>
                         <Col md={12}>
+                            <div className="content">
+                                <h2 className="custom-header-h2 custom-dashboard-header">
+                                    <span className="uppercase">Связь с разработчиками </span>
+                                    <div className="clearfix"></div>
+                                </h2>
+                            </div>
                             <Card
                                 title="если у вас есть вопросы свяжитесь с нами через фирму ниже"
                                 content={

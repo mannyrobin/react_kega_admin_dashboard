@@ -3,6 +3,7 @@ import Order from './Order';
 import Info from './Info';
 import { Grid } from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
+import {NavLink} from "react-router-dom";
 
 class Orders extends Component {
     constructor (props) {
@@ -11,7 +12,7 @@ class Orders extends Component {
         this.state = {
             openOrderMoreDetails: false,
             info: [],
-            pages: []
+            pages: [1,2]
         }
     }
 
@@ -20,11 +21,11 @@ class Orders extends Component {
     }
 
     componentDidMount () {
-        let pages = [];
-        for (let i = 0; i < parseInt(this.props.props.data.arr.length / 15); ++i) {
-            pages.push(1)
-        }
-        this.setState({pages: pages})
+        // let pages = [];
+        // for (let i = 0; i < parseInt(this.props.props.data.arr.length / 15); ++i) {
+        //     pages.push(i)
+        // }
+        // this.setState({pages: pages})
     }
 
     render() {
@@ -36,13 +37,13 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <ChooseFilials props={this.props.props} />
+                    <ChooseFilials title="Заказы" props={this.props.props} />
                     <div className="orders-block">
                         <div className="col-md-7">
-                            <button type="button" className="btn btn-default active">новые заказы</button>
-                            <button type="button" className="btn btn-default">выполненные заказы</button>
-                            <button type="button" className="btn btn-default">выполняется доставка</button>
-                            <button type="button" className="btn btn-default">в обработке</button>
+                            <button type="button" className="btn btn-default active">Новые заказы</button>
+                            <button type="button" className="btn btn-default">Выполненные заказы</button>
+                            <button type="button" className="btn btn-default">Выполняется доставка</button>
+                            <button type="button" className="btn btn-default">В обработке</button>
                         </div>
                         <div className="choose-date col-md-5">
                             <label className="col-md-4" htmlFor="usr">
@@ -63,14 +64,14 @@ class Orders extends Component {
                             <table className="table">
                                 <thead>
                                 <tr>
-                                    <th>номер заказа</th>
-                                    <th>время поступления</th>
-                                    <th>время доставки</th>
-                                    <th>сумма</th>
-                                    <th>имя</th>
-                                    <th>тел. заказчика</th>
-                                    <th>статус</th>
-                                    <th>подробности</th>
+                                    <th>Номер заказа</th>
+                                    <th>Время поступления</th>
+                                    <th>Время доставки</th>
+                                    <th>Сумма</th>
+                                    <th>Имя</th>
+                                    <th>Тел. заказчика</th>
+                                    <th>Статус</th>
+                                    <th>Подробности</th>
                                 </tr>
                                 </thead>
                                 <tbody>
@@ -83,14 +84,15 @@ class Orders extends Component {
                             </table>
                         </div>
                     </div>
-                            <div>
-                                <div className="pagination-block">
-                                    <a className="active" href="#">1</a>
-                                    <a href="#">2</a>
-                                    <a href="#">3</a>
-                                </div>
-                            </div>
-
+                    <div>
+                        <div className="pagination-block">
+                            {
+                                this.state.pages.map(item => {
+                                    return <a className="active" href="#" >{item}</a>;
+                                })
+                            }
+                        </div>
+                    </div>
                 </Grid>
             </div>
         );

@@ -10,7 +10,7 @@ class ChooseFilials extends Component {
         return (
             <div className="content">
                 <h2 className="custom-header-h2 custom-dashboard-header">
-                    <span>ВСЕ ТОВАРЫ</span>
+                    <span className="uppercase">{this.props.title}</span>
                     <div className="custom-select col-md-4">
                         <label className="col-md-5" htmlFor="sel1">Выберите филиал:</label>
                         <select className="form-control col-md-7" id="sel1">

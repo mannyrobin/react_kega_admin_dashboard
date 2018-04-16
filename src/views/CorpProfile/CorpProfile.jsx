@@ -9,11 +9,11 @@ import Button from 'elements/CustomButton/CustomButton.jsx';
 import  Filials from "./Filials";
 
 import avatar from "assets/img/faces/face-3.jpg";
+import UploadFile from "../UploadFile/UploadFile";
 
 class CorpProfile extends Component {
     constructor (props) {
         super(props);
-        this.showImg = this.showImg.bind(this);
         this.removeFilial = this.removeFilial.bind(this);
         this.addFilial = this.addFilial.bind(this);
         this.openMapPopup = this.openMapPopup.bind(this);
@@ -21,37 +21,6 @@ class CorpProfile extends Component {
         this.state = {
             filials: [1, 2, 3],
             openMap: false
-        }
-    }
-
-    showImg(e) {
-        let _URL = window.URL || window.webkitURL,
-            currentImg = e.target.name,
-            files = e.target.files;
-        if (files && files[0]) {
-
-
-            let img = new Image();
-            img.onload = function() {
-                let reader = new FileReader(),
-                    imgWidth = this.width,
-                    imgHeight = this.height,
-                    maxImgWidth = currentImg === "littleImg" ? 355 : (currentImg === "largeImg") ? 640 : null,
-                    maxImgheight = currentImg === "littleImg" ? 355 : (currentImg === "largeImg") ? 640 : null
-
-                reader.onload = function(event) {
-                    if (imgWidth < maxImgWidth || imgHeight < maxImgheight) {
-                        alert("dimensions error");
-                        return
-                    }
-                    document.getElementById(currentImg).src = event.target.result;
-                };
-                reader.readAsDataURL(files[0]);
-            };
-            img.onerror = function() {
-                alert( "not a valid file: " + files[0].type);
-            };
-            img.src = _URL.createObjectURL(files[0]);
         }
     }
 
@@ -80,6 +49,12 @@ class CorpProfile extends Component {
                 <Grid fluid>
                     <Row>
                         <Col md={12}>
+                            <div className="content">
+                                <h2 className="custom-header-h2 custom-dashboard-header">
+                                    <span className="uppercase">Профиль компании</span>
+                                    <div className="clearfix"></div>
+                                </h2>
+                            </div>
                             <Card
                                 title="Профиль компании"
                                 content={
@@ -129,37 +104,7 @@ class CorpProfile extends Component {
                                             </button>
                                         </div>
                                         <hr className="custom-hr"/>
-                                        <div className="visual custom-block">
-                                            <h4>визуальный образ</h4>
-                                            <Col md={6}>
-                                                <div className="img-block">
-                                                    <img id="littleImg"/>
-                                                </div>
-                                                <div>
-                                                    <p className="upload-img">Загрузите логотип</p>
-                                                    <label className="btn" htmlFor="my-file-selector1">
-                                                        <input id="my-file-selector1" name="littleImg" type="file" accept=".jpg" onChange={this.showImg}/>
-                                                        Загрузить
-                                                    </label>
-                                                    <p className="img-size">Минимум 350х350 пикс. в формате jpg
-                                                        с использованием однотонного фона</p>
-                                                </div>
-                                            </Col>
-                                            <Col md={6}>
-                                                <div className="img-block img-large">
-                                                    <img id="largeImg"/>
-                                                </div>
-                                                <div>
-                                                    <p className="upload-img">Загрузите логотип</p>
-                                                    <label className="btn" htmlFor="my-file-selector2">
-                                                        <input id="my-file-selector2" name="largeImg" type="file" accept=".jpg" onChange={this.showImg}/>
-                                                        Загрузить
-                                                    </label>
-                                                    <p className="img-size">Минимум 640х355 пикс. в формате jpg</p>
-                                                </div>
-                                            </Col>
-                                            <div className="clearfix"></div>
-                                        </div>
+                                        <UploadFile littleImgWidth={350} littleImgHeight={350} largeImgWidth={640} largeImgHeight={355} />
                                         <hr className="custom-hr"/>
                                         <div className="custom-block filials">
                                             <h4>Филиалы</h4>
