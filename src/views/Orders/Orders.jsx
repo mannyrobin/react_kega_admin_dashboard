@@ -1,9 +1,9 @@
-import React, {Component} from 'react';
+import React, { Component } from 'react';
+import { Grid } from 'react-bootstrap';
 import Order from './Order';
 import Info from './Info';
-import { Grid } from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
-import {NavLink} from "react-router-dom";
+import Pagination from "../pagination/Pagination";
 
 class Orders extends Component {
     constructor (props) {
@@ -11,8 +11,7 @@ class Orders extends Component {
         this.moreDetails = this.moreDetails.bind(this);
         this.state = {
             openOrderMoreDetails: false,
-            info: [],
-            pages: [1,2]
+            infos: []
         }
     }
 
@@ -20,12 +19,33 @@ class Orders extends Component {
         this.setState({openOrderMoreDetails: true});
     }
 
+    getCertainInfos (index, arr) {
+        let infoToShow = [];
+        if (!index) {
+            index = 0;
+        }
+        debugger
+        for (let i = index * 15; i <= (index + 1) * 15; ++i) {
+            infoToShow.push(!arr ? this.props.props.data.arr[i] : arr[i]);
+        }
+        infoToShow.length && arr && this.setState({infos: infoToShow});
+    }
+
+    getPaginationInfo () {
+        let pages = [];
+        for (let i = 0; i <= Math.ceil(45 / 15); ++i) {
+            pages.push(i)
+        }
+
+        return pages;
+    }
+
     componentDidMount () {
-        // let pages = [];
-        // for (let i = 0; i < parseInt(this.props.props.data.arr.length / 15); ++i) {
-        //     pages.push(i)
-        // }
-        // this.setState({pages: pages})
+        this.getCertainInfos();
+    }
+
+    componentWillUnmount () {
+        localStorage.removeItem("pageNumber");
     }
 
     render() {
@@ -76,7 +96,7 @@ class Orders extends Component {
                                 </thead>
                                 <tbody>
                                 {
-                                    this.state.info.map(item => {
+                                    this.state.infos.map(item => {
                                         <Info item={item} moreDetails={this.moreDetails}/>
                                     })
                                 }
@@ -84,15 +104,7 @@ class Orders extends Component {
                             </table>
                         </div>
                     </div>
-                    <div>
-                        <div className="pagination-block">
-                            {
-                                this.state.pages.map(item => {
-                                    return <a className="active" href="#" >{item}</a>;
-                                })
-                            }
-                        </div>
-                    </div>
+                    <Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} />
                 </Grid>
             </div>
         );

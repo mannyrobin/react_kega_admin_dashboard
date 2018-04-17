@@ -37,9 +37,7 @@ class Login extends Component {
             } else {
                 alert("wrong username or password");
             }
-        }).catch(function(error){
-            throw new Error(error);
-        });
+        })
     }
 
     componentDidMount () {

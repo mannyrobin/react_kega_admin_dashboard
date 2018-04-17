@@ -27,7 +27,7 @@ class Sidebar extends Component{
     }
     componentDidMount() {
         this.updateDimensions();
-        window.addEventListener("resize", this.updateDimensions.bind(this));
+        // window.addEventListener("resize", this.updateDimensions.bind(this));
     }
     dropDown (dropDown, child) {
         if (dropDown) {
