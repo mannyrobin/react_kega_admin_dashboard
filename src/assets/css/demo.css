@@ -808,7 +808,14 @@ li.user-icon > a {
 .add-product-block .add-product-sub-block1 .form-group label,
 .add-product-block .add-product-sub-block2 .form-group label {
     float: left;
-    width: 140px;
+    width: 130px;
+    margin-right: 10px;
+    text-align: right;
+}
+.add-product-block .add-product-sub-block1 .form-group.first label,
+.add-product-block .add-product-sub-block2 .form-group.first label {
+    margin-right: 0;
+    text-align: left;
 }
 
 .add-product-block .add-product-sub-block1 .col-md-custom {
@@ -929,7 +936,7 @@ body .sidebar .nav li > a {
 
     .add-product-block .add-product-sub-block1 .form-group label,
     .add-product-block .add-product-sub-block2 .form-group label {
-        width: 120px;
+        width: 110px;
     }
 }
 
@@ -945,7 +952,7 @@ body .sidebar .nav li > a {
 
     .add-product-block .add-product-sub-block1 .form-group label,
     .add-product-block .add-product-sub-block2 .form-group label {
-        width: 80px;
+        width: 70px;
     }
 }
 
@@ -962,7 +969,7 @@ body .sidebar .nav li > a {
 
     .add-product-block .add-product-sub-block1 .form-group label,
     .add-product-block .add-product-sub-block2 .form-group label {
-        width: 70px;
+        width: 60px;
     }
 }
 
@@ -1030,7 +1037,7 @@ body .sidebar .nav li > a {
 
     .add-product-block .add-product-sub-block1 .form-group label,
     .add-product-block .add-product-sub-block2 .form-group label {
-        width: 120px;
+        width: 110px;
     }
 
     .custom-contact .custom-block {

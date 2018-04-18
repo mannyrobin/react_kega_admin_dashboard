@@ -49,7 +49,7 @@ class AddProduct extends Component {
                                             <h4>Данные организации</h4>
                                             <div className="add-product-sub-block1">
                                                 <Col md={7}>
-                                                    <div className="form-group">
+                                                    <div className="form-group first">
                                                         <label htmlFor="usr">Наименование товара:</label>
                                                         <input type="text" className="form-control" id="usr"/>
                                                     </div>
@@ -68,7 +68,7 @@ class AddProduct extends Component {
                                                 <div className="clearfix"></div>
                                             </div>
                                             <div className="add-product-sub-block2">
-                                                <div className="form-group">
+                                                <div className="form-group first">
                                                     <label htmlFor="count-or-weight">Введите кол-во</label>
                                                     <input className="form-control" type="text" name="count-or-weight"
                                                            placeholder="Вес или объем" id="count-or-weight"/>
@@ -97,7 +97,7 @@ class AddProduct extends Component {
                                             </div>
                                             <div className="add-product-sub-block1">
                                                 <div className="col-md-custom">
-                                                    <div className="form-group">
+                                                    <div className="form-group first">
                                                         <label htmlFor="usr">Описание товара:</label>
                                                         <input type="text" className="form-control" placeholder="Введите описание" id="usr"/>
                                                     </div>
