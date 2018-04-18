@@ -19,7 +19,7 @@ class Orders extends Component {
         this.setState({openOrderMoreDetails: true});
     }
 
-    getCertainInfos (index, arr) {
+    getCertainInfos (index, arr, self) {
         let infoToShow = [];
         if (!index) {
             index = 0;
@@ -28,7 +28,7 @@ class Orders extends Component {
         for (let i = index * 15; i <= (index + 1) * 15; ++i) {
             infoToShow.push(!arr ? this.props.props.data.arr[i] : arr[i]);
         }
-        infoToShow.length && arr && this.setState({infos: infoToShow});
+        infoToShow.length && arr && (self ? self.setState({infos: infoToShow}) : this.setState({infos: infoToShow}));
     }
 
     getPaginationInfo () {
@@ -104,7 +104,7 @@ class Orders extends Component {
                             </table>
                         </div>
                     </div>
-                    <Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} />
+                    <Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} self={this} />
                 </Grid>
             </div>
         );

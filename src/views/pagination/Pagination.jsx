@@ -9,13 +9,16 @@ class Pagination extends Component {
         return (e) => {
             e.preventDefault();
             localStorage.setItem('pageNumber', number);
-            this.props.getCertainInfos(number, this.props.arr);
+            this.props.getCertainInfos(number, this.props.arr, this.props.self);
         }
     }
 
     render() {
         let self = this,
             pageNumber = parseInt(localStorage.getItem('pageNumber'));
+        if (!pageNumber) {
+            pageNumber = 0;
+        }
         return (
             <div>
                 <div className="pagination-block">

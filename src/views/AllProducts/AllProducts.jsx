@@ -1,13 +1,37 @@
 import React, {Component} from 'react';
 import {Grid, Row, Col, Table} from 'react-bootstrap';
-
-import Card from 'components/Card/Card.jsx';
-import {thArray, tdArray} from 'variables/Variables.jsx';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
+import Pagination from "../pagination/Pagination";
 
 class AllProducts extends Component {
     constructor (props) {
         super(props);
+        this.getCertainInfos = this.getCertainInfos.bind(this);
+    }
+
+    getCertainInfos (index, arr, self) {
+        let infoToShow = [];
+        if (!index) {
+            index = 0;
+        }
+        debugger
+        for (let i = index * 15; i <= (index + 1) * 15; ++i) {
+            infoToShow.push(!arr ? this.props.props.data.arr[i] : arr[i]);
+        }
+        infoToShow.length && arr && (self ? self.setState({infos: infoToShow}) : this.setState({infos: infoToShow}));
+    }
+
+    getPaginationInfo () {
+        let pages = [];
+        for (let i = 0; i <= Math.ceil(45 / 15); ++i) {
+            pages.push(i)
+        }
+
+        return pages;
+    }
+
+    componentWillUnmount () {
+        localStorage.removeItem("pageNumber");
     }
 
     render() {
@@ -92,11 +116,7 @@ class AllProducts extends Component {
                         </div>
                     </Col>
                     <div className="clearfix"></div>
-                    <div className="pagination-block">
-                        <a className="active" href="#">1</a>
-                        <a href="#">2</a>
-                        <a href="#">3</a>
-                    </div>
+                   <Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} self={this} />
                 </Grid>
             </div>
         );
