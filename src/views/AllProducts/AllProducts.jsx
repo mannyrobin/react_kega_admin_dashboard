@@ -2,10 +2,15 @@ import React, {Component} from 'react';
 import {Grid, Row, Col, Table} from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import Pagination from "../pagination/Pagination";
+import querystring from "querystring";
+import axios from "axios/index";
 
 class AllProducts extends Component {
     constructor (props) {
         super(props);
+        this.state = {
+            response: null
+        };
         this.getCertainInfos = this.getCertainInfos.bind(this);
     }
 
@@ -30,11 +35,37 @@ class AllProducts extends Component {
         return pages;
     }
 
+    componentDidMount () {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
+            data: querystring.stringify({
+                request_code: 3,
+                sub_market_id: 5
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            debugger
+            self.setState({response: response})
+        }).catch(function(error){
+            throw new Error(error);
+        });
+    }
+
     componentWillUnmount () {
         localStorage.removeItem("pageNumber");
     }
 
     render() {
+        if (!this.state.response) {
+            return (
+                <div>Loading...</div>
+            )
+        }
         return (
             <div className="content">
                 <Grid fluid>
