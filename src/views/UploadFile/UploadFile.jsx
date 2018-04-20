@@ -25,7 +25,6 @@ class UploadFile extends Component {
                     maxImgheight = currentImg === "littleImg" ? props.littleImgHeight : (currentImg === "largeImg") ? props.largeImgHeight : null
 
                 reader.onload = function(event) {
-                    debugger
                     if (imgWidth < maxImgWidth || imgHeight < maxImgheight) {
                         alert("dimensions error");
                         return

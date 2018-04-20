@@ -24,7 +24,6 @@ class Orders extends Component {
         if (!index) {
             index = 0;
         }
-        debugger
         for (let i = index * 15; i <= (index + 1) * 15; ++i) {
             infoToShow.push(!arr ? this.props.props.data.arr[i] : arr[i]);
         }

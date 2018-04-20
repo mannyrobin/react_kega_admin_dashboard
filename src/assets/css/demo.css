@@ -481,10 +481,9 @@ td > a {
     padding: 0;
 }
 
-.product-table .prod-img div {
+.product-table .prod-img img {
     width: 62px;
     height: 62px;
-    background: url("../img/prod-img.jpg") 50% 50% / contain no-repeat;
 }
 
 .product-table tr td {

@@ -35,7 +35,6 @@ class Sidebar extends Component{
             } else {
                 this.setState(() => ({dropDowned: false, dropDownArrow: false}))
             }
-            debugger
             window.location.href = "http://localhost:3000/#/add_product";
         } else if (!child) {
             this.setState(() => ({dropDowned: false, dropDownArrow: false}))
