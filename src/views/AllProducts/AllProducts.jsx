@@ -27,96 +27,51 @@ class AllProducts extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i < Math.ceil(this.state.response.length / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state.response.data.length / 15); ++i) {
             pages.push(i)
         }
 
         return pages;
     }
 
+    changeItemStatus (item) {
+        return () => {
+            console.log(">>>>>>>>>>>>>>>>>>>>>>>  ", this.state.response.data.indexOf(item));
+            let changedResponse = this.state.response;
+            changedResponse.data[changedResponse.data.indexOf(item)].existing_status = (item.existing_status === "0" ? "1" : "0");
+            this.setState({response: changedResponse});
+
+        }
+    }
 
     componentDidMount () {
         let self = this;
-        let obj = {
-            lcohol_percent: "4.7",
-            capacity: "1",
-            category_id: "1",
-            category_name: "Разливное пиво",
-            country: "Россия",
-            cover_url: "http://u0419737.cp.regruhosting.ru/kega/files/item_covers/01.JPG",
-            description: "Светлый нефильтрованный лагер, с гармоничным солодовым вкусом и мягкой хмелевой горечью. Классика немецких традиций.",
-            existing_status: "0",
-            icon_url: "http://u0419737.cp.regruhosting.ru/kega/files/items/item02.JPG",
-            id: "12",
-            manufacturer: "Vansdorf",
-            market_id: "5",
-            name: "Helles",
-            price: "130"
-        };
-        let obj1 = {
-            lcohol_percent: "4.7",
-            capacity: "1",
-            category_id: "1",
-            category_name: "Разливное пиво",
-            country: "Россия",
-            cover_url: "http://u0419737.cp.regruhosting.ru/kega/files/item_covers/01.JPG",
-            description: "Светлый нефильтрованный лагер, с гармоничным солодовым вкусом и мягкой хмелевой горечью. Классика немецких традиций.",
-            existing_status: "0",
-            icon_url: "http://u0419737.cp.regruhosting.ru/kega/files/items/item02.JPG",
-            id: "12",
-            manufacturer: "Vansdorf",
-            market_id: "5",
-            name: "Helles",
-            price: "500000000"
-        };
-        let obj2 = {
-            lcohol_percent: "4.7",
-            capacity: "1",
-            category_id: "1",
-            category_name: "Разливное пиво",
-            country: "Россия",
-            cover_url: "http://u0419737.cp.regruhosting.ru/kega/files/item_covers/01.JPG",
-            description: "Светлый нефильтрованный лагер, с гармоничным солодовым вкусом и мягкой хмелевой горечью. Классика немецких традиций.",
-            existing_status: "0",
-            icon_url: "http://u0419737.cp.regruhosting.ru/kega/files/items/item02.JPG",
-            id: "12",
-            manufacturer: "Vansdorf",
-            market_id: "5",
-            name: "Helles",
-            price: "2222222222"
-        };
-        let arr = [];
-        arr.push(obj2);
-        for (let i = 0; i < 40; ++i) {
-            arr.push(obj);
-        }
-        arr.push(obj1);
-        this.setState({response: arr});
-        // axios({
-        //     method:'post',
-        //     url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
-        //     data: querystring.stringify({
-        //         request_code: 3,
-        //         sub_market_id: 5
-        //     }),
-        //     headers: {
-        //         'Content-type': 'application/x-www-form-urlencoded'
-        //     },
-        //     responseType:'json'
-        // }).then(function(response) {
-        //     debugger
-        //     self.setState({response: response})
-        // }).catch(function(error){
-        //     throw new Error(error);
-        // });
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
+            data: querystring.stringify({
+                request_code: 3,
+                sub_market_id: 5
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({response: response})
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     getInfoForCertainPage () {
         let certainPageInfo = [],
             pageNumber = parseInt(localStorage.getItem("pageNumber"));
-        debugger
+        if (!pageNumber) {
+            pageNumber = 0;
+        }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            this.state.response[i] && certainPageInfo.push(this.state.response[i]);
+            this.state.response.data[i] && certainPageInfo.push(this.state.response.data[i]);
         }
         return certainPageInfo;
     }
@@ -182,15 +137,15 @@ class AllProducts extends Component {
                                 {
                                     this.getInfoForCertainPage().map((item, index) => {
                                         return (
-                                            <tr className="no-in-stock">
+                                            <tr className="no-in-stock" key={index}>
                                                 <td className="prod-img" width="62px"><img src={item.icon_url}></img></td>
                                                 <td>{item.manufacturer} - {item.name}</td>
                                                 <td>{item.category_name}</td>
                                                 <td>{item.price}</td>
                                                 <td className="select-td">
-                                                    <select className="form-control">
-                                                        <option selected={item.existing_status === "0"}>Нет в наличии</option>
-                                                        <option selected={item.existing_status === "1"}>Есть в наличии</option>
+                                                    <select className="form-control" value={item.existing_status} onChange={this.changeItemStatus(item)}>
+                                                        <option value="0">Нет в наличии</option>
+                                                        <option value="1">Есть в наличии</option>
                                                     </select>
                                                 </td>
                                                 <td><span className="edit"></span><span className="trash pe-7s-trash"></span></td>
