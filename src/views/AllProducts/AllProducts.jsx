@@ -9,9 +9,11 @@ class AllProducts extends Component {
     constructor (props) {
         super(props);
         this.state = {
-            response: null
+            response: null,
+            filteredResponse: []
         };
         this.getCertainInfos = this.getCertainInfos.bind(this);
+        this.filterProducts = this.filterProducts.bind(this);
     }
 
     getCertainInfos (index, arr, self) {
@@ -34,9 +36,16 @@ class AllProducts extends Component {
         return pages;
     }
 
+    filterProducts () {
+        let flteredData = [];
+        if (this.refs.filter.value) {
+            flteredData = this.state.response.data.filter(item => item.name.toLowerCase().includes(this.refs.filter.value));
+        }
+        this.setState({filteredResponse: flteredData});
+    }
+
     changeItemStatus (item) {
         return () => {
-            console.log(">>>>>>>>>>>>>>>>>>>>>>>  ", this.state.response.data.indexOf(item));
             let changedResponse = this.state.response;
             changedResponse.data[changedResponse.data.indexOf(item)].existing_status = (item.existing_status === "0" ? "1" : "0");
             this.setState({response: changedResponse});
@@ -71,7 +80,13 @@ class AllProducts extends Component {
             pageNumber = 0;
         }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            this.state.response.data[i] && certainPageInfo.push(this.state.response.data[i]);
+            if (this.state.filteredResponse.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
+                if (this.state.filteredResponse[i]) {
+                    certainPageInfo.push(this.state.filteredResponse[i]);
+                }
+            } else if(this.state.response.data[i]) {
+                certainPageInfo.push(this.state.response.data[i]);
+            }
         }
         return certainPageInfo;
     }
@@ -86,7 +101,6 @@ class AllProducts extends Component {
                 <div>Loading...</div>
             )
         }
-        console.log("????????????????  ", this.getInfoForCertainPage());
         let paginationInfo = this.getPaginationInfo();
         return (
             <div className="content">
@@ -115,8 +129,8 @@ class AllProducts extends Component {
                             </div>
                         </div>
                         <div className="search-block col-md-6">
-                            <input className="form-control" placeholder="Поиск по товаром" type="search"/>
-                            <button className="btn btn-default">Найти</button>
+                            <input className="form-control" placeholder="Поиск по товаром" type="search" ref="filter"/>
+                            <button className="btn btn-default" onClick={this.filterProducts}>Найти</button>
                         </div>
                         <div className="clearfix"></div>
                     </div>

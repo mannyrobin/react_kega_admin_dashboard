@@ -31,7 +31,6 @@ class Login extends Component {
             }),
             responseType:'json'
         }).then(function(response) {
-            console.log(">>>>>>>>>>>>>>  ", response);
             if (response.data && !response.data.error) {
                 self.props.doLogin(response);
             } else {
