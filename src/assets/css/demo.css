@@ -498,6 +498,7 @@ td > a {
     font-size: 24px;
     color: #a6a6a6;
     padding-left: 19px;
+    cursor: pointer;
 }
 
 .edit {
@@ -505,6 +506,7 @@ td > a {
     width: 18px;
     height: 21px;
     background: url("../img/edit.png") 50% 50% / contain no-repeat;
+    cursor: pointer;
 }
 
 .product-table td select {
@@ -637,6 +639,78 @@ td > a {
 
 .name-and-edit-prod > span {
     font-size: 14px;
+    display: inline-block;
+}
+
+.name-and-edit-prod .prod-edit-name {
+    width: 40%;
+}
+
+.name-and-edit-prod .prod-edit-write {
+    width: 30%;
+}
+
+.popup-block {
+    position: absolute;
+    display: none;
+    width: 100%;
+    height: 100%;
+    top: 0;
+    left: 0;
+    z-index: 999;
+}
+
+.popup-block.open-popup {
+    display: block;
+}
+
+.popup-block:before {
+    content: "";
+    display: block;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.4);
+}
+
+.popup-inner {
+    position: fixed;
+    top: calc(50% - 250px);
+    left: calc(50% - 300px);
+    width: 600px;
+    height: 500px;
+    background-color: #fff;
+}
+
+.popup-inner-delete {
+    position: fixed;
+    top: calc(50% - 65px);
+    left: calc(50% - 160px);
+    width: 320px;
+    height: 130px;
+    padding: 20px;
+    text-align: center;
+    box-sizing: border-box;
+    background: #fff;
+}
+
+.popup-inner-delete p {
+    margin-bottom: 20px;
+}
+
+.popup-inner-delete button {
+    margin: 0 10px;
+    padding: 4px 8px;
+
+}
+
+.close-icon {
+    display: inline-block;
+    position: absolute;
+    top: 5px;
+    right: 10px;
+    cursor: pointer;
+    font-weight: 600;
+    font-size: 20px;
 }
 
 .name-and-edit-prod {
@@ -937,10 +1011,24 @@ body .sidebar .nav li > a {
     .add-product-block .add-product-sub-block2 .form-group label {
         width: 110px;
     }
+
+    .popup-inner {
+        top: calc(50% - 200px);
+        left: calc(50% - 250px);
+        width: 500px;
+        height: 400px;
+    }
 }
 
 @media  screen and (max-width: 1300px) {
     /* Add Product */
+
+    .popup-inner {
+        top: calc(50% - 150px);
+        left: calc(50% - 200px);
+        width: 400px;
+        height: 300px;
+    }
 
     .add-product-block .add-product-sub-block1 select,
     .add-product-block .add-product-sub-block1 input,
@@ -1005,6 +1093,13 @@ body .sidebar .nav li > a {
 @media screen and (max-width: 991px) {
     h2.custom-header-h2.custom-dashboard-header {
         padding: 0 15px;
+    }
+
+    .popup-inner {
+        top: 10%;
+        left: 10%;
+        width: 80%;
+        height: 80%;
     }
 
     /* Add Product */

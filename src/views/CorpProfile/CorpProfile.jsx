@@ -125,6 +125,11 @@ class CorpProfile extends Component {
                         </Col>
                     </Row>
                 </Grid>
+                <div className="popup-block">
+                    <div className="popup-inner">
+                        <span className="close-icon">x</span>
+                    </div>
+                </div>
             </div>
         );
     }

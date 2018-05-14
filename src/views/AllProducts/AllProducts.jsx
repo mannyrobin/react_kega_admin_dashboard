@@ -176,6 +176,14 @@ class AllProducts extends Component {
                         paginationInfo.length > 1 && <Pagination arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
                     }
                 </Grid>
+                <div className="popup-block">
+                    <div className="popup-inner-delete">
+                        <span className="close-icon">x</span>
+                        <p>Are you sure?</p>
+                        <button className="btn">Yes</button>
+                        <button className="btn">No</button>
+                    </div>
+                </div>
             </div>
         );
     }
