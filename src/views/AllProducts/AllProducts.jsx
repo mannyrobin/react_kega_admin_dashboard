@@ -10,10 +10,53 @@ class AllProducts extends Component {
         super(props);
         this.state = {
             response: null,
-            filteredResponse: []
+            filteredResponse: [],
+            itemToDelete: null
         };
         this.getCertainInfos = this.getCertainInfos.bind(this);
         this.filterProducts = this.filterProducts.bind(this);
+        this.openDeletePopup = this.openDeletePopup.bind(this);
+        this.closeDeletePopup = this.closeDeletePopup.bind(this);
+        this.deleteProduct = this.deleteProduct.bind(this);
+    }
+
+    openDeletePopup (id) {
+        return () => {
+            let popup = document.getElementById("delete-popup");
+            popup.className = popup.className + " open-popup";
+            this.setState({itemToDelete: id});
+        }
+    }
+
+    closeDeletePopup () {
+        let popup = document.getElementById("delete-popup");
+        popup.className = popup.className.replace(" open-popup", "");
+        this.setState({itemToDelete: null});
+    }
+
+    deleteProduct () {
+        let self = this,
+            id = this.state.itemToDelete;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
+            data: querystring.stringify({
+                item_id: id,
+                delete: 1
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            let products = self.state.response.filter(product => product.id !== id);
+            if (response.data.change_status) {
+                self.closeDeletePopup();
+                self.setState({response: products})
+            }
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     getCertainInfos (index, arr, self) {
@@ -29,7 +72,7 @@ class AllProducts extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i < Math.ceil(this.state.response.data.length / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state.response.length / 15); ++i) {
             pages.push(i)
         }
 
@@ -39,7 +82,9 @@ class AllProducts extends Component {
     filterProducts () {
         let flteredData = [];
         if (this.refs.filter.value) {
-            flteredData = this.state.response.data.filter(item => item.name.toLowerCase().includes(this.refs.filter.value));
+            flteredData = this.state.response.filter(item => (
+                item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
+            ));
         }
         this.setState({filteredResponse: flteredData});
     }
@@ -47,7 +92,7 @@ class AllProducts extends Component {
     changeItemStatus (item) {
         return () => {
             let changedResponse = this.state.response;
-            changedResponse.data[changedResponse.data.indexOf(item)].existing_status = (item.existing_status === "0" ? "1" : "0");
+            changedResponse[changedResponse.indexOf(item)].existing_status = (item.existing_status === "0" ? "1" : "0");
             this.setState({response: changedResponse});
 
         }
@@ -67,7 +112,7 @@ class AllProducts extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            self.setState({response: response})
+            self.setState({response: response.data})
         }).catch(function(error){
             throw new Error(error);
         });
@@ -84,8 +129,8 @@ class AllProducts extends Component {
                 if (this.state.filteredResponse[i]) {
                     certainPageInfo.push(this.state.filteredResponse[i]);
                 }
-            } else if(this.state.response.data[i]) {
-                certainPageInfo.push(this.state.response.data[i]);
+            } else if(this.state.response[i]) {
+                certainPageInfo.push(this.state.response[i]);
             }
         }
         return certainPageInfo;
@@ -129,7 +174,7 @@ class AllProducts extends Component {
                             </div>
                         </div>
                         <div className="search-block col-md-6">
-                            <input className="form-control" placeholder="Поиск по товаром" type="search" ref="filter"/>
+                            <input className="form-control" placeholder="Поиск по товаром" type="search" ref="filter" onChange={this.filterProducts}/>
                             <button className="btn btn-default" onClick={this.filterProducts}>Найти</button>
                         </div>
                         <div className="clearfix"></div>
@@ -162,7 +207,7 @@ class AllProducts extends Component {
                                                         <option value="1">Есть в наличии</option>
                                                     </select>
                                                 </td>
-                                                <td><span className="edit"></span><span className="trash pe-7s-trash"></span></td>
+                                                <td><span className="edit"></span><span className="trash pe-7s-trash" onClick={this.openDeletePopup(item.id)}></span></td>
                                             </tr>
                                         )
                                     })
@@ -176,12 +221,12 @@ class AllProducts extends Component {
                         paginationInfo.length > 1 && <Pagination arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
                     }
                 </Grid>
-                <div className="popup-block">
+                <div id="delete-popup" className="popup-block">
                     <div className="popup-inner-delete">
-                        <span className="close-icon">x</span>
-                        <p>Are you sure?</p>
-                        <button className="btn">Yes</button>
-                        <button className="btn">No</button>
+                        <span className="close-icon" onClick={this.closeDeletePopup}>x</span>
+                        <p>Удалить этот товар?</p>
+                        <button className="btn" onClick={this.deleteProduct}>Yes</button>
+                        <button className="btn" onClick={this.closeDeletePopup}>No</button>
                     </div>
                 </div>
             </div>
