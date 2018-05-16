@@ -14,8 +14,6 @@ class UploadFile extends Component {
             files = e.target.files,
             {props} = this;
         if (files && files[0]) {
-
-
             let img = new Image();
             img.onload = function() {
                 let reader = new FileReader(),

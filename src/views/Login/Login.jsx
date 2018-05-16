@@ -32,6 +32,7 @@ class Login extends Component {
             responseType:'json'
         }).then(function(response) {
             if (response.data && !response.data.error) {
+                localStorage.setItem('market_id', marketId);
                 self.props.doLogin(response);
             } else {
                 alert("wrong username or password");
@@ -52,6 +53,7 @@ class Login extends Component {
             },
             responseType:'json'
         }).then(function(response) {
+            console.log("***************************  ", response)
             self.setState({response: response})
         }).catch(function(error){
             throw new Error(error);

@@ -1,15 +1,13 @@
 import React, {Component} from 'react';
 import {Grid, Row, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
 import axios from "axios";
-
 import {Card} from 'components/Card/Card.jsx';
 import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
 import {UserCard} from 'components/UserCard/UserCard.jsx';
-import Button from 'elements/CustomButton/CustomButton.jsx';
 import  Filials from "./Filials";
-
-import avatar from "assets/img/faces/face-3.jpg";
 import UploadFile from "../UploadFile/UploadFile";
+import querystring from "querystring";
+import Maps from "../Maps/Maps";
 
 class CorpProfile extends Component {
     constructor (props) {
@@ -17,19 +15,51 @@ class CorpProfile extends Component {
         this.removeFilial = this.removeFilial.bind(this);
         this.addFilial = this.addFilial.bind(this);
         this.openMapPopup = this.openMapPopup.bind(this);
-        this.closeMapPopup = this.closeMapPopup.bind(this);
+        // this.sendFilialContactData = this.sendFilialContactData.bind(this);
         this.state = {
-            filials: [1, 2, 3],
-            openMap: false
+            filials: [],
+            mapParams: {
+                lat: null,
+                lng: null
+            }
         }
     }
 
-    openMapPopup () {
-        this.setState({openMap: true})
+    // sendFilialContactData () {
+    //     let self = this;
+    //     axios({
+    //         method:'post',
+    //         url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+    //         data: querystring.stringify({
+    //             request_code: 4,
+    //             market_id: localStorage.getItem('market_id'),
+    //             data: {
+    //
+    //             }
+    //         }),
+    //         headers: {
+    //             'Content-type': 'application/x-www-form-urlencoded'
+    //         },
+    //         responseType:'json'
+    //     }).then(function(response) {
+    //         self.setState({filials: response.data})
+    //         console.log(">>>>>>>>>>>>>>>11111111111111  ", response)
+    //     }).catch(function(error){
+    //         throw new Error(error);
+    //     });
+    // }
+
+    openMapPopup (params) {
+        return () => {
+            let popup = document.getElementById("map_popup");
+            popup.className = popup.className + " open-popup";
+            this.setState({mapParams: params});
+        };
     }
 
     closeMapPopup () {
-        this.setState({openMap: false})
+        let popup = document.getElementById("map_popup");
+        popup.className = popup.className.replace(" open-popup", "");
     }
 
     addFilial () {
@@ -38,12 +68,39 @@ class CorpProfile extends Component {
         this.setState({filials: newFilials})
     }
 
-    removeFilial (item) {
-        let index = this.state.filials.indexOf(item);
-        this.setState((state) => { filials: state.filials.splice(index, 1) });
+    removeFilial (id) {
+        this.setState((state) => { filials: state.filials.filter(filial => filial.id !== id) });
+    }
+
+    componentDidMount () {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 2,
+                market_id: localStorage.getItem('market_id')
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({filials: response.data})
+            console.log(">>>>>>>>>>>>>>>11111111111111  ", response)
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     render() {
+        if (!this.state.filials) {
+            return (
+                <div>
+                    ...Loading
+                </div>
+            )
+        }
         return (
             <div className="content">
                 <Grid fluid>
@@ -110,13 +167,13 @@ class CorpProfile extends Component {
                                             <h4>Филиалы</h4>
                                         </div>
                                         {
-                                            this.state.filials.map((item) => {
-                                                return <Filials item={item} addFilial={this.addFilial} removeFilial={this.removeFilial} key={item} openMapPopup={this.openMapPopup} closeMapPopup={this.closeMapPopup} />
+                                            this.state.filials.map((filial) => {
+                                                return <Filials filial={filial} removeFilial={this.removeFilial} key={filial.id} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
                                         <hr className="custom-hr"/>
-                                        <button type="submit" onClick={this.sendContactData}
+                                        <button type="submit" onClick={this.sendFilialContactData}
                                                 className="custom-violet-btn btn">Сохранить
                                         </button>
                                     </form>
@@ -125,9 +182,10 @@ class CorpProfile extends Component {
                         </Col>
                     </Row>
                 </Grid>
-                <div className="popup-block">
+                <div id="map_popup" className="popup-block">
                     <div className="popup-inner">
-                        <span className="close-icon">x</span>
+                        <span className="close-icon" onClick={this.closeMapPopup}>x</span>
+                        <Maps lat={this.state.mapParams.lat} lng={this.state.mapParams.lng} />
                     </div>
                 </div>
             </div>
