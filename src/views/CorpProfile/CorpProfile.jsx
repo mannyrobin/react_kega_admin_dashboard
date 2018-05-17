@@ -15,17 +15,28 @@ class CorpProfile extends Component {
         this.removeFilial = this.removeFilial.bind(this);
         this.addFilial = this.addFilial.bind(this);
         this.openMapPopup = this.openMapPopup.bind(this);
+        this.collectReqBody = this.collectReqBody.bind(this);
         // this.sendFilialContactData = this.sendFilialContactData.bind(this);
         this.state = {
             filials: [],
             mapParams: {
                 lat: null,
                 lng: null
-            }
+            },
+            reqBody: {}
         }
     }
 
-    // sendFilialContactData () {
+    collectReqBody (key) {
+        return (e) => {
+            let reqBody = this.state.reqBody;
+            reqBody[key] = e.target.value;
+            this.setState({reqBody: reqBody})
+        }
+    }
+
+    // sendFilialContactData (e) {
+    //     e.preventDefault();
     //     let self = this;
     //     axios({
     //         method:'post',
@@ -34,7 +45,12 @@ class CorpProfile extends Component {
     //             request_code: 4,
     //             market_id: localStorage.getItem('market_id'),
     //             data: {
-    //
+    //                 name: self.state.name,
+    //                 address: self.state.address,
+    //                 contact_name: self.state.contact_name,
+    //                 mobile_number: self.state.mobile_number,
+    //                 city: self.state.city,
+    //                 mail: self.state.mail,
     //             }
     //         }),
     //         headers: {
@@ -94,6 +110,7 @@ class CorpProfile extends Component {
     }
 
     render() {
+        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  ", this.state.reqBody)
         if (!this.state.filials) {
             return (
                 <div>
@@ -168,7 +185,7 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((filial) => {
-                                                return <Filials filial={filial} removeFilial={this.removeFilial} key={filial.id} openMapPopup={this.openMapPopup} />
+                                                return <Filials filial={filial} collectReqBody={this.collectReqBody} removeFilial={this.removeFilial} key={filial.id} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
