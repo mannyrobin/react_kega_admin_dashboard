@@ -16,6 +16,8 @@ class CorpProfile extends Component {
         this.addFilial = this.addFilial.bind(this);
         this.openMapPopup = this.openMapPopup.bind(this);
         this.collectReqBody = this.collectReqBody.bind(this);
+        this.closeRemoveFilialPopup = this.closeRemoveFilialPopup.bind(this);
+        this.openRemoveFilialPopup = this.openRemoveFilialPopup.bind(this);
         // this.sendFilialContactData = this.sendFilialContactData.bind(this);
         this.state = {
             filials: [],
@@ -23,8 +25,49 @@ class CorpProfile extends Component {
                 lat: null,
                 lng: null
             },
-            reqBody: {}
+            reqBody: {},
+            filialToDelete: null
         }
+    }
+
+    openRemoveFilialPopup (id) {
+        return () => {
+            let popup = document.getElementById("remove-filial-popup");
+            popup.className = popup.className + " open-popup";
+            this.setState({filialToDelete: id});
+        }
+    }
+
+    closeRemoveFilialPopup () {
+        let popup = document.getElementById("remove-filial-popup");
+        popup.className = popup.className.replace(" open-popup", "");
+        this.setState({filialToDelete: null});
+    }
+
+    removeFilial () {
+        let self = this,
+            id = this.state.filialToDelete;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                sub_market_id: id,
+                delete: 1
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            let filials = self.state.filials.filter(filial => filial.id !== id);
+            debugger
+            if (response.data.change_status) {
+                self.closeRemoveFilialPopup();
+                self.setState({filials: filials})
+            }
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     collectReqBody (key) {
@@ -82,10 +125,6 @@ class CorpProfile extends Component {
         let newFilials = this.state.filials;
         newFilials.push(newFilials.length + 1);
         this.setState({filials: newFilials})
-    }
-
-    removeFilial (id) {
-        this.setState((state) => { filials: state.filials.filter(filial => filial.id !== id) });
     }
 
     componentDidMount () {
@@ -185,7 +224,7 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((filial) => {
-                                                return <Filials filial={filial} collectReqBody={this.collectReqBody} removeFilial={this.removeFilial} key={filial.id} openMapPopup={this.openMapPopup} />
+                                                return <Filials filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} key={filial.id} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
@@ -203,6 +242,14 @@ class CorpProfile extends Component {
                     <div className="popup-inner">
                         <span className="close-icon" onClick={this.closeMapPopup}>x</span>
                         <Maps lat={this.state.mapParams.lat} lng={this.state.mapParams.lng} />
+                    </div>
+                </div>
+                <div id="remove-filial-popup" className="popup-block">
+                    <div className="popup-inner-delete">
+                        <span className="close-icon" onClick={this.closeRemoveFilialPopup}>x</span>
+                        <p>Удалить этот Филиал?</p>
+                        <button className="btn" onClick={this.removeFilial}>Да</button>
+                        <button className="btn" onClick={this.closeRemoveFilialPopup}>Нет</button>
                     </div>
                 </div>
             </div>

@@ -6,7 +6,7 @@ class Filials extends Component {
         return (
             <div className="custom-block filials">
                 <h4>
-                    <a className="remove-block"><i className="pe-7s-trash" onClick={() => {this.props.removeFilial(this.props.filial.id)}}></i></a>
+                    <a className="remove-block"><i className="pe-7s-trash" onClick={this.props.openRemoveFilialPopup(this.props.filial.id)}></i></a>
                 </h4>
                 <Col md={6}>
                     <div className="form-group">
