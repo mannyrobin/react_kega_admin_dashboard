@@ -17,8 +17,8 @@ class Filials extends Component {
                         <label className="col-md-4" htmlFor="sel1">Выберите город</label>
                         <select className="form-control col-md-8" value={this.props.filial.city_name} onChange={this.props.collectReqBody(this.props.filial.id, "city_name")} id="sel1">
                             {
-                                this.props.cities.map(city => {
-                                    return <option value={city}>{city}</option>;
+                                this.props.cities.map((city, index) => {
+                                    return <option value={city} key={index}>{city}</option>;
                                 })
                             }
                         </select>
