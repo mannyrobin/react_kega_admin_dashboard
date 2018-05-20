@@ -48,7 +48,6 @@ class Contact extends Component {
 
             responseType:'json'
         }).then(function(response) {
-            console.log(">>>>>>>>>>>>>>  ", response);
           })
         .catch(function(error){
             throw new Error(error);

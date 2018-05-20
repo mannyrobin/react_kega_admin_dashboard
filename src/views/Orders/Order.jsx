@@ -15,17 +15,14 @@ class Order extends Component {
     }
 
     sendContactData() {
-        console.log("111111111111111111")
         axios({
             method: 'get',
             url: 'https://jsonplaceholder.typicode.com/users',
             responseType: 'json'
         }).then(function (response) {
-            console.log(">>>>>>>>>>>>>>  ", response);
         })
-            .catch(function (error) {
-                console.log("++++++++++++++  ", error)
-            })
+        .catch(function (error) {
+        })
     }
 
     render() {

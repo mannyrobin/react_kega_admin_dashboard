@@ -11,35 +11,36 @@ class Filials extends Component {
                 <Col md={6}>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="usr">Название филиала</label>
-                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody("name")} defaultValue={this.props.filial.name}/>
+                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody(this.props.filial.id, "name")} defaultValue={this.props.filial.name}/>
                     </div>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="sel1">Выберите город</label>
-                        <select className="form-control col-md-8" onClick={this.props.collectReqBody("city")} id="sel1">
-                            <option>1</option>
-                            <option>2</option>
-                            <option>3</option>
-                            <option>4</option>
+                        <select className="form-control col-md-8" value={this.props.filial.city_name} onChange={this.props.collectReqBody(this.props.filial.id, "city_name")} id="sel1">
+                            {
+                                this.props.cities.map(city => {
+                                    return <option value={city}>{city}</option>;
+                                })
+                            }
                         </select>
                     </div>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="usr">Адрес филиала</label>
-                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody("address")} defaultValue={this.props.filial.address}/>
+                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody(this.props.filial.id, "address")} defaultValue={this.props.filial.address}/>
                     </div>
                     <a className="check-in-map" onClick={this.props.openMapPopup({lat: this.props.filial.lattitude, lng: this.props.filial.longitude})} >проверить на карте</a>
                 </Col>
                 <Col md={6}>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="usr">Контактное лицо</label>
-                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody("contact_name")} defaultValue={this.props.filial.contact_name}/>
+                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody(this.props.filial.id, "contact_name")} defaultValue={this.props.filial.contact_name}/>
                     </div>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="usr">Контактный телефон</label>
-                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody("mobile_number")} defaultValue={this.props.filial.mobile_number}/>
+                        <input type="text" className="form-control col-md-8" id="usr" onChange={this.props.collectReqBody(this.props.filial.id, "mobile_number")} defaultValue={this.props.filial.mobile_number}/>
                     </div>
                     <div className="form-group">
                         <label className="col-md-4" htmlFor="usr">Контактный e-mail</label>
-                        <input type="text" className="form-control  col-md-8" id="usr" onChange={this.props.collectReqBody("mail")} defaultValue={this.props.filial.mail}/>
+                        <input type="text" className="form-control  col-md-8" id="usr" onChange={this.props.collectReqBody(this.props.filial.id, "mail")} defaultValue={this.props.filial.mail}/>
                     </div>
                 </Col>
                 <div className="clearfix"></div>

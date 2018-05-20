@@ -53,7 +53,6 @@ class Login extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            console.log("***************************  ", response)
             self.setState({response: response})
         }).catch(function(error){
             throw new Error(error);

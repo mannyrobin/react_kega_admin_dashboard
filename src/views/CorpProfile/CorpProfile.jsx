@@ -18,9 +18,10 @@ class CorpProfile extends Component {
         this.collectReqBody = this.collectReqBody.bind(this);
         this.closeRemoveFilialPopup = this.closeRemoveFilialPopup.bind(this);
         this.openRemoveFilialPopup = this.openRemoveFilialPopup.bind(this);
-        // this.sendFilialContactData = this.sendFilialContactData.bind(this);
+        this.sendFilialContactData = this.sendFilialContactData.bind(this);
         this.state = {
             filials: [],
+            cities: [],
             mapParams: {
                 lat: null,
                 lng: null
@@ -60,7 +61,6 @@ class CorpProfile extends Component {
             responseType:'json'
         }).then(function(response) {
             let filials = self.state.filials.filter(filial => filial.id !== id);
-            debugger
             if (response.data.change_status) {
                 self.closeRemoveFilialPopup();
                 self.setState({filials: filials})
@@ -70,43 +70,28 @@ class CorpProfile extends Component {
         });
     }
 
-    collectReqBody (key) {
-        return (e) => {
-            let reqBody = this.state.reqBody;
-            reqBody[key] = e.target.value;
-            this.setState({reqBody: reqBody})
-        }
-    }
+    sendFilialContactData (e) {
+        e.preventDefault();
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 4,
+                market_id: localStorage.getItem('market_id'),
+                data: self.state.filials
 
-    // sendFilialContactData (e) {
-    //     e.preventDefault();
-    //     let self = this;
-    //     axios({
-    //         method:'post',
-    //         url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
-    //         data: querystring.stringify({
-    //             request_code: 4,
-    //             market_id: localStorage.getItem('market_id'),
-    //             data: {
-    //                 name: self.state.name,
-    //                 address: self.state.address,
-    //                 contact_name: self.state.contact_name,
-    //                 mobile_number: self.state.mobile_number,
-    //                 city: self.state.city,
-    //                 mail: self.state.mail,
-    //             }
-    //         }),
-    //         headers: {
-    //             'Content-type': 'application/x-www-form-urlencoded'
-    //         },
-    //         responseType:'json'
-    //     }).then(function(response) {
-    //         self.setState({filials: response.data})
-    //         console.log(">>>>>>>>>>>>>>>11111111111111  ", response)
-    //     }).catch(function(error){
-    //         throw new Error(error);
-    //     });
-    // }
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            // self.setState({filials: response.data})
+        }).catch(function(error){
+            throw new Error(error);
+        });
+    }
 
     openMapPopup (params) {
         return () => {
@@ -127,6 +112,18 @@ class CorpProfile extends Component {
         this.setState({filials: newFilials})
     }
 
+    collectReqBody (filialId, key) {
+        return (e) => {
+            let filials = this.state.filials;
+            filials.map(filial => {
+                if (filial.id === filialId) {
+                    filial[key] = e.target.value;
+                }
+            });
+            this.setState({filials: filials});
+        }
+    }
+
     componentDidMount () {
         let self = this;
         axios({
@@ -141,15 +138,18 @@ class CorpProfile extends Component {
             },
             responseType:'json'
         }).then(function(response) {
+            let cities = [];
+            response.data.map(filial => {
+                cities.push(filial.city_name);
+            });
             self.setState({filials: response.data})
-            console.log(">>>>>>>>>>>>>>>11111111111111  ", response)
+            self.setState({cities: cities});
         }).catch(function(error){
             throw new Error(error);
         });
     }
 
     render() {
-        console.log("%%%%%%%%%%%%%%%%%%%%%%%%%%%%%  ", this.state.reqBody)
         if (!this.state.filials) {
             return (
                 <div>
@@ -224,7 +224,7 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((filial) => {
-                                                return <Filials filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} key={filial.id} openMapPopup={this.openMapPopup} />
+                                                return <Filials changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} key={filial.id} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
