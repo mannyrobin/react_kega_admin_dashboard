@@ -1,11 +1,6 @@
 import React, {Component} from 'react';
-import { Grid } from 'react-bootstrap';
 
 class ChooseFilials extends Component {
-    constructor (props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="content">

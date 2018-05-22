@@ -1,12 +1,7 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
-import axios from "axios";
+import {Grid, Row, Col } from 'react-bootstrap';
 
 import {Card} from 'components/Card/Card.jsx';
-import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
-import {UserCard} from 'components/UserCard/UserCard.jsx';
-
-import avatar from "assets/img/faces/face-3.jpg";
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import UploadFile from "../UploadFile/UploadFile";
 

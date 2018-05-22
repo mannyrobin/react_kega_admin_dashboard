@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Table} from 'react-bootstrap';
+import {Grid, Col, Table} from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import Pagination from "../pagination/Pagination";
 import querystring from "querystring";

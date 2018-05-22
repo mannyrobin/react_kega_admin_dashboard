@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, Table} from 'react-bootstrap';
-import {thArray, tdArray} from 'variables/Variables.jsx';
+import { Col } from 'react-bootstrap';
 
 class UploadFile extends Component {
     constructor (props) {

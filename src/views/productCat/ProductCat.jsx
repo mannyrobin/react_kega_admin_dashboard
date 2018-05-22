@@ -3,10 +3,6 @@ import {Grid, Row} from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 
 class Contact extends Component {
-    constructor(props) {
-        super(props);
-    }
-
     render() {
         return (
             <div className="content">

@@ -1,7 +1,6 @@
 import React, {Component} from 'react';
 import axios from "axios";
 import querystring from "querystring";
-import Dashboard from "../Orders/Orders";
 
 class Login extends Component {
     constructor (props) {

@@ -96,7 +96,7 @@ class Orders extends Component {
                                 <tbody>
                                 {
                                     this.state.infos.map(item => {
-                                        <Info item={item} moreDetails={this.moreDetails}/>
+                                        return <Info item={item} moreDetails={this.moreDetails}/>
                                     })
                                 }
                                 </tbody>

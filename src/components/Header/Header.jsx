@@ -3,13 +3,7 @@ import { Navbar } from 'react-bootstrap';
 
 import HeaderLinks from './HeaderLinks.jsx';
 
-import appRoutes from 'routes/routes.jsx';
-
 class Header extends Component{
-    constructor(props){
-        super(props);
-    }
-
     render(){
         return (
             <Navbar fluid>

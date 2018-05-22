@@ -1,10 +1,8 @@
 import React, {Component} from 'react';
-import {Grid, Row, Col, FormGroup, ControlLabel, FormControl} from 'react-bootstrap';
+import {Grid, Row, Col } from 'react-bootstrap';
 import axios from "axios";
 import {Card} from 'components/Card/Card.jsx';
-import {FormInputs} from 'components/FormInputs/FormInputs.jsx';
-import {UserCard} from 'components/UserCard/UserCard.jsx';
-import  Filials from "./Filials";
+import Filials from "./Filials";
 import UploadFile from "../UploadFile/UploadFile";
 import querystring from "querystring";
 import Maps from "../Maps/Maps";
@@ -117,7 +115,7 @@ class CorpProfile extends Component {
             let filials = this.state.filials;
             filials.map(filial => {
                 if (filial.id === filialId) {
-                    filial[key] = e.target.value;
+                    filial[key] = e.target.value
                 }
             });
             this.setState({filials: filials});

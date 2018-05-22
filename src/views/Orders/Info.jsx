@@ -1,12 +1,7 @@
 import React, { Component } from 'react';
 
 class Info extends Component {
-    constructor (props) {
-        super(props);
-    }
-
     render() {
-        let {item} = this.props.item;
         return (
             <tr>
                 <td>John</td>

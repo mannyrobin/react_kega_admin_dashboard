@@ -4,7 +4,6 @@ import Header from 'components/Header/Header';
 import Sidebar from 'components/Sidebar/Sidebar';
 import appRoutes from 'routes/routes.jsx';
 import Login from "../../views/Login/Login";
-import ChooseFilials from "../../views/ChooseFilials/ChooseFilials";
 
 class App extends Component {
     constructor(props){

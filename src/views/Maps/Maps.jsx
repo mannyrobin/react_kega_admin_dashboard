@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 import {Map, Marker, GoogleApiWrapper} from 'google-maps-react';
-import Geocode from "react-geocode";
 
 
 class Maps extends Component{
