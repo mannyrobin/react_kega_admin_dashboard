@@ -20,6 +20,17 @@ class AllProducts extends Component {
         this.deleteProduct = this.deleteProduct.bind(this);
     }
 
+    openEditPage (id) {
+        return () => {
+            this.state.response.filter(item => {
+                if (item.id === id) {
+                    localStorage.setItem("itemToEdit", JSON.stringify(item));
+                }
+            });
+            window.location.href = window.location.origin + "/#/add_product";
+        };
+    }
+
     openDeletePopup (id) {
         return () => {
             let popup = document.getElementById("delete-popup");
@@ -207,7 +218,7 @@ class AllProducts extends Component {
                                                         <option value="1">Есть в наличии</option>
                                                     </select>
                                                 </td>
-                                                <td><span className="edit"></span><span className="trash pe-7s-trash" onClick={this.openDeletePopup(item.id)}></span></td>
+                                                <td><span className="edit" onClick={this.openEditPage(item.id)}></span><span className="trash pe-7s-trash" onClick={this.openDeletePopup(item.id)}></span></td>
                                             </tr>
                                         )
                                     })

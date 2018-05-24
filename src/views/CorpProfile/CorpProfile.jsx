@@ -16,7 +16,7 @@ class CorpProfile extends Component {
         this.collectReqBody = this.collectReqBody.bind(this);
         this.closeRemoveFilialPopup = this.closeRemoveFilialPopup.bind(this);
         this.openRemoveFilialPopup = this.openRemoveFilialPopup.bind(this);
-        this.sendFilialContactData = this.sendFilialContactData.bind(this);
+        this.sendFilialData = this.sendFilialData.bind(this);
         this.state = {
             filials: [],
             cities: [],
@@ -68,7 +68,7 @@ class CorpProfile extends Component {
         });
     }
 
-    sendFilialContactData (e) {
+    sendFilialData (e) {
         e.preventDefault();
         let self = this;
         axios({
@@ -105,9 +105,11 @@ class CorpProfile extends Component {
     }
 
     addFilial () {
-        let newFilials = this.state.filials;
-        newFilials.push(newFilials.length + 1);
-        this.setState({filials: newFilials})
+        let filials = this.state.filials,
+            newFilialId = (parseInt(filials[filials.length - 1].id) + 1).toString(),
+            newFilial = {id: newFilialId};
+        filials.push(newFilial);
+        this.setState({filials: filials})
     }
 
     collectReqBody (filialId, key) {
@@ -136,12 +138,22 @@ class CorpProfile extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            let cities = [];
-            response.data.map(filial => {
-                cities.push(filial.city_name);
-            });
-            self.setState({filials: response.data})
-            self.setState({cities: cities});
+            self.setState({filials: response.data});
+        }).catch(function(error){
+            throw new Error(error);
+        });
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/index.php",
+            data: querystring.stringify({
+                city_list: 1
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({cities: response.data});
         }).catch(function(error){
             throw new Error(error);
         });
@@ -222,12 +234,12 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((filial) => {
-                                                return <Filials changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} key={filial.id} openMapPopup={this.openMapPopup} />
+                                                return <Filials key={filial.id} changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
                                         <hr className="custom-hr"/>
-                                        <button type="submit" onClick={this.sendFilialContactData}
+                                        <button type="submit" onClick={this.sendFilialData}
                                                 className="custom-violet-btn btn">Сохранить
                                         </button>
                                     </form>

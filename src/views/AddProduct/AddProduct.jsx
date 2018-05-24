@@ -8,27 +8,62 @@ import UploadFile from "../UploadFile/UploadFile";
 class AddProduct extends Component {
     constructor(props) {
         super(props);
-        this.removeFilial = this.removeFilial.bind(this);
-        this.addFilial = this.addFilial.bind(this);
+        this.sendProductData = this.sendProductData.bind(this);
+        this.collectReqBody = this.collectReqBody.bind(this);
         this.state = {
-            filials: [1, 2, 3]
+            reqBody: {}
         }
     }
 
-    addFilial() {
-        let newFilials = this.state.filials;
-        newFilials.push(newFilials.length + 1);
-        this.setState({filials: newFilials})
+    collectReqBody (key) {
+        return (e) => {
+            let reqBody = this.state.reqBody;
+            reqBody[key] = e.target.value;
+            this.setState({reqBody});
+        }
     }
 
-    removeFilial(item) {
-        let index = this.state.filials.indexOf(item);
-        this.setState((state) => {
-            filials: state.filials.splice(index, 1)
-        });
+    sendProductData (e) {
+        // e.preventDefault();
+        // let self = this;
+        // axios({
+        //     method:'post',
+        //     url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+        //     data: querystring.stringify({
+        //         request_code: 4,
+        //         market_id: localStorage.getItem('market_id'),
+        //         data: self.state.reqBody
+        //
+        //     }),
+        //     headers: {
+        //         'Content-type': 'application/x-www-form-urlencoded'
+        //     },
+        //     responseType:'json'
+        // }).then(function(response) {
+        //     // self.setState({filials: response.data})
+        // }).catch(function(error){
+        //     throw new Error(error);
+        // });
+    }
+
+    componentDidMount () {
+        let itemToEdit = JSON.parse(localStorage.getItem("itemToEdit"));
+        if (itemToEdit) {
+            this.setState({...itemToEdit});
+        }
+        this.setState({loaded: true});
+    }
+
+    componentWillUnmount () {
+        localStorage.removeItem("itemToEdit");
     }
 
     render() {
+        if (!this.state.loaded) {
+            return <div>
+                Loading...
+            </div>
+        }
         return (
             <div className="content">
                 <Grid fluid>
@@ -45,7 +80,7 @@ class AddProduct extends Component {
                                                 <Col md={7}>
                                                     <div className="form-group first">
                                                         <label htmlFor="usr">Наименование товара:</label>
-                                                        <input type="text" className="form-control" id="usr"/>
+                                                        <input type="text" onChange={this.collectReqBody("name")} defaultValue={this.state.name} className="form-control" id="usr"/>
                                                     </div>
                                                 </Col>
                                                 <Col md={5}>
@@ -65,7 +100,8 @@ class AddProduct extends Component {
                                                 <div className="form-group first">
                                                     <label htmlFor="count-or-weight">Введите кол-во</label>
                                                     <input className="form-control" type="text" name="count-or-weight"
-                                                           placeholder="Вес или объем" id="count-or-weight"/>
+                                                           placeholder="Вес или объем" onChange={this.collectReqBody("count")}
+                                                           id="count-or-weight"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="unit-measurements">Единица измерения</label>
@@ -79,12 +115,14 @@ class AddProduct extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="price">Цена, руб</label>
-                                                    <input className="form-control" type="text" name="price"
+                                                    <input className="form-control" type="text" name="price" onChange={this.collectReqBody("price")}
+                                                           defaultValue={this.state.price}
                                                            id="price"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="alcohol">Алкоголь, %</label>
-                                                    <input className="form-control" type="text" name="alcohol"
+                                                    <input className="form-control" type="text" name="alcohol" onChange={this.collectReqBody("alcohol_percent")}
+                                                           defaultValue={this.state.alcohol_percent}
                                                            id="alcohol"/>
                                                 </div>
                                                 <div className="clearfix"></div>
@@ -93,7 +131,9 @@ class AddProduct extends Component {
                                                 <div className="col-md-custom">
                                                     <div className="form-group first">
                                                         <label htmlFor="usr">Описание товара:</label>
-                                                        <input type="text" className="form-control" placeholder="Введите описание" id="usr"/>
+                                                        <input type="text" className="form-control" placeholder="Введите описание" onChange={this.collectReqBody("description")}
+                                                               defaultValue={this.state.description}
+                                                               id="usr"/>
                                                     </div>
                                                 </div>
                                             </div>
@@ -102,7 +142,7 @@ class AddProduct extends Component {
                                         <hr className="custom-hr"/>
                                         <UploadFile littleImgWidth={370} littleImgHeight={370} largeImgWidth={750} largeImgHeight={370} />
                                         <hr className="custom-hr"/>
-                                        <button type="submit" onClick={this.sendContactData}
+                                        <button type="submit" onClick={this.sendProductData}
                                                 className="custom-violet-btn btn">Сохранить
                                         </button>
                                     </form>
