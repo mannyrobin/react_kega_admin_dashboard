@@ -706,11 +706,12 @@ td > a {
 .close-icon {
     display: inline-block;
     position: absolute;
-    top: 5px;
-    right: 10px;
+    top: -5px;
+    right: 5px;
     cursor: pointer;
     font-weight: 600;
     font-size: 20px;
+    z-index: 9;
 }
 
 .name-and-edit-prod {
@@ -812,11 +813,13 @@ li.submenu a:after {
 .icon-notification {
     background: url("../img/notification.png") 50% 50% no-repeat;
     padding: 10px 15px;
+    position: relative;
 }
 
 .icon-messages {
     background: url("../img/message.png") 50% 50% no-repeat;
     padding: 10px 15px;
+    position: relative;
 }
 
 .user-icon {
@@ -896,6 +899,7 @@ li.user-icon > a {
 }
 
 .header-bottom .nav.navbar-nav.navbar-right {
+    position: relative;
     display: flex;
 }
 
@@ -995,6 +999,57 @@ body .sidebar .nav li > a {
 .order-composition .product-row .prod-img-block img {
     max-width: 63px;
     max-height: 63px;
+}
+
+.custom-drop-down {
+    position: absolute;
+    width: 90%;
+    height: 200px;
+    background: white;
+    transform: translateY(-200px);
+    border: 1px solid #ccc;
+    box-shadow: 0 1px 10px 0 rgba(0,0,0, 0.3);
+    transition: transform .3s;
+    overflow-y: auto;
+}
+.custom-drop-down.opened {
+    transform: translateY(68px);
+}
+.custom-drop-down-inner {
+    position: relative;
+    padding: 10px;
+    height: 100%;
+}
+
+.icon-notification.arrow:before,
+.icon-messages.arrow:before {
+    content: "";
+    display: block;
+    position: absolute;
+    width: 0;
+    height: 0;
+    border-left: 10px solid transparent;
+    border-right: 10px solid transparent;
+    border-top: 10px solid #261404;
+    top: 62px;
+    left: 16px;
+    z-index: 9;
+}
+
+.custom-drop-down-inner span {
+    cursor: pointer;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    max-width: 100%;
+    padding: 5px;
+    transition: background, color .15s;
+}
+
+
+
+.custom-drop-down-inner span:hover {
+    background-color: #e8b75a;
 }
 
 @media  screen and (max-width: 1500px) {
@@ -5197,12 +5252,6 @@ fieldset[disabled] .btn-neutral.active {
     font-size: 13px;
 }
 
-#map {
-    position: relative;
-    width: 100%;
-    height: calc(100% - 60px);
-}
-
 .places-buttons .btn {
     margin-bottom: 30px
 }
@@ -5694,7 +5743,7 @@ fieldset[disabled] .btn-neutral.active {
 #map {
     position: relative;
     width: 100%;
-    height: calc(100% - 60px);
+    height: 100%;
 }
 
 .places-buttons .btn {
