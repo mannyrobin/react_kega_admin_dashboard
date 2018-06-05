@@ -1001,6 +1001,10 @@ body .sidebar .nav li > a {
     max-height: 63px;
 }
 
+color-red {
+    color: red;
+}
+
 .custom-drop-down {
     position: absolute;
     width: 90%;

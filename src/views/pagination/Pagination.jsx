@@ -4,7 +4,7 @@ class Pagination extends Component {
     selectPage (number) {
         return (e) => {
             e.preventDefault();
-            localStorage.setItem('pageNumber', number);
+            localStorage.setItem(this.props.pageName, number);
             this.props.getCertainInfos(number, this.props.arr, this.props.self);
         }
     }

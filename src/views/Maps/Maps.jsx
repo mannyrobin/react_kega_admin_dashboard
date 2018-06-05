@@ -19,7 +19,7 @@ class Maps extends Component{
         return (
             <div id="map">
                 <Map
-                    style={{width: '100%', height: '100%', position: 'relative'}}
+                    style={{width: '100%', height: '100%', position: 'fixed'}}
                     google={this.props.google}
                     initialCenter={{
                         lat: this.props.lat,

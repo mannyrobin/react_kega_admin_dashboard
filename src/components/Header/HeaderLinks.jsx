@@ -7,25 +7,40 @@ class HeaderLinks extends Component{
         super(props);
     }
 
-    componentDidMount () {
+    toggleNotMesifications (className) {
+        return () => {
+            let elementsTodEdit = document.getElementsByClassName("remove-arrow"),
+                arrow = document.getElementsByClassName(className)[0],
+                popup = document.getElementById("notMesPopup");
+            for (let i = 0; i < elementsTodEdit.length; ++i) {
+                !elementsTodEdit[i].classList.contains(className) && elementsTodEdit[i].classList.remove("arrow");
+            }
+            if (arrow.classList.contains("arrow")) {
+                arrow.classList.remove("arrow");
+                popup.classList.remove("opened")
+            } else {
+                arrow.classList.add("arrow");
+                popup.classList.add("opened");
+            }
+        }
     }
 
-    render(){
+    render () {
         return (
             <div className="header-bottom">
                 <Nav pullRight>
-                    <NavItem eventKey={1} href="#" className="icon-notification circle-number"><span>{this.props.props.data.notification_count && this.props.props.data.notification_count}</span></NavItem>
-                    <NavItem eventKey={1} href="#" className="icon-messages circle-number"><span>{this.props.props.data.message_count && this.props.props.data.message_count}</span></NavItem>
-                    <NavItem eventKey={3} href="#" className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props.props.data.name && this.props.props.data.name}</span></NavItem>
-                    <div className="custom-drop-down">
-                        <div className="custom-drop-down-inner">
-                            <span>Notification</span>
-                            <span>Notification</span>
-                            <span>Notification</span>
-                            <span>Notification</span>
-                        </div>
-                    </div>
+                    <NavItem onClick={this.toggleNotMesifications("icon-notification")} className="icon-notification circle-number remove-arrow"><span>{this.props.props.data.notification_count && this.props.props.data.notification_count}</span></NavItem>
+                    <NavItem onClick={this.toggleNotMesifications("icon-messages")} className="icon-messages circle-number remove-arrow"><span>{this.props.props.data.message_count && this.props.props.data.message_count}</span></NavItem>
+                    <NavItem className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props.props.data.name && this.props.props.data.name}</span></NavItem>
                 </Nav>
+                <div id="notMesPopup" className="custom-drop-down">
+                    <div className="custom-drop-down-inner">
+                        <span>Notification</span>
+                        <span>Notification</span>
+                        <span>Notification</span>
+                        <span>Notification</span>
+                    </div>
+                </div>
             </div>
         );
     }

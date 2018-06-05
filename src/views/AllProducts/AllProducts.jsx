@@ -3,7 +3,7 @@ import {Grid, Col, Table} from 'react-bootstrap';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import Pagination from "../pagination/Pagination";
 import querystring from "querystring";
-import axios from "axios/index";
+import axios from "axios";
 
 class AllProducts extends Component {
     constructor (props) {
@@ -18,6 +18,7 @@ class AllProducts extends Component {
         this.openDeletePopup = this.openDeletePopup.bind(this);
         this.closeDeletePopup = this.closeDeletePopup.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
+        this.filterProductsByBranch = this.filterProductsByBranch.bind(this);
     }
 
     openEditPage (id) {
@@ -83,17 +84,30 @@ class AllProducts extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i < Math.ceil(this.state.response.length / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].length / 15); ++i) {
             pages.push(i)
         }
 
+        pages.length < 2 && localStorage.setItem('productsPageNumber', 0);
         return pages;
+    }
+
+    filterProductsByBranch (e) {
+        debugger
+        let branchId = null;
+        this.props.props.data.arr.filter(item => {
+            if (item.sub_market_name === e.target.value && !branchId) {
+                branchId = item.sub_market_id;
+            }
+        });
+        let flteredData = this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
+        this.setState({filteredResponse: flteredData});
     }
 
     filterProducts () {
         let flteredData = [];
         if (this.refs.filter.value) {
-            flteredData = this.state.response.filter(item => (
+            flteredData = this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].filter(item => (
                 item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
             ));
         }
@@ -116,7 +130,7 @@ class AllProducts extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
             data: querystring.stringify({
                 request_code: 3,
-                sub_market_id: 5
+                sub_market_id: localStorage.getItem('market_id')
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
@@ -131,7 +145,7 @@ class AllProducts extends Component {
 
     getInfoForCertainPage () {
         let certainPageInfo = [],
-            pageNumber = parseInt(localStorage.getItem("pageNumber"));
+            pageNumber = parseInt(localStorage.getItem("productsPageNumber"));
         if (!pageNumber) {
             pageNumber = 0;
         }
@@ -148,7 +162,7 @@ class AllProducts extends Component {
     }
 
     componentWillUnmount () {
-        localStorage.removeItem("pageNumber");
+        localStorage.removeItem("productsPageNumber");
     }
 
     render() {
@@ -161,7 +175,7 @@ class AllProducts extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials title="Все товары " props={this.props.props} />
+                    <ChooseFilials filterProductsByBranch={this.filterProductsByBranch} title="Все товары 55555" filials={this.props.props.data.arr} />
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
                             <label className="col-md-4" htmlFor="usr">
@@ -229,7 +243,7 @@ class AllProducts extends Component {
                     </Col>
                     <div className="clearfix"></div>
                     {
-                        paginationInfo.length > 1 && <Pagination arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
+                        paginationInfo.length > 1 && <Pagination pageName="productsPageNumber" arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
                     }
                 </Grid>
                 <div id="delete-popup" className="popup-block">

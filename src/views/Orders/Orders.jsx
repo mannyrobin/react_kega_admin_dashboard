@@ -4,19 +4,52 @@ import Order from './Order';
 import Info from './Info';
 import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import Pagination from "../pagination/Pagination";
+import axios from "axios";
+import querystring from "querystring";
 
 class Orders extends Component {
     constructor (props) {
         super(props);
-        this.moreDetails = this.moreDetails.bind(this);
+        this.openMoreDetails = this.openMoreDetails.bind(this);
+        this.closeMoreDetails = this.closeMoreDetails.bind(this);
         this.state = {
-            openOrderMoreDetails: false,
-            infos: []
+            response: null,
+            openOrderMoreDetails: {
+                enabled: false,
+                itemId: null
+            },
+            filteredResponse: [],
+            selectedFielialId: this.props.props.data.arr[0].sub_market_id
         }
     }
 
-    moreDetails () {
-        this.setState({openOrderMoreDetails: true});
+    openMoreDetails (id) {
+        return (e) => {
+            e.preventDefault();
+            this.setState({openOrderMoreDetails: {enabled: true, itemId: id}});
+        };
+    }
+
+    closeMoreDetails () {
+        this.setState({openOrderMoreDetails: {enabled: false, itemId: null}});
+    }
+
+    getInfoForCertainPage () {
+        let certainPageInfo = [],
+            pageNumber = parseInt(localStorage.getItem("ordersPageNumber"));
+        if (!pageNumber) {
+            pageNumber = 0;
+        }
+        for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
+            // if (this.state.filteredResponse.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
+            //     if (this.state.filteredResponse[i]) {
+            //         certainPageInfo.push(this.state.filteredResponse[i]);
+            //     }
+            if(this.state.response[i]) {
+                certainPageInfo.push(this.state.response[i]);
+            }
+        }
+        return certainPageInfo;
     }
 
     getCertainInfos (index, arr, self) {
@@ -32,27 +65,58 @@ class Orders extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i <= Math.ceil(45 / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].length / 15); ++i) {
             pages.push(i)
         }
 
+        pages.length < 2 && localStorage.setItem('ordersPageNumber', 0);
         return pages;
     }
 
     componentDidMount () {
-        this.getCertainInfos();
+        console.log("999999999999999", this.props)
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
+            data: querystring.stringify({
+                request_code: 1,
+                market_id: self.state.selectedFielialId
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            console.log("???????????????????????????", response)
+            self.setState({response: response.data})
+        }).catch(function(error){
+            throw new Error(error);
+        });
+    }
+
+    shouldComponentUpdate (nextProps, prevState) {
+        debugger
+        return true
     }
 
     componentWillUnmount () {
-        localStorage.removeItem("pageNumber");
+        localStorage.removeItem("ordersPageNumber");
     }
 
     render() {
-        if (this.state.openOrderMoreDetails) {
+        debugger
+        if (!this.state.response) {
             return (
-                <Order />
+                <div>Loading...</div>
+            )
+        } else if (this.state.openOrderMoreDetails.enabled) {
+            let itemToShow = this.state.response.filter(item => item.id === this.state.openOrderMoreDetails.itemId);
+            return (
+                <Order item={itemToShow[0]} closeMoreDetails={this.closeMoreDetails} />
             )
         }
+        let paginationInfo = this.getPaginationInfo();
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
@@ -95,15 +159,18 @@ class Orders extends Component {
                                 </thead>
                                 <tbody>
                                 {
-                                    this.state.infos.map(item => {
-                                        return <Info item={item} moreDetails={this.moreDetails}/>
+                                    this.getInfoForCertainPage().map(item => {
+                                        return <Info key={item.id} item={item} openMoreDetails={this.openMoreDetails}/>
                                     })
                                 }
                                 </tbody>
                             </table>
                         </div>
                     </div>
-                    <Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} self={this} />
+                    {
+                        paginationInfo.length > 1 && <Pagination pageName="ordersPageNumber" arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
+                    }
+                    {/*<Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} self={this} />*/}
                 </Grid>
             </div>
         );
