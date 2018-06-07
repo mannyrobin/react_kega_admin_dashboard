@@ -249,6 +249,11 @@ label.btn {
     border-radius: 5px;
 }
 
+.product-row,
+.col-md-12.short-block {
+    padding: 0 15px;
+}
+
 .header-custom-block .col-md-8 .card > .header {
     background-color: #fafafa;
     color: #a2a0a0;
@@ -395,6 +400,7 @@ td .form-control {
 td > a {
     color: #e8b75a;
     font-size: 12px;
+    cursor: pointer;
 }
 
 .custom-table select {
@@ -812,14 +818,18 @@ li.submenu a:after {
 
 .icon-notification {
     background: url("../img/notification.png") 50% 50% no-repeat;
-    padding: 10px 15px;
+    padding: 0 15px;
+    margin: 0 15px;
     position: relative;
+    cursor: pointer;
 }
 
 .icon-messages {
     background: url("../img/message.png") 50% 50% no-repeat;
-    padding: 10px 15px;
+    padding: 0 15px;
+    margin: 0 15px;
     position: relative;
+    cursor: pointer;
 }
 
 .user-icon {
@@ -838,17 +848,17 @@ li.submenu a:after {
     border-radius: 50%
 }
 
-.user-icon a,
-.user-icon a > span {
+a.user-icon,
+a.user-icon  > span {
     color: #fff;
 }
 
-.user-icon a > span {
+a.user-icon  > span {
     padding-left: 12px;
 }
 
-li.user-icon > a {
-    margin: 0!important;
+a.user-icon  {
+    margin: 0 35px 0!important;
 }
 
 /* Add Product */
@@ -909,11 +919,11 @@ p.circle-number {
 }
 
 p.circle-number > span,
-.circle-number a > span {
+.circle-number > span {
     display: block;
     position: absolute;
-    top: -7px;
-    right: -11px;
+    top: 6px;
+    right: -5px;
     background: #f9b852;
     min-width: 9px;
     min-height: 13px;
@@ -1007,7 +1017,8 @@ color-red {
 
 .custom-drop-down {
     position: absolute;
-    width: 90%;
+    right: 12%;
+    width: 280px;
     height: 200px;
     background: white;
     transform: translateY(-200px);
@@ -1620,6 +1631,7 @@ input:focus {
     line-height: 30px;
     font-size: 12px;
     font-weight: 400;
+    cursor: pointer;
 }
 
 .sidebar .nav .caret {

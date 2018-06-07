@@ -12,7 +12,7 @@ class Order extends Component {
                         <div className="col-md-12 client-data">
                             <h2 className="custom-header-h2 custom-dashboard-header">
                                 <span>ЗАКАЗ №422344400</span>
-                                <span className="custom-right yellow-color" onClick={this.props.closeMoreDetails}>Вернуться к списку заказов</span>
+                                <span className="custom-right yellow-color" onClick={this.props.closeMoreDetails}> Вернуться к списку заказов</span>
                                 <div className="clearfix"></div>
                             </h2>
                             <div className="col-md-8">
@@ -39,8 +39,32 @@ class Order extends Component {
                                 </div>
                             </div>
                         </div>
-                        <div className="col-md-12 ">
+                        <div className="col-md-12 short-block order-composition">
                             <h3>Состав заказа</h3>
+                            <div className="product-row">
+                                <span>Bekhaven - Black Stout</span>
+                                <span>Бутылочное пиво</span>
+                                <span>1</span>
+                                <span>250 РУБ.</span>
+                            </div>
+                            <div className="product-row">
+                                <span>Bekhaven - Black Stout</span>
+                                <span>Бутылочное пиво</span>
+                                <span>1</span>
+                                <span>250 РУБ.</span>
+                            </div>
+                            <div className="product-row">
+                                <span>Bekhaven - Black Stout</span>
+                                <span>Бутылочное пиво</span>
+                                <span>1</span>
+                                <span>250 РУБ.</span>
+                            </div>
+                            <div className="product-row">
+                                <span>Bekhaven - Black Stout</span>
+                                <span>Бутылочное пиво</span>
+                                <span>1</span>
+                                <span>250 РУБ.</span>
+                            </div>
                             <div className="product-row">
                                 <span>Bekhaven - Black Stout</span>
                                 <span>Бутылочное пиво</span>
@@ -49,7 +73,7 @@ class Order extends Component {
                             </div>
                         </div>
                         <div className="clearfix"></div>
-                        <button className="custom-violet-btn">Заказ собран</button>
+                        <button className="btn custom-violet-btn">Заказ собран</button>
                     </Row>
                 </Grid>
             </div>

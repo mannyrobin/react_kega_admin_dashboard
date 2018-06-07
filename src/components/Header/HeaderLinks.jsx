@@ -28,11 +28,11 @@ class HeaderLinks extends Component{
     render () {
         return (
             <div className="header-bottom">
-                <Nav pullRight>
-                    <NavItem onClick={this.toggleNotMesifications("icon-notification")} className="icon-notification circle-number remove-arrow"><span>{this.props.props.data.notification_count && this.props.props.data.notification_count}</span></NavItem>
-                    <NavItem onClick={this.toggleNotMesifications("icon-messages")} className="icon-messages circle-number remove-arrow"><span>{this.props.props.data.message_count && this.props.props.data.message_count}</span></NavItem>
-                    <NavItem className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props.props.data.name && this.props.props.data.name}</span></NavItem>
-                </Nav>
+                <div className="nav navbar-nav navbar-right">
+                    <a onClick={this.toggleNotMesifications("icon-notification")} className="icon-notification circle-number remove-arrow"><span>{this.props.props.data.notification_count && this.props.props.data.notification_count}</span></a>
+                    <a onClick={this.toggleNotMesifications("icon-messages")} className="icon-messages circle-number remove-arrow"><span>{this.props.props.data.message_count && this.props.props.data.message_count}</span></a>
+                    <a className="user-icon"><img id="userIcon" src={this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props.props.data.name && this.props.props.data.name}</span></a>
+                </div>
                 <div id="notMesPopup" className="custom-drop-down">
                     <div className="custom-drop-down-inner">
                         <span>Notification</span>
