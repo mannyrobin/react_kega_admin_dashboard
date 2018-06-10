@@ -2,9 +2,10 @@ import React, { Component } from 'react';
 
 class Info extends Component {
     render() {
+        console.log(">>>>>>>>>>>>>>>>>  ", this.props.item)
         return (
             <tr>
-                <td>John</td>
+                <td>{this.props.item.id && this.props.item.id}</td>
                 <td>{this.props.item.start_date && this.props.item.start_date}</td>
                 <td>{this.props.item.finish_date && this.props.item.finish_date}</td>
                 <td>John</td>

@@ -1014,7 +1014,15 @@ body .sidebar .nav li > a {
 color-red {
     color: red;
 }
-
+.custom-right {
+    float: right;
+}
+.yellow-color {
+    color: #e8b75a !important;
+}
+.cursor-pointer {
+    cursor: pointer;
+}
 .custom-drop-down {
     position: absolute;
     right: 12%;
@@ -1026,6 +1034,9 @@ color-red {
     box-shadow: 0 1px 10px 0 rgba(0,0,0, 0.3);
     transition: transform .3s;
     overflow-y: auto;
+}
+.order-block {
+    padding-left: 35px;
 }
 .custom-drop-down.opened {
     transform: translateY(68px);

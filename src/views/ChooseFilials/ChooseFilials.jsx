@@ -2,7 +2,6 @@ import React, {Component} from 'react';
 
 class ChooseFilials extends Component {
     render() {
-        console.log("^^^^^^^^^^^^^^^^^^^^^  ", this.props)
         return (
             <div className="content">
                 <h2 className="custom-header-h2 custom-dashboard-header">

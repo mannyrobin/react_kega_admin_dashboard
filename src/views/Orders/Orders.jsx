@@ -74,7 +74,6 @@ class Orders extends Component {
     }
 
     componentDidMount () {
-        console.log("999999999999999", this.props)
         let self = this;
         axios({
             method:'post',
@@ -88,16 +87,10 @@ class Orders extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            console.log("???????????????????????????", response)
             self.setState({response: response.data})
         }).catch(function(error){
             throw new Error(error);
         });
-    }
-
-    shouldComponentUpdate (nextProps, prevState) {
-        debugger
-        return true
     }
 
     componentWillUnmount () {
@@ -105,7 +98,6 @@ class Orders extends Component {
     }
 
     render() {
-        debugger
         if (!this.state.response) {
             return (
                 <div>Loading...</div>

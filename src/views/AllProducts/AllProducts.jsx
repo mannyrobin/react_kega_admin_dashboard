@@ -93,7 +93,6 @@ class AllProducts extends Component {
     }
 
     filterProductsByBranch (e) {
-        debugger
         let branchId = null;
         this.props.props.data.arr.filter(item => {
             if (item.sub_market_name === e.target.value && !branchId) {
