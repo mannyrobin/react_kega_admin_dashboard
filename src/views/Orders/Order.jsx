@@ -1,6 +1,5 @@
 import React, {Component} from 'react';
 import { Grid, Row } from 'react-bootstrap';
-import axios from "axios";
 
 class Order extends Component {
     render() {

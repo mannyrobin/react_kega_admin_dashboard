@@ -9,23 +9,24 @@ class App extends Component {
     constructor(props){
         super(props);
         this.state = {
-            loggedIn: false,
-            props: null
+            loggedInUser: localStorage.getItem("loggedInUser") && JSON.parse(localStorage.getItem("loggedInUser"))
         };
         this.doLogin = this.doLogin.bind(this);
         this.doLogOut = this.doLogOut.bind(this);
     }
 
     doLogin (response) {
-        this.setState({loggedIn: true, props: response});
+        localStorage.setItem("loggedInUser", JSON.stringify(response));
+        this.setState({loggedInUser: response});
     }
 
     doLogOut () {
-        this.setState({loggedIn: false})
+        localStorage.removeItem("loggedInUser");
+        this.setState({loggedInUser: null})
     }
 
     render() {
-        if (!this.state.loggedIn) {
+        if (!this.state.loggedInUser) {
             return (
                 <Login doLogin={this.doLogin}/>
             )
@@ -34,7 +35,7 @@ class App extends Component {
             <div className="wrapper">
                 <Sidebar {...this.props} doLogOut={this.doLogOut} />
                 <div id="main-panel" className="main-panel">
-                    <Header {...this.props} props={this.state.props}/>
+                    <Header {...this.props} props={this.state.loggedInUser}/>
                     <Switch>
                         {
                             appRoutes.map((prop,key) => {
@@ -56,7 +57,7 @@ class App extends Component {
                                     );
                                 return (
                                     <Route path={prop.path} component={() => {
-                                        return <prop.component props={this.state.props} />
+                                        return <prop.component props={this.state.loggedInUser} />
                                     }
                                     } key={key} />
                                 );

@@ -7,12 +7,9 @@ class Login extends Component {
         super(props);
         this.submit = this.submit.bind(this);
         this.state = {
-            response: null,
-            loggedIn: false
+            response: null
         }
     }
-
-    //vansdorf 12345
 
     submit (e) {
         let username = this.refs.username.value,
