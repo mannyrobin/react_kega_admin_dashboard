@@ -115,6 +115,22 @@ a, img {
     background-color: #cc904d;
 }
 
+.greenStatus {
+    color: green !important;
+}
+
+.yellowStatus {
+    color: orange !important;
+}
+
+.redStatus {
+    color: red !important;
+}
+
+.grayStatus {
+    color: lightgray !important;
+}
+
 #my-file-selector {
     display: none;
 }
@@ -411,9 +427,9 @@ td > a {
     color: #669900;
 }
 
-.custom-table select.processing {
-    color: #ffcc00;
-}
+/*.custom-table select.processing {*/
+    /*color: #ffcc00;*/
+/*}*/
 
 .custom-table select.delivery {
     color: #cc3300;

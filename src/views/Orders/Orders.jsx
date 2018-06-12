@@ -12,6 +12,7 @@ class Orders extends Component {
         super(props);
         this.openMoreDetails = this.openMoreDetails.bind(this);
         this.closeMoreDetails = this.closeMoreDetails.bind(this);
+        this.removeChangedItem = this.removeChangedItem.bind(this);
         this.state = {
             response: null,
             openOrderMoreDetails: {
@@ -19,7 +20,43 @@ class Orders extends Component {
                 itemId: null
             },
             filteredResponse: [],
-            selectedFielialId: this.props.props.data.arr[0].sub_market_id
+            selectedFielialId: this.props.props.data.arr[0].sub_market_id,
+            buttons: ["Все заказы", "Новые заказы", "Выполнен", "Доставка", "В обработке"],
+            activeButton: "Все заказы"
+        }
+    }
+
+    removeChangedItem (id) {
+        let filteredItems = this.state.response.filter(item => item.id !== id);
+        this.setState({response: filteredItems});
+    }
+
+    getCertainOrders (name) {
+        return () => {
+            if (this.state.buttons.indexOf(name) === 0) {
+                localStorage.setItem("allOrders", true);
+                this.getAllOrders();
+            } else {
+                localStorage.removeItem("allOrders");
+                let self = this;
+                axios({
+                    method:'post',
+                    url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
+                    data: querystring.stringify({
+                        request_code: 2,
+                        status: self.state.buttons.indexOf(name),
+                        market_id: self.state.selectedFielialId
+                    }),
+                    headers: {
+                        'Content-type': 'application/x-www-form-urlencoded'
+                    },
+                    responseType:'json'
+                }).then(function(response) {
+                    self.setState({response: response.data, activeButton: name})
+                }).catch(function(error){
+                    throw new Error(error);
+                });
+            }
         }
     }
 
@@ -74,6 +111,15 @@ class Orders extends Component {
     }
 
     componentDidMount () {
+        localStorage.setItem("allOrders", true);
+        this.getAllOrders(1);
+    }
+
+    componentWillUnmount () {
+        localStorage.removeItem("allOrders");
+    }
+
+    getAllOrders () {
         let self = this;
         axios({
             method:'post',
@@ -87,7 +133,7 @@ class Orders extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            self.setState({response: response.data})
+            self.setState({response: response.data, activeButton: "Все заказы"});
         }).catch(function(error){
             throw new Error(error);
         });
@@ -115,10 +161,13 @@ class Orders extends Component {
                     <ChooseFilials title="Заказы" props={this.props.props} />
                     <div className="orders-block">
                         <div className="col-md-7">
-                            <button type="button" className="btn btn-default active">Новые заказы</button>
-                            <button type="button" className="btn btn-default">Выполненные заказы</button>
-                            <button type="button" className="btn btn-default">Выполняется доставка</button>
-                            <button type="button" className="btn btn-default">В обработке</button>
+                            {
+                                this.state.buttons.map((item, index) => {
+                                    return (
+                                        <button key={index} type="button" onClick={this.getCertainOrders(item)} className={`${this.state.activeButton === item ? "active" : ""} btn btn-default`}>{item}</button>
+                                    )
+                                })
+                            }
                         </div>
                         <div className="choose-date col-md-5">
                             <label className="col-md-4" htmlFor="usr">
@@ -152,7 +201,7 @@ class Orders extends Component {
                                 <tbody>
                                 {
                                     this.getInfoForCertainPage().map(item => {
-                                        return <Info key={item.id} item={item} openMoreDetails={this.openMoreDetails}/>
+                                        return <Info removeChangedItem={this.removeChangedItem} statusNames={this.state.buttons} key={item.id} item={item} openMoreDetails={this.openMoreDetails}/>
                                     })
                                 }
                                 </tbody>
@@ -162,7 +211,6 @@ class Orders extends Component {
                     {
                         paginationInfo.length > 1 && <Pagination pageName="ordersPageNumber" arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
                     }
-                    {/*<Pagination arr={this.props.props.data.arr} pages={this.getPaginationInfo()} getCertainInfos={this.getCertainInfos} self={this} />*/}
                 </Grid>
             </div>
         );

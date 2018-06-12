@@ -115,10 +115,28 @@ class AllProducts extends Component {
 
     changeItemStatus (item) {
         return () => {
-            let changedResponse = this.state.response;
-            changedResponse[changedResponse.indexOf(item)].existing_status = (item.existing_status === "0" ? "1" : "0");
-            this.setState({response: changedResponse});
-
+            let self = this;
+            axios({
+                method:'post',
+                url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
+                data: querystring.stringify({
+                    request_code: 1,
+                    existing_status: 1 - parseInt(item.existing_status),
+                    item_id: item.id
+                }),
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                responseType:'json'
+            }).then(function(response) {
+                if (response.data.change_status) {
+                    let changedResponse = self.state.response;
+                    changedResponse[changedResponse.indexOf(item)].existing_status = 1 - parseInt(item.existing_status);
+                    self.setState({response: changedResponse});
+                }
+            }).catch(function(error){
+                throw new Error(error);
+            });
         }
     }
 

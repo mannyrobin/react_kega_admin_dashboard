@@ -33,8 +33,8 @@ class Order extends Component {
                             <div className="col-md-4 add-new-cat">
                                 <h3>Данные заказа</h3>
                                 <div className="col-md-12">
-                                    <p>Сумма заказа: <span>Дмитрий</span></p>
-                                    <p>Доставка: <span>Дмитрий</span></p>
+                                    <p>Сумма заказа: <span>{this.props.item.total_price} РУБ.</span></p>
+                                    <p>Доставка: <span>{this.props.item.delivery_price} РУБ.</span></p>
                                     <p>Оплата: <span>{`${this.props.item.status === "0" ? "Не оплачен" : "Оплачен "}`}</span></p>
                                     <p>Курьер: <span className="color-red">{this.props.item.courier_status}</span></p>
                                 </div>
