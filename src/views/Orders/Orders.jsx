@@ -170,7 +170,7 @@ class Orders extends Component {
                             }
                         </div>
                         <div className="choose-date col-md-5">
-                            <label className="col-md-4" htmlFor="usr">
+                            <label className="col-md-4 choose-date-text" htmlFor="usr">
                                 Выберите дату:
                             </label>
                             <div className="col-md-4">

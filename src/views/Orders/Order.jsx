@@ -45,7 +45,7 @@ class Order extends Component {
                             {
                                 items.map(item => {
                                     return <div key={item.itemsMenuModel.id} className="product-row">
-                                        <span>{item.itemsMenuModel.manufacturer} - {item.itemsMenuModel.name}</span>
+                                        <span><span className="image-block-span"><img src={item.itemsMenuModel.icon_url} alt="" /></span>{item.itemsMenuModel.manufacturer} - {item.itemsMenuModel.name}</span>
                                         <span>Бутылочное пиво</span>
                                         <span>{item.count}</span>
                                         <span>{item.itemsMenuModel.price} РУБ.</span>

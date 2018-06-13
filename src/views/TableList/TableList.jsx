@@ -25,7 +25,7 @@ class TableList extends Component {
                     </h2>
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
-                            <label className="col-md-4" htmlFor="usr">
+                            <label className="col-md-4 choose-date-text" htmlFor="usr">
                                 Выберите дату:
                             </label>
                             <div className="col-md-4">
