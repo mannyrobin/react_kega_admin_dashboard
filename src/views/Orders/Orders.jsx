@@ -13,6 +13,7 @@ class Orders extends Component {
         this.openMoreDetails = this.openMoreDetails.bind(this);
         this.closeMoreDetails = this.closeMoreDetails.bind(this);
         this.removeChangedItem = this.removeChangedItem.bind(this);
+        this.updateItem = this.updateItem.bind(this);
         this.state = {
             response: null,
             openOrderMoreDetails: {
@@ -29,6 +30,17 @@ class Orders extends Component {
     removeChangedItem (id) {
         let filteredItems = this.state.response.filter(item => item.id !== id);
         this.setState({response: filteredItems});
+    }
+
+    updateItem (itemToUpdate) {
+        let newData = this.state.response.map(item => {
+            if (item.id === itemToUpdate.id) {
+                item.status = "3";
+            }
+            return item;
+        });
+        debugger
+        this.setState({response: newData, openOrderMoreDetails: {enabled: false, itemId: null}});
     }
 
     getCertainOrders (name) {
@@ -151,7 +163,7 @@ class Orders extends Component {
         } else if (this.state.openOrderMoreDetails.enabled) {
             let itemToShow = this.state.response.filter(item => item.id === this.state.openOrderMoreDetails.itemId);
             return (
-                <Order item={itemToShow[0]} closeMoreDetails={this.closeMoreDetails} />
+                <Order item={itemToShow[0]} updateItem={this.updateItem} closeMoreDetails={this.closeMoreDetails} />
             )
         }
         let paginationInfo = this.getPaginationInfo();

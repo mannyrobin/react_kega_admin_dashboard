@@ -1,10 +1,40 @@
 import React, {Component} from 'react';
 import { Grid, Row } from 'react-bootstrap';
+import querystring from "querystring";
+import axios from "axios/index";
 
 class Order extends Component {
-    render() {
+    constructor(props) {
+        super(props);
+        this.orderCollected = this.orderCollected.bind(this);
+    }
+
+    orderCollected (e) {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
+            data: querystring.stringify({
+                request_code: 3,
+                order_id: self.props.item.id,
+                status: 3
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            if (response.data.change_status) {
+                self.props.updateItem(self.props.item);
+            }
+        }).catch(function(error){
+            throw new Error(error);
+        });
+    }
+
+    render () {
         let items = JSON.parse(this.props.item.items);
-        console.log("5555555555555555555555  ", items)
+        console.log("5555555555555555555555  ", this.props)
 
         return (
             <div className="content main-order-page">
@@ -54,7 +84,10 @@ class Order extends Component {
                             }
                         </div>
                         <div className="clearfix"></div>
-                        <button className="btn custom-violet-btn">Заказ собран</button>
+                        {
+                            !(parseInt(this.props.item.status) === 2 || parseInt(this.props.item.status) === 3) &&
+                            <button className="btn custom-violet-btn" onClick={this.orderCollected}>Заказ собран</button>
+                        }
                     </Row>
                 </Grid>
             </div>
