@@ -9,7 +9,7 @@ class Contact extends Component {
                 <Grid fluid>
                     <Row>
                         <div className="col-md-12 add-stock">
-                            <ChooseFilials title="Категории товаров" props={this.props.props} />
+                            <ChooseFilials title="Категории товаров" filials={this.props.props.data.arr}  />
                             <div className="col-md-5">
                                 <h3>Категории</h3>
                                 <div className="name-and-edit-prod">

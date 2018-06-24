@@ -67,7 +67,7 @@ class AddProduct extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials title="Добавление товара" props={this.props.props} />
+                    <ChooseFilials title="Добавление товара" filials={this.props.props.data.arr}  />
                     <Row>
                         <Col md={12}>
                             <Card

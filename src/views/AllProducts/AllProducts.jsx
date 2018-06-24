@@ -11,7 +11,10 @@ class AllProducts extends Component {
         this.state = {
             response: null,
             filteredResponse: [],
-            itemToDelete: null
+            filteredResponseByName: [],
+            itemToDelete: null,
+            alreadyFilteredByBranch: false,
+            IsFilteredByInput: false
         };
         this.getCertainInfos = this.getCertainInfos.bind(this);
         this.filterProducts = this.filterProducts.bind(this);
@@ -84,7 +87,7 @@ class AllProducts extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].length / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponseByName.length ? "filteredResponseByName" : "filteredResponse"}`].length / 15); ++i) {
             pages.push(i)
         }
 
@@ -93,24 +96,33 @@ class AllProducts extends Component {
     }
 
     filterProductsByBranch (e) {
+        let value = null;
+        if (!e) {
+            value = this.props.props.data.arr[0].sub_market_name;
+        } else {
+            value = e.target.value;
+        }
         let branchId = null;
         this.props.props.data.arr.filter(item => {
-            if (item.sub_market_name === e.target.value && !branchId) {
+            if (item.sub_market_name === value && !branchId) {
                 branchId = item.sub_market_id;
             }
         });
-        let flteredData = this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
-        this.setState({filteredResponse: flteredData});
+        let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByInput) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
+        if (this.refs.filter) {
+            this.refs.filter.value = null;
+        }
+        this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByName: []});
     }
 
     filterProducts () {
         let flteredData = [];
         if (this.refs.filter.value) {
-            flteredData = this.state[`${this.state.filteredResponse.length ? "filteredResponse" : "response"}`].filter(item => (
+            flteredData = this.state.filteredResponse.filter(item => (
                 item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
             ));
         }
-        this.setState({filteredResponse: flteredData});
+        this.setState({filteredResponseByName: flteredData, IsFilteredByInput: true});
     }
 
     changeItemStatus (item) {
@@ -166,13 +178,16 @@ class AllProducts extends Component {
         if (!pageNumber) {
             pageNumber = 0;
         }
+        if (!this.state.alreadyFilteredByBranch) {
+            this.filterProductsByBranch();
+        }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            if (this.state.filteredResponse.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
-                if (this.state.filteredResponse[i]) {
-                    certainPageInfo.push(this.state.filteredResponse[i]);
+            if (this.state.filteredResponseByName.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
+                if (this.state.filteredResponseByName[i]) {
+                    certainPageInfo.push(this.state.filteredResponseByName[i]);
                 }
-            } else if(this.state.response[i]) {
-                certainPageInfo.push(this.state.response[i]);
+            } else if(this.state.filteredResponse[i]) {
+                certainPageInfo.push(this.state.filteredResponse[i]);
             }
         }
         return certainPageInfo;
@@ -192,7 +207,7 @@ class AllProducts extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials filterProductsByBranch={this.filterProductsByBranch} title="Все товары 55555" filials={this.props.props.data.arr} />
+                    <ChooseFilials filterProductsByBranch={this.filterProductsByBranch} title="Все товары" filials={this.props.props.data.arr} />
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
                             <label className="col-md-4" htmlFor="usr">

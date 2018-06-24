@@ -21,6 +21,9 @@ class Orders extends Component {
                 itemId: null
             },
             filteredResponse: [],
+            filteredResponseByDate: [],
+            alreadyFilteredByBranch: false,
+            IsFilteredByDate: false,
             selectedFielialId: this.props.props.data.arr[0].sub_market_id,
             buttons: ["Все заказы", "Новые заказы", "Выполнен", "Доставка", "В обработке"],
             activeButton: "Все заказы"
@@ -83,6 +86,58 @@ class Orders extends Component {
         this.setState({openOrderMoreDetails: {enabled: false, itemId: null}});
     }
 
+    // filterProducts () {
+    //     let flteredData = [];
+    //     if (this.refs.filter.value) {
+    //         flteredData = this.state.filteredResponse.filter(item => (
+    //             item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
+    //         ));
+    //     }
+    //     this.setState({filteredResponseByDate: flteredData, IsFilteredByDate: true});
+    // }
+
+    // filterProductsByBranch (e) {
+    //     debugger
+    //     let value = null;
+    //     if (!e) {
+    //         value = this.props.props.data.arr[0].sub_market_name;
+    //     } else {
+    //         value = e.target.value;
+    //     }
+    //     let branchId = null;
+    //     this.props.props.data.arr.filter(item => {
+    //         if (item.sub_market_name === value && !branchId) {
+    //             branchId = item.sub_market_id;
+    //         }
+    //     });
+    //     let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByDate) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
+    //     if (this.refs.filter) {
+    //         this.refs.filter.value = null;
+    //     }
+    //     this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByDate: []});
+    // }
+
+    // getInfoForCertainPage () {
+    //     let certainPageInfo = [],
+    //         pageNumber = parseInt(localStorage.getItem("ordersPageNumber"));
+    //     if (!pageNumber) {
+    //         pageNumber = 0;
+    //     }
+    //     if (!this.state.alreadyFilteredByBranch) {
+    //         this.filterProductsByBranch();
+    //     }
+    //     for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
+    //         if (this.state.filteredResponseByDate.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
+    //             if (this.state.filteredResponseByDate[i]) {
+    //                 certainPageInfo.push(this.state.filteredResponseByDate[i]);
+    //             }
+    //         } else if(this.state.filteredResponse[i]) {
+    //             certainPageInfo.push(this.state.filteredResponse[i]);
+    //         }
+    //     }
+    //     return certainPageInfo;
+    // }
+
     getInfoForCertainPage () {
         let certainPageInfo = [],
             pageNumber = parseInt(localStorage.getItem("ordersPageNumber"));
@@ -121,6 +176,16 @@ class Orders extends Component {
         pages.length < 2 && localStorage.setItem('ordersPageNumber', 0);
         return pages;
     }
+
+    // getPaginationInfo () {
+    //     let pages = [];
+    //     for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponseByDate.length ? "filteredResponseByDate" : "filteredResponse"}`].length / 15); ++i) {
+    //         pages.push(i)
+    //     }
+    //
+    //     pages.length < 2 && localStorage.setItem('ordersPageNumber', 0);
+    //     return pages;
+    // }
 
     componentDidMount () {
         localStorage.setItem("allOrders", true);
@@ -170,7 +235,7 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <ChooseFilials title="Заказы" props={this.props.props} />
+                    <ChooseFilials /*filterProductsByBranch={this.filterProductsByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
                     <div className="orders-block">
                         <div className="col-md-7">
                             {
