@@ -10,11 +10,13 @@ class AllProducts extends Component {
         super(props);
         this.state = {
             response: null,
-            filteredResponse: [],
-            filteredResponseByName: [],
+            filteredDataByBranch: [],
+            filteredData: [],
             itemToDelete: null,
             alreadyFilteredByBranch: false,
-            IsFilteredByInput: false
+            existingFilterValue: "",
+            categoryFilterValue: "",
+            nameFilterValue: ""
         };
         this.getCertainInfos = this.getCertainInfos.bind(this);
         this.filterProducts = this.filterProducts.bind(this);
@@ -87,7 +89,7 @@ class AllProducts extends Component {
 
     getPaginationInfo () {
         let pages = [];
-        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponseByName.length ? "filteredResponseByName" : "filteredResponse"}`].length / 15); ++i) {
+        for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredData.length ? "filteredData" : "response"}`].length / 15); ++i) {
             pages.push(i)
         }
 
@@ -108,21 +110,68 @@ class AllProducts extends Component {
                 branchId = item.sub_market_id;
             }
         });
-        let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByInput) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
-        if (this.refs.filter) {
-            this.refs.filter.value = null;
-        }
-        this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByName: []});
+        let filteredData = this.state.response.filter(item => item.category_id === branchId);
+        this.setState({filteredDataByBranch: filteredData, filteredData: [], alreadyFilteredByBranch: true, existingFilterValue: "", categoryFilterValue: "", nameFilterValue: ""});
     }
 
-    filterProducts () {
-        let flteredData = [];
-        if (this.refs.filter.value) {
-            flteredData = this.state.filteredResponse.filter(item => (
-                item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
-            ));
+    getExistingStatusCode (existingStatus) {
+        switch (existingStatus) {
+            case "Нет в наличии":
+                return "0";
+            case "Есть в наличии":
+                return "1";
+            default:
+                return "2";
         }
-        this.setState({filteredResponseByName: flteredData, IsFilteredByInput: true});
+    }
+
+    filterProducts (filterType) {
+        return (e) => {
+            let filterByExistingStatus = null,
+                filterByCategoryName = null,
+                filterByName = null,
+                value = e.target.value,
+                filteredData = this.state.filteredDataByBranch;
+            switch (filterType) {
+                case 0:
+                    filterByExistingStatus = this.getExistingStatusCode(value);
+                    filterByCategoryName = this.state.categoryFilterValue;
+                    filterByName = this.state.nameFilterValue;
+                    break;
+                case 1:
+                    filterByCategoryName = value;
+                    filterByExistingStatus = this.getExistingStatusCode(this.state.existingFilterValue);
+                    filterByName = this.state.nameFilterValue;
+                    break;
+                case 2:
+                    filterByName = value || this.refs.filterByName.value;
+                    filterByExistingStatus = this.getExistingStatusCode(this.state.existingFilterValue);
+                    filterByCategoryName = this.state.categoryFilterValue;
+                    break;
+                default:
+                    break;
+            }
+            if (filterByName) {
+                if (filteredData.length) {
+                    filteredData = filteredData.filter(item => (
+                        item.name.toLowerCase().includes(filterByName.toLowerCase()) || item.manufacturer.toLowerCase().includes(filterByName.toLowerCase())
+                    ));
+                } else {
+                    filteredData = this.state.response.filter(item => (
+                        item.name.toLowerCase().includes(filterByName.toLowerCase()) || item.manufacturer.toLowerCase().includes(filterByName.toLowerCase())
+                    ));
+                }
+            }
+            if (filterByCategoryName) {
+                filteredData = filteredData.filter(item => item.category_name.toLowerCase() === filterByCategoryName.toLowerCase());
+            }
+            if (filterByExistingStatus) {
+                if (filterByExistingStatus !== "2") {
+                    filteredData = filteredData.filter(item => item.existing_status === filterByExistingStatus);
+                }
+            }
+            this.setState({filteredData, existingFilterValue: filterByExistingStatus === "0" ? "Нет в наличии" : filterByExistingStatus === "1" ? "Есть в наличии" : "Все", categoryFilterValue: filterByCategoryName, nameFilterValue: filterByName});
+        };
     }
 
     changeItemStatus (item) {
@@ -182,15 +231,25 @@ class AllProducts extends Component {
             this.filterProductsByBranch();
         }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            if (this.state.filteredResponseByName.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
-                if (this.state.filteredResponseByName[i]) {
-                    certainPageInfo.push(this.state.filteredResponseByName[i]);
+            if (this.state.filteredData.length || this.state.existingFilterValue || this.state.categoryFilterValue || this.state.nameFilterValue) {
+                if (this.state.filteredData[i]) {
+                    certainPageInfo.push(this.state.filteredData[i]);
                 }
-            } else if(this.state.filteredResponse[i]) {
-                certainPageInfo.push(this.state.filteredResponse[i]);
+            } else if(this.state.filteredDataByBranch[i]) {
+                certainPageInfo.push(this.state.filteredDataByBranch[i]);
             }
         }
         return certainPageInfo;
+    }
+
+    getCategoryNames () {
+        let categoryNames = [];
+        this.state.response.map(item => {
+            if (item && categoryNames.indexOf(item.category_name) === -1) {
+                categoryNames.push(item.category_name);
+            }
+        });
+        return categoryNames;
     }
 
     componentWillUnmount () {
@@ -203,7 +262,8 @@ class AllProducts extends Component {
                 <div>Loading...</div>
             )
         }
-        let paginationInfo = this.getPaginationInfo();
+        let paginationInfo = this.getPaginationInfo(),
+            categoryNames = this.getCategoryNames();
         return (
             <div className="content">
                 <Grid fluid>
@@ -214,25 +274,23 @@ class AllProducts extends Component {
                                 фильтр товаров:
                             </label>
                             <div className="col-md-4">
-                                <select className="form-control processing">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                <select className="form-control processing" value={this.state.existingFilterValue} onChange={this.filterProducts(0)}>
+                                    <option value="Все">Все</option>
+                                    <option value="Нет в наличии">Нет в наличии</option>
+                                    <option value="Есть в наличии">Есть в наличии</option>
                                 </select>
                             </div>
                             <div className="col-md-4">
-                                <select className="form-control processing">
-                                    <option>1</option>
-                                    <option>2</option>
-                                    <option>3</option>
-                                    <option>4</option>
+                                <select className="form-control processing" value={this.state.categoryFilterValue} onChange={this.filterProducts(1)}>
+                                    {
+                                        categoryNames && categoryNames.map((item, index) => <option value={item} key={index}>{item}</option>)
+                                    }
                                 </select>
                             </div>
                         </div>
                         <div className="search-block col-md-6">
-                            <input className="form-control" placeholder="Поиск по товаром" type="search" ref="filter" onChange={this.filterProducts}/>
-                            <button className="btn btn-default" onClick={this.filterProducts}>Найти</button>
+                            <input className="form-control" placeholder="Поиск по товаром" ref="filterByName" value={this.state.nameFilterValue} type="search" onChange={this.filterProducts(2)}/>
+                            <button className="btn btn-default" onClick={this.filterProducts(2)}>Найти</button>
                         </div>
                         <div className="clearfix"></div>
                     </div>
