@@ -941,7 +941,7 @@ p.circle-number > span,
     top: 6px;
     right: -5px;
     background: #f9b852;
-    min-width: 9px;
+    min-width: 15px;
     min-height: 13px;
     line-height: 11px;
     text-align: center;

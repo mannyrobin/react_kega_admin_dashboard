@@ -6,6 +6,8 @@ import ChooseFilials from "../ChooseFilials/ChooseFilials";
 import Pagination from "../pagination/Pagination";
 import axios from "axios";
 import querystring from "querystring";
+import Moment from 'moment';
+import { extendMoment } from 'moment-range';
 
 class Orders extends Component {
     constructor (props) {
@@ -14,7 +16,10 @@ class Orders extends Component {
         this.closeMoreDetails = this.closeMoreDetails.bind(this);
         this.removeChangedItem = this.removeChangedItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
+        this.onchangeDatePicker = this.onchangeDatePicker.bind(this);
         this.state = {
+            toDate: Moment().format('YYYY-MM-DD'),
+            fromDate: Moment().subtract(1, 'months').format('YYYY-MM-DD'),
             response: null,
             openOrderMoreDetails: {
                 enabled: false,
@@ -42,7 +47,6 @@ class Orders extends Component {
             }
             return item;
         });
-        debugger
         this.setState({response: newData, openOrderMoreDetails: {enabled: false, itemId: null}});
     }
 
@@ -67,7 +71,7 @@ class Orders extends Component {
                     },
                     responseType:'json'
                 }).then(function(response) {
-                    self.setState({response: response.data, activeButton: name})
+                    self.setState({response: response.data, activeButton: name, filteredResponseByDate: [], filteredByDate: false, toDate: Moment().format('YYYY-MM-DD'), fromDate: Moment().subtract(1, 'months').format('YYYY-MM-DD')});
                 }).catch(function(error){
                     throw new Error(error);
                 });
@@ -96,26 +100,25 @@ class Orders extends Component {
     //     this.setState({filteredResponseByDate: flteredData, IsFilteredByDate: true});
     // }
 
-    // filterProductsByBranch (e) {
-    //     debugger
-    //     let value = null;
-    //     if (!e) {
-    //         value = this.props.props.data.arr[0].sub_market_name;
-    //     } else {
-    //         value = e.target.value;
-    //     }
-    //     let branchId = null;
-    //     this.props.props.data.arr.filter(item => {
-    //         if (item.sub_market_name === value && !branchId) {
-    //             branchId = item.sub_market_id;
-    //         }
-    //     });
-    //     let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByDate) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
-    //     if (this.refs.filter) {
-    //         this.refs.filter.value = null;
-    //     }
-    //     this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByDate: []});
-    // }
+    filterOrdersByBranch (e) {
+        let value = null;
+        if (!e) {
+            value = this.props.props.data.arr[0].sub_market_name;
+        } else {
+            value = e.target.value;
+        }
+        let branchId = null;
+        this.props.props.data.arr.filter(item => {
+            if (item.sub_market_name === value && !branchId) {
+                branchId = item.sub_market_id;
+            }
+        });
+        let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByDate) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
+        if (this.refs.filter) {
+            this.refs.filter.value = null;
+        }
+        this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByDate: []});
+    }
 
     // getInfoForCertainPage () {
     //     let certainPageInfo = [],
@@ -149,7 +152,11 @@ class Orders extends Component {
             //     if (this.state.filteredResponse[i]) {
             //         certainPageInfo.push(this.state.filteredResponse[i]);
             //     }
-            if(this.state.response[i]) {
+            if (this.state.filteredByDate) {
+                if (this.state.filteredResponseByDate[i]) {
+                    certainPageInfo.push(this.state.filteredResponseByDate[i]);
+                }
+            } else if(this.state.response[i]) {
                 certainPageInfo.push(this.state.response[i]);
             }
         }
@@ -192,10 +199,6 @@ class Orders extends Component {
         this.getAllOrders(1);
     }
 
-    componentWillUnmount () {
-        localStorage.removeItem("allOrders");
-    }
-
     getAllOrders () {
         let self = this;
         axios({
@@ -218,9 +221,32 @@ class Orders extends Component {
 
     componentWillUnmount () {
         localStorage.removeItem("ordersPageNumber");
+        localStorage.removeItem("allOrders");
     }
 
-    render() {
+    onchangeDatePicker (date) {
+        return (e) => {
+            const moment = extendMoment(Moment);
+            let { toDate, fromDate } = this.state;
+            if (date === "to") {
+                toDate = e.target.value;
+            } else {
+                fromDate = e.target.value;
+            }
+            let range = moment.range(fromDate, toDate);
+            if (range.diff("days") < 0) {
+                return;
+            }
+
+            let filteredResponseByDate = this.state.response.filter(item => {
+                return range.contains(moment(item.start_date))
+            });
+
+            this.setState({filteredByDate: true, filteredResponseByDate, toDate, fromDate});
+        };
+    }
+
+    render () {
         if (!this.state.response) {
             return (
                 <div>Loading...</div>
@@ -235,7 +261,7 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <ChooseFilials /*filterProductsByBranch={this.filterProductsByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
+                    <ChooseFilials /*filterOrdersByBranch={this.filterOrdersByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
                     <div className="orders-block">
                         <div className="col-md-7">
                             {
@@ -251,10 +277,10 @@ class Orders extends Component {
                                 Выберите дату:
                             </label>
                             <div className="col-md-4">
-                                <input type="text" className="form-control" id="usr"/>
+                                <input type="date" onChange={this.onchangeDatePicker("from")} value={this.state.fromDate} className="form-control" id="usr"/>
                             </div>
                             <div className="col-md-4">
-                                <input type="text" className="form-control" id="usr"/>
+                                <input type="date" onChange={this.onchangeDatePicker("to")} value={this.state.toDate} className="form-control" id="usr"/>
                             </div>
                         </div>
                         <div className="clearfix"></div>

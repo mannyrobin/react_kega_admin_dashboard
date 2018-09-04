@@ -13,10 +13,12 @@ class CorpProfile extends Component {
         this.removeFilial = this.removeFilial.bind(this);
         this.addFilial = this.addFilial.bind(this);
         this.openMapPopup = this.openMapPopup.bind(this);
-        this.collectReqBody = this.collectReqBody.bind(this);
+        this.collectFilialReqBody = this.collectFilialReqBody.bind(this);
         this.closeRemoveFilialPopup = this.closeRemoveFilialPopup.bind(this);
         this.openRemoveFilialPopup = this.openRemoveFilialPopup.bind(this);
         this.sendFilialData = this.sendFilialData.bind(this);
+        this.collectDataOrganizationReqBody = this.collectDataOrganizationReqBody.bind(this);
+        this.sendContactData = this.sendContactData.bind(this);
         this.state = {
             filials: [],
             cities: [],
@@ -24,9 +26,49 @@ class CorpProfile extends Component {
                 lat: null,
                 lng: null
             },
-            reqBody: {},
-            filialToDelete: null
+            dataOrgReqBody: {
+                yuriForma: "0",
+                companyName: "",
+                organizationNameName: "",
+                address: "",
+                inn: "",
+                kpp: "",
+                ogrn: ""
+            },
+            filialToDelete: null,
         }
+    }
+
+    sendContactData () {
+        // let self = this;
+        // axios({
+        //     method:'post',
+        //     url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+        //     data: querystring.stringify({
+        //         sub_market_id: id,
+        //         data: self.state.dataOrgReqBody
+        //     }),
+        //     headers: {
+        //         'Content-type': 'application/x-www-form-urlencoded'
+        //     },
+        //     responseType:'json'
+        // }).then(function(response) {
+        //     let filials = self.state.filials.filter(filial => filial.id !== id);
+        //     if (response.data.change_status) {
+        //         self.closeRemoveFilialPopup();
+        //         self.setState({filials: filials})
+        //     }
+        // }).catch(function(error){
+        //     throw new Error(error);
+        // });
+    }
+
+    collectDataOrganizationReqBody (key) {
+        return (e) => {
+            let dataOrgReqBody = this.state.dataOrgReqBody;
+            dataOrgReqBody[key] = e.target.value;
+            this.setState({dataOrgReqBody});
+        };
     }
 
     openRemoveFilialPopup (id) {
@@ -78,7 +120,6 @@ class CorpProfile extends Component {
                 request_code: 4,
                 market_id: localStorage.getItem('market_id'),
                 data: self.state.filials
-
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
@@ -112,7 +153,7 @@ class CorpProfile extends Component {
         this.setState({filials: filials})
     }
 
-    collectReqBody (filialId, key) {
+    collectFilialReqBody (filialId, key) {
         return (e) => {
             let filials = this.state.filials;
             filials.map(filial => {
@@ -120,7 +161,7 @@ class CorpProfile extends Component {
                     filial[key] = e.target.value
                 }
             });
-            this.setState({filials: filials});
+            this.setState({filials});
         }
     }
 
@@ -187,38 +228,36 @@ class CorpProfile extends Component {
                                             <Col md={6}>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Наименование компании:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("companyName")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="sel1">Юридическая фирма:</label>
-                                                    <select className="form-control col-md-8" id="sel1">
-                                                        <option>1</option>
-                                                        <option>2</option>
-                                                        <option>3</option>
-                                                        <option>4</option>
+                                                    <select className="form-control col-md-8" id="sel1" value={this.state.yuriForma} onChange={this.collectDataOrganizationReqBody("yuriForma")}>
+                                                        <option value="0">ООО</option>
+                                                        <option value="1">ИП</option>
                                                     </select>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Юр. наименование организации:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("organizationNameName")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Юр. адрес:</label>
-                                                    <input type="text" className="form-control  col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("address")} id="usr"/>
                                                 </div>
                                             </Col>
                                             <Col md={6}>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">ИНН:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("inn")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">КПП:</label>
-                                                    <input type="text" className="form-control col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("kpp")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">ОГРН:</label>
-                                                    <input type="text" className="form-control  col-md-8" id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("ogrn")} id="usr"/>
                                                 </div>
                                             </Col>
                                             <div className="clearfix"></div>
@@ -234,7 +273,7 @@ class CorpProfile extends Component {
                                         </div>
                                         {
                                             this.state.filials.map((filial) => {
-                                                return <Filials key={filial.id} changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} openMapPopup={this.openMapPopup} />
+                                                return <Filials key={filial.id} changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectFilialReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} openMapPopup={this.openMapPopup} />
                                             })
                                         }
                                         <a className="add-filial" onClick={this.addFilial}>+ Добавить еще один</a>
