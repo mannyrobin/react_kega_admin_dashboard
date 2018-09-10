@@ -10,10 +10,10 @@ class AllProducts extends Component {
         super(props);
         this.state = {
             response: null,
-            filteredDataByBranch: [],
             filteredData: [],
+            alreadyFiltered: false,
+            callFromRender: false,
             itemToDelete: null,
-            alreadyFilteredByBranch: false,
             existingFilterValue: "",
             categoryFilterValue: "",
             nameFilterValue: ""
@@ -98,20 +98,36 @@ class AllProducts extends Component {
     }
 
     filterProductsByBranch (e) {
-        let value = null;
+        console.log("????????????  ", this.props.props.data.arr)
+        let value = null,
+            branchId = null,
+            self = this;
         if (!e) {
             value = this.props.props.data.arr[0].sub_market_name;
         } else {
             value = e.target.value;
         }
-        let branchId = null;
-        this.props.props.data.arr.filter(item => {
+        self.props.props.data.arr.filter(item => {
             if (item.sub_market_name === value && !branchId) {
                 branchId = item.sub_market_id;
             }
         });
-        let filteredData = this.state.response.filter(item => item.category_id === branchId);
-        this.setState({filteredDataByBranch: filteredData, filteredData: [], alreadyFilteredByBranch: true, existingFilterValue: "", categoryFilterValue: "", nameFilterValue: ""});
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
+            data: querystring.stringify({
+                request_code: 3,
+                sub_market_id: branchId
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({response: response.data, filteredData: [], existingFilterValue: "", categoryFilterValue: "", nameFilterValue: "", alreadyFiltered: false});
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     getExistingStatusCode (existingStatus) {
@@ -127,28 +143,24 @@ class AllProducts extends Component {
 
     filterProducts (filterType) {
         return (e) => {
-            let filterByExistingStatus = null,
-                filterByCategoryName = null,
-                filterByName = null,
-                value = e.target.value,
-                filteredData = this.state.filteredDataByBranch;
+            let { existingFilterValue, categoryFilterValue, nameFilterValue, response } = this.state;
+            let filterByExistingStatus = this.getExistingStatusCode(existingFilterValue),
+                filterByCategoryName = categoryFilterValue,
+                filterByName = nameFilterValue,
+                value = e && e.target.value,
+                filteredData = response;
             switch (filterType) {
                 case 0:
                     filterByExistingStatus = this.getExistingStatusCode(value);
-                    filterByCategoryName = this.state.categoryFilterValue;
-                    filterByName = this.state.nameFilterValue;
                     break;
                 case 1:
                     filterByCategoryName = value;
-                    filterByExistingStatus = this.getExistingStatusCode(this.state.existingFilterValue);
-                    filterByName = this.state.nameFilterValue;
                     break;
                 case 2:
                     filterByName = value || this.refs.filterByName.value;
-                    filterByExistingStatus = this.getExistingStatusCode(this.state.existingFilterValue);
-                    filterByCategoryName = this.state.categoryFilterValue;
                     break;
                 default:
+
                     break;
             }
             if (filterByName) {
@@ -157,7 +169,7 @@ class AllProducts extends Component {
                         item.name.toLowerCase().includes(filterByName.toLowerCase()) || item.manufacturer.toLowerCase().includes(filterByName.toLowerCase())
                     ));
                 } else {
-                    filteredData = this.state.response.filter(item => (
+                    filteredData = response.filter(item => (
                         item.name.toLowerCase().includes(filterByName.toLowerCase()) || item.manufacturer.toLowerCase().includes(filterByName.toLowerCase())
                     ));
                 }
@@ -167,10 +179,10 @@ class AllProducts extends Component {
             }
             if (filterByExistingStatus) {
                 if (filterByExistingStatus !== "2") {
-                    filteredData = filteredData.filter(item => item.existing_status === filterByExistingStatus);
+                    filteredData = filteredData.filter(item => item.existing_status == filterByExistingStatus);
                 }
             }
-            this.setState({filteredData, existingFilterValue: filterByExistingStatus === "0" ? "Нет в наличии" : filterByExistingStatus === "1" ? "Есть в наличии" : "Все", categoryFilterValue: filterByCategoryName, nameFilterValue: filterByName});
+            this.setState({filteredData, callFromRender: false, existingFilterValue: filterByExistingStatus === "0" ? "Нет в наличии" : filterByExistingStatus === "1" ? "Есть в наличии" : "Все", categoryFilterValue: filterByCategoryName, nameFilterValue: filterByName, alreadyFiltered: true});
         };
     }
 
@@ -193,7 +205,7 @@ class AllProducts extends Component {
                 if (response.data.change_status) {
                     let changedResponse = self.state.response;
                     changedResponse[changedResponse.indexOf(item)].existing_status = 1 - parseInt(item.existing_status);
-                    self.setState({response: changedResponse});
+                    self.setState({response: changedResponse, callFromRender: true});
                 }
             }).catch(function(error){
                 throw new Error(error);
@@ -227,23 +239,22 @@ class AllProducts extends Component {
         if (!pageNumber) {
             pageNumber = 0;
         }
-        if (!this.state.alreadyFilteredByBranch) {
-            this.filterProductsByBranch();
-        }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            if (this.state.filteredData.length || this.state.existingFilterValue || this.state.categoryFilterValue || this.state.nameFilterValue) {
-                if (this.state.filteredData[i]) {
+            if (this.state.filteredData.length || this.state.alreadyFiltered) {
+                if ((this.state.existingFilterValue || this.state.categoryFilterValue || this.state.nameFilterValue) && this.state.filteredData[i]) {
                     certainPageInfo.push(this.state.filteredData[i]);
                 }
-            } else if(this.state.filteredDataByBranch[i]) {
-                certainPageInfo.push(this.state.filteredDataByBranch[i]);
+            } else {
+                if (this.state.response[i]) {
+                    certainPageInfo.push(this.state.response[i]);
+                }
             }
         }
         return certainPageInfo;
     }
 
     getCategoryNames () {
-        let categoryNames = [];
+        let categoryNames = ["Все"];
         this.state.response.map(item => {
             if (item && categoryNames.indexOf(item.category_name) === -1) {
                 categoryNames.push(item.category_name);
@@ -257,6 +268,7 @@ class AllProducts extends Component {
     }
 
     render() {
+        this.state.callFromRender && this.filterProducts()();
         if (!this.state.response) {
             return (
                 <div>Loading...</div>
