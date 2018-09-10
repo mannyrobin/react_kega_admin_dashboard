@@ -23,7 +23,7 @@ class AllProducts extends Component {
         this.openDeletePopup = this.openDeletePopup.bind(this);
         this.closeDeletePopup = this.closeDeletePopup.bind(this);
         this.deleteProduct = this.deleteProduct.bind(this);
-        this.filterProductsByBranch = this.filterProductsByBranch.bind(this);
+        this.getProductsByBranch = this.getProductsByBranch.bind(this);
     }
 
     openEditPage (id) {
@@ -97,8 +97,7 @@ class AllProducts extends Component {
         return pages;
     }
 
-    filterProductsByBranch (e) {
-        console.log("????????????  ", this.props.props.data.arr)
+    getProductsByBranch (e) {
         let value = null,
             branchId = null,
             self = this;
@@ -279,7 +278,7 @@ class AllProducts extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials filterProductsByBranch={this.filterProductsByBranch} title="Все товары" filials={this.props.props.data.arr} />
+                    <ChooseFilials getByBranch={this.getProductsByBranch} title="Все товары" filials={this.props.props.data.arr} />
                     <div className="products-filter">
                         <div className="choose-date prod-filters-select col-md-6">
                             <label className="col-md-4" htmlFor="usr">

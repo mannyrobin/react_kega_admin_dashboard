@@ -14,6 +14,7 @@ class Orders extends Component {
         super(props);
         this.openMoreDetails = this.openMoreDetails.bind(this);
         this.closeMoreDetails = this.closeMoreDetails.bind(this);
+        this.getOrdersByBranch = this.getOrdersByBranch.bind(this);
         this.removeChangedItem = this.removeChangedItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
         this.onchangeDatePicker = this.onchangeDatePicker.bind(this);
@@ -100,7 +101,7 @@ class Orders extends Component {
     //     this.setState({filteredResponseByDate: flteredData, IsFilteredByDate: true});
     // }
 
-    filterOrdersByBranch (e) {
+    getOrdersByBranch (e) {
         let value = null;
         if (!e) {
             value = this.props.props.data.arr[0].sub_market_name;
@@ -261,7 +262,7 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <ChooseFilials /*filterOrdersByBranch={this.filterOrdersByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
+                    <ChooseFilials /*getByBranch={this.getOrdersByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
                     <div className="orders-block">
                         <div className="col-md-7">
                             {
