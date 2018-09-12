@@ -75,7 +75,6 @@ class ProductCat extends Component {
 
     removeCategory (id) {
         return () => {
-            debugger
             let self = this,
                 res = self.state.response,
                 count = null;
