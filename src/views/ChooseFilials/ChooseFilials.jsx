@@ -11,12 +11,12 @@ class ChooseFilials extends Component {
                         <select className="form-control col-md-7" onChange={this.props.getByBranch && this.props.getByBranch} id="sel1">
                             {
                                 this.props.filials && this.props.filials.map(filial => {
-                                    return <option key={filial.sub_market_id}>{filial.sub_market_name}</option>
+                                    return <option value={filial.sub_market_id} key={filial.sub_market_id}>{filial.sub_market_name}</option>
                                 })
                             }
                         </select>
                     </div>
-                    <div className="clearfix"></div>
+                    <div className="clearfix"/>
                 </h2>
             </div>
         );

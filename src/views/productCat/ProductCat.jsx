@@ -77,13 +77,13 @@ class ProductCat extends Component {
         return () => {
             let self = this,
                 res = self.state.response,
-                count = null;
+                itemToDelete = null;
             res.map(item => {
-                if (item.id === id && parseInt(item.count) > 0) {
-                    count = item.count;
+                if (item.id === id && parseInt(item.count) === 0) {
+                    itemToDelete = true;
                 }
             });
-            if (count) {
+            if (itemToDelete) {
                 axios({
                     method:'post',
                     url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",

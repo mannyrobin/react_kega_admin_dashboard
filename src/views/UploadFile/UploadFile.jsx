@@ -11,7 +11,7 @@ class UploadFile extends Component {
         let _URL = window.URL || window.webkitURL,
             currentImg = e.target.name,
             files = e.target.files,
-            {props} = this;
+            { props } = this;
         if (files && files[0]) {
             let img = new Image();
             img.onload = function() {
@@ -19,7 +19,7 @@ class UploadFile extends Component {
                     imgWidth = this.width,
                     imgHeight = this.height,
                     maxImgWidth = currentImg === "littleImg" ? props.littleImgWidth : (currentImg === "largeImg") ? props.largeImgWidth : null,
-                    maxImgheight = currentImg === "littleImg" ? props.littleImgHeight : (currentImg === "largeImg") ? props.largeImgHeight : null
+                    maxImgheight = currentImg === "littleImg" ? props.littleImgHeight : (currentImg === "largeImg") ? props.largeImgHeight : null;
 
                 reader.onload = function(event) {
                     if (imgWidth < maxImgWidth || imgHeight < maxImgheight) {
@@ -27,6 +27,12 @@ class UploadFile extends Component {
                         return
                     }
                     document.getElementById(currentImg).src = event.target.result;
+                    let base64Img = event.target.result.replace(/^data:image\/jpeg;base64,+/i, '');
+                    if (currentImg === "littleImg") {
+                        props.setLittleImg(base64Img);
+                    } else {
+                        props.setLargeImg(base64Img);
+                    }
                 };
                 reader.readAsDataURL(files[0]);
             };
@@ -68,7 +74,7 @@ class UploadFile extends Component {
                         <p className="img-size">Минимум {this.props.largeImgWidth}х{this.props.largeImgHeight} пикс. в формате jpg</p>
                     </div>
                 </Col>
-                <div className="clearfix"></div>
+                <div className="clearfix"/>
             </div>
         );
     }

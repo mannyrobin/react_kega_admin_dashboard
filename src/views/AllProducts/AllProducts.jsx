@@ -30,7 +30,13 @@ class AllProducts extends Component {
         return () => {
             this.state.response.filter(item => {
                 if (item.id === id) {
-                    localStorage.setItem("itemToEdit", JSON.stringify(item));
+                    let editableFields = {
+                        item_name: item.name,
+                        price: item.price,
+                        alchohol_percent: item.alcohol_percent,
+                        item_description: item.description
+                    };
+                    localStorage.setItem("itemToEdit", JSON.stringify(editableFields));
                 }
             });
             window.location.href = window.location.origin + "/#/add_product";
@@ -174,7 +180,9 @@ class AllProducts extends Component {
                 }
             }
             if (filterByCategoryName) {
-                filteredData = filteredData.filter(item => item.category_name.toLowerCase() === filterByCategoryName.toLowerCase());
+                if (filterByCategoryName !== "Все") {
+                    filteredData = filteredData.filter(item => item.category_name.toLowerCase() === filterByCategoryName.toLowerCase());
+                }
             }
             if (filterByExistingStatus) {
                 if (filterByExistingStatus !== "2") {
@@ -303,7 +311,7 @@ class AllProducts extends Component {
                             <input className="form-control" placeholder="Поиск по товаром" ref="filterByName" value={this.state.nameFilterValue} type="search" onChange={this.filterProducts(2)}/>
                             <button className="btn btn-default" onClick={this.filterProducts(2)}>Найти</button>
                         </div>
-                        <div className="clearfix"></div>
+                        <div className="clearfix" />
                     </div>
                     <Col md={12}>
                         <div className="custom-table product-table">
@@ -323,7 +331,7 @@ class AllProducts extends Component {
                                     this.getInfoForCertainPage().map((item, index) => {
                                         return (
                                             <tr className="no-in-stock" key={index}>
-                                                <td className="prod-img" width="62px"><img src={item.icon_url}></img></td>
+                                                <td className="prod-img" width="62px"><img src={item.icon_url} /></td>
                                                 <td>{item.manufacturer} - {item.name}</td>
                                                 <td>{item.category_name}</td>
                                                 <td>{item.price}</td>
@@ -333,7 +341,7 @@ class AllProducts extends Component {
                                                         <option value="1">Есть в наличии</option>
                                                     </select>
                                                 </td>
-                                                <td><span className="edit" onClick={this.openEditPage(item.id)}></span><span className="trash pe-7s-trash" onClick={this.openDeletePopup(item.id)}></span></td>
+                                                <td><span className="edit" onClick={this.openEditPage(item.id)} /><span className="trash pe-7s-trash" onClick={this.openDeletePopup(item.id)} /></td>
                                             </tr>
                                         )
                                     })
@@ -342,7 +350,7 @@ class AllProducts extends Component {
                             </Table>
                         </div>
                     </Col>
-                    <div className="clearfix"></div>
+                    <div className="clearfix" />
                     {
                         paginationInfo.length > 1 && <Pagination pageName="productsPageNumber" arr={this.props.props.data.arr} pages={paginationInfo} getCertainInfos={this.getCertainInfos} self={this} />
                     }

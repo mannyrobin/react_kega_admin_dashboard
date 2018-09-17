@@ -156,7 +156,7 @@ class CorpProfile extends Component {
     collectFilialReqBody (filialId, key) {
         return (e) => {
             let filials = this.state.filials;
-            filials.map(filial => {
+            filials && filials.map(filial => {
                 if (filial.id === filialId) {
                     filial[key] = e.target.value
                 }
@@ -185,7 +185,7 @@ class CorpProfile extends Component {
         });
         axios({
             method:'post',
-            url: "http://u0419737.cp.regruhosting.ru/kega/index.php",
+            url: "http://u0419737.cp.regruhosting.ru/kega/location_controller.php",
             data: querystring.stringify({
                 city_list: 1
             }),
@@ -196,7 +196,7 @@ class CorpProfile extends Component {
         }).then(function(response) {
             self.setState({cities: response.data});
         }).catch(function(error){
-            throw new Error(error);
+            // throw new Error(error);
         });
     }
 
@@ -216,7 +216,7 @@ class CorpProfile extends Component {
                             <div className="content">
                                 <h2 className="custom-header-h2 custom-dashboard-header">
                                     <span className="uppercase">Профиль компании</span>
-                                    <div className="clearfix"></div>
+                                    <div className="clearfix"/>
                                 </h2>
                             </div>
                             <Card
@@ -260,7 +260,7 @@ class CorpProfile extends Component {
                                                     <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("ogrn")} id="usr"/>
                                                 </div>
                                             </Col>
-                                            <div className="clearfix"></div>
+                                            <div className="clearfix"/>
                                             <button type="submit" onClick={this.sendContactData}
                                                     className="custom-violet-btn btn">Сохранить
                                             </button>
@@ -272,7 +272,7 @@ class CorpProfile extends Component {
                                             <h4>Филиалы</h4>
                                         </div>
                                         {
-                                            this.state.filials.map((filial) => {
+                                            this.state.filials && this.state.filials.map((filial) => {
                                                 return <Filials key={filial.id} changeCityName={this.changeCityName} cities={this.state.cities} filial={filial} collectReqBody={this.collectFilialReqBody} openRemoveFilialPopup={this.openRemoveFilialPopup} openMapPopup={this.openMapPopup} />
                                             })
                                         }
