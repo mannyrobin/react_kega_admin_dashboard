@@ -112,24 +112,38 @@ class CorpProfile extends Component {
 
     sendFilialData (e) {
         e.preventDefault();
-        let self = this;
-        axios({
-            method:'post',
-            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
-            data: querystring.stringify({
-                request_code: 4,
-                market_id: localStorage.getItem('market_id'),
-                data: self.state.filials
-            }),
-            headers: {
-                'Content-type': 'application/x-www-form-urlencoded'
-            },
-            responseType:'json'
-        }).then(function(response) {
-            // self.setState({filials: response.data})
-        }).catch(function(error){
-            throw new Error(error);
-        });
+        let self = this,
+            filials = this.state.filials;
+        for (let i = 0; i < filials.length; ++i) {
+            let currentFilial = filials[i],
+                reqObj = {
+                    address: currentFilial.address,
+                    city_id: currentFilial.city_id,
+                    closing_time: currentFilial.closing_time,
+                    contact_name: currentFilial.contact_name,
+                    lattitude: currentFilial.lattitude,
+                    longitude: currentFilial.longitude,
+                    mail: currentFilial.mail,
+                    market_id: localStorage.getItem('market_id'),
+                    mobile_number: currentFilial.mobile_number,
+                    sub_market_name: this.props.props.data.arr[0].sub_market_id,
+                    opening_time: currentFilial.opening_time,
+                    request_code: 4
+                };
+            axios({
+                method:'post',
+                url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+                data: querystring.stringify(reqObj),
+                headers: {
+                    'Content-type': 'application/x-www-form-urlencoded'
+                },
+                responseType:'json'
+            }).then(function(response) {
+                // self.setState({filials: response.data})
+            }).catch(function(error){
+                throw new Error(error);
+            });
+        }
     }
 
     openMapPopup (params) {
