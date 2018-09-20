@@ -17,11 +17,15 @@ class CorpProfile extends Component {
         this.closeRemoveFilialPopup = this.closeRemoveFilialPopup.bind(this);
         this.openRemoveFilialPopup = this.openRemoveFilialPopup.bind(this);
         this.sendFilialData = this.sendFilialData.bind(this);
+        this.setLittleImg = this.setLittleImg.bind(this);
+        this.setLargeImg = this.setLargeImg.bind(this);
         this.collectDataOrganizationReqBody = this.collectDataOrganizationReqBody.bind(this);
         this.sendContactData = this.sendContactData.bind(this);
         this.state = {
-            filials: [],
+            filials: null,
             cities: [],
+            comericalData: null,
+            images: null,
             mapParams: {
                 lat: null,
                 lng: null
@@ -40,34 +44,29 @@ class CorpProfile extends Component {
     }
 
     sendContactData () {
-        // let self = this;
-        // axios({
-        //     method:'post',
-        //     url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
-        //     data: querystring.stringify({
-        //         sub_market_id: id,
-        //         data: self.state.dataOrgReqBody
-        //     }),
-        //     headers: {
-        //         'Content-type': 'application/x-www-form-urlencoded'
-        //     },
-        //     responseType:'json'
-        // }).then(function(response) {
-        //     let filials = self.state.filials.filter(filial => filial.id !== id);
-        //     if (response.data.change_status) {
-        //         self.closeRemoveFilialPopup();
-        //         self.setState({filials: filials})
-        //     }
-        // }).catch(function(error){
-        //     throw new Error(error);
-        // });
+        let self = this,
+            reqData = this.state.comericalData;
+        reqData.request_code  = 13;
+        reqData.market_id = localStorage.getItem("market_id");
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify(reqData),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     collectDataOrganizationReqBody (key) {
         return (e) => {
-            let dataOrgReqBody = this.state.dataOrgReqBody;
-            dataOrgReqBody[key] = e.target.value;
-            this.setState({dataOrgReqBody});
+            let comericalData = this.state.comericalData;
+            comericalData[key] = e.target.value;
+            this.setState({comericalData});
         };
     }
 
@@ -117,6 +116,7 @@ class CorpProfile extends Component {
         for (let i = 0; i < filials.length; ++i) {
             let currentFilial = filials[i],
                 reqObj = {
+                    id: currentFilial.id,
                     address: currentFilial.address,
                     city_id: currentFilial.city_id,
                     closing_time: currentFilial.closing_time,
@@ -161,7 +161,7 @@ class CorpProfile extends Component {
 
     addFilial () {
         let filials = this.state.filials,
-            newFilialId = (parseInt(filials[filials.length - 1].id) + 1).toString(),
+            newFilialId = "-1",
             newFilial = {id: newFilialId};
         filials.push(newFilial);
         this.setState({filials: filials})
@@ -177,6 +177,47 @@ class CorpProfile extends Component {
             });
             this.setState({filials});
         }
+    }
+
+    setLittleImg (img) {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 12,
+                market_id: localStorage.getItem('market_id'),
+                market_logo: img
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+        }).catch(function(error){
+            throw new Error(error);
+        });
+    }
+
+
+    setLargeImg (img) {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 11,
+                market_id: localStorage.getItem('market_id'),
+                market_banner: img
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     componentDidMount () {
@@ -210,12 +251,45 @@ class CorpProfile extends Component {
         }).then(function(response) {
             self.setState({cities: response.data});
         }).catch(function(error){
-            // throw new Error(error);
+            throw new Error(error);
+        });
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 9,
+                market_id: localStorage.getItem('market_id')
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({comericalData: response.data});
+        }).catch(function(error){
+            throw new Error(error);
+        });
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
+            data: querystring.stringify({
+                request_code: 10,
+                market_id: localStorage.getItem('market_id')
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({images: response.data});
+        }).catch(function(error){
+            throw new Error(error);
         });
     }
 
     render() {
-        if (!this.state.filials) {
+        let { filials, comericalData, images } = this.state;
+        if (!filials || !comericalData || !images) {
             return (
                 <div>
                     ...Loading
@@ -242,36 +316,36 @@ class CorpProfile extends Component {
                                             <Col md={6}>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Наименование компании:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("companyName")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.company_name} onChange={this.collectDataOrganizationReqBody("company_name")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="sel1">Юридическая фирма:</label>
-                                                    <select className="form-control col-md-8" id="sel1" value={this.state.yuriForma} onChange={this.collectDataOrganizationReqBody("yuriForma")}>
-                                                        <option value="0">ООО</option>
-                                                        <option value="1">ИП</option>
+                                                    <select className="form-control col-md-8" id="sel1" value={this.state.comericalData.company_type} onChange={this.collectDataOrganizationReqBody("company_type")}>
+                                                        <option value="0">ИП</option>
+                                                        <option value="1">ООО</option>
                                                     </select>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Юр. наименование организации:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("organizationNameName")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.comercial_name} onChange={this.collectDataOrganizationReqBody("comercial_name")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">Юр. адрес:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("address")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.comercial_address} onChange={this.collectDataOrganizationReqBody("comercial_address")} id="usr"/>
                                                 </div>
                                             </Col>
                                             <Col md={6}>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">ИНН:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("inn")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.inn} onChange={this.collectDataOrganizationReqBody("inn")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">КПП:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("kpp")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.kpp} onChange={this.collectDataOrganizationReqBody("kpp")} id="usr"/>
                                                 </div>
                                                 <div className="form-group">
                                                     <label className="col-md-4" htmlFor="usr">ОГРН:</label>
-                                                    <input type="text" className="form-control col-md-8" onChange={this.collectDataOrganizationReqBody("ogrn")} id="usr"/>
+                                                    <input type="text" className="form-control col-md-8" value={comericalData.ogrn} onChange={this.collectDataOrganizationReqBody("ogrn")} id="usr"/>
                                                 </div>
                                             </Col>
                                             <div className="clearfix"/>
@@ -280,7 +354,7 @@ class CorpProfile extends Component {
                                             </button>
                                         </div>
                                         <hr className="custom-hr"/>
-                                        <UploadFile littleImgWidth={350} littleImgHeight={350} largeImgWidth={640} largeImgHeight={355} />
+                                        <UploadFile images={images} setLittleImg={this.setLittleImg} setLargeImg={this.setLargeImg} littleImgWidth={350} littleImgHeight={350} largeImgWidth={640} largeImgHeight={355} />
                                         <hr className="custom-hr"/>
                                         <div className="custom-block filials">
                                             <h4>Филиалы</h4>

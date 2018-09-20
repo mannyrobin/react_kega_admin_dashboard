@@ -49,7 +49,7 @@ class UploadFile extends Component {
                 <h4>визуальный образ</h4>
                 <Col md={6}>
                     <div className="img-block">
-                        <img id="littleImg"/>
+                        <img src={this.props.images && this.props.images.logo_url} id="littleImg"/>
                     </div>
                     <div>
                         <p className="upload-img">Загрузите логотип</p>
@@ -63,7 +63,7 @@ class UploadFile extends Component {
                 </Col>
                 <Col md={6}>
                     <div className="img-block img-large">
-                        <img id="largeImg"/>
+                        <img src={this.props.images && this.props.images.banner_url} id="largeImg"/>
                     </div>
                     <div>
                         <p className="upload-img">Загрузите логотип</p>
