@@ -11,7 +11,7 @@ class Pagination extends Component {
 
     render() {
         let self = this,
-            pageNumber = parseInt(localStorage.getItem('pageNumber'));
+            pageNumber = parseInt(localStorage.getItem(this.props.pageName));
         if (!pageNumber) {
             pageNumber = 0;
         }

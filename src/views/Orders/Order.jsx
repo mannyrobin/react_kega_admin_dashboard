@@ -34,7 +34,6 @@ class Order extends Component {
 
     render () {
         let items = JSON.parse(this.props.item.items);
-        console.log("5555555555555555555555  ", this.props)
 
         return (
             <div className="content main-order-page">

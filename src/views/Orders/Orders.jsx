@@ -197,7 +197,7 @@ class Orders extends Component {
 
     componentDidMount () {
         localStorage.setItem("allOrders", true);
-        this.getAllOrders(1);
+        this.getAllOrders();
     }
 
     getAllOrders () {

@@ -48,7 +48,7 @@ class Info extends Component {
                 <td>{this.state.item.id && this.state.item.id}</td>
                 <td>{this.state.item.start_date && this.state.item.start_date}</td>
                 <td>{this.state.item.finish_date && this.state.item.finish_date}</td>
-                <td>John</td>
+                <td>{this.state.item.total_price && this.state.item.total_price}</td>
                 <td>{this.state.item.user_name && this.state.item.user_name}</td>
                 <td>{this.state.item.mobile_number && this.state.item.mobile_number}</td>
                 <td>
