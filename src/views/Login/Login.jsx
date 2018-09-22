@@ -29,6 +29,7 @@ class Login extends Component {
         }).then(function(response) {
             if (response.data && !response.data.error) {
                 localStorage.setItem('market_id', marketId);
+                localStorage.setItem('sub_market_id', response.data.arr[0].sub_market_id);
                 self.props.doLogin(response);
             } else {
                 alert("wrong username or password");

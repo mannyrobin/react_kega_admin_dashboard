@@ -32,6 +32,11 @@ class Order extends Component {
         });
     }
 
+    componentWillMount () {
+        localStorage.removeItem("notificationEnabled");
+        localStorage.removeItem("notificationItemId");
+    }
+
     render () {
         let items = JSON.parse(this.props.item.items);
 

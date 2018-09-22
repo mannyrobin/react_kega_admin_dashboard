@@ -32,14 +32,18 @@ class AllProducts extends Component {
                 if (item.id === id) {
                     let editableFields = {
                         item_name: item.name,
+                        cover_url: item.cover_url,
+                        icon_url: item.icon_url,
                         price: item.price,
                         alchohol_percent: item.alcohol_percent,
-                        item_description: item.description
+                        item_description: item.description,
+                        id: item.id,
+                        capacity: item.capacity
                     };
                     localStorage.setItem("itemToEdit", JSON.stringify(editableFields));
                 }
             });
-            window.location.href = window.location.origin + "/#/add_product";
+            window.location.href = window.location.origin + "/#/edit_product";
         };
     }
 
@@ -104,19 +108,9 @@ class AllProducts extends Component {
     }
 
     getProductsByBranch (e) {
-        let value = null,
-            branchId = null,
+        let branchId = e.target.value,
             self = this;
-        if (!e) {
-            value = this.props.props.data.arr[0].sub_market_name;
-        } else {
-            value = e.target.value;
-        }
-        self.props.props.data.arr.filter(item => {
-            if (item.sub_market_name === value && !branchId) {
-                branchId = item.sub_market_id;
-            }
-        });
+        localStorage.setItem('sub_market_id', branchId);
         axios({
             method:'post',
             url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",

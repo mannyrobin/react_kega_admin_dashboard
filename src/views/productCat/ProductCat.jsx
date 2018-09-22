@@ -11,11 +11,18 @@ class ProductCat extends Component {
         this.addCategory = this.addCategory.bind(this);
         this.openEditField = this.openEditField.bind(this);
         this.updateCategory = this.updateCategory.bind(this);
+        this.changeBranchId = this.changeBranchId.bind(this);
         this.closeRemoveCategoryPopup = this.closeRemoveCategoryPopup.bind(this);
         this.state = {
             response: null,
             openPopup: false
         }
+    }
+
+    changeBranchId (e) {
+        let value = e.target.value;
+        localStorage.setItem('sub_market_id', value);
+        this.setState({selectedFielialId: value});
     }
 
     closeRemoveCategoryPopup () {
@@ -181,7 +188,7 @@ class ProductCat extends Component {
                 <Grid fluid>
                     <Row>
                         <div className="col-md-12 add-stock">
-                            <ChooseFilials title="Категории товаров" filials={this.props.props.data.arr}  />
+                            <ChooseFilials getByBranch={this.changeBranchId} title="Категории товаров" filials={this.props.props.data.arr}  />
                             <div className="col-md-5">
                                 <h3>Категории</h3>
                                 {

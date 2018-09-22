@@ -7,7 +7,7 @@ import UploadFile from "../UploadFile/UploadFile";
 import axios from "axios/index";
 import querystring from "querystring";
 
-class AddProduct extends Component {
+class EditProduct extends Component {
     constructor(props) {
         super(props);
         this.sendProductData = this.sendProductData.bind(this);
@@ -54,11 +54,14 @@ class AddProduct extends Component {
     sendProductData (e) {
         e.preventDefault();
         let self = this,
-            { reqBody, selectedFielialId } = this.state;
+            { reqBody } = this.state,
+            itemToEdit = JSON.parse(localStorage.getItem("itemToEdit"));
         reqBody.market_id = localStorage.getItem('market_id');
-        reqBody.sub_market_id = selectedFielialId;
-        reqBody.request_code = 5;
-        if (Object.keys(reqBody).length >0) {
+        reqBody.sub_market_id = this.props.props.data.arr[0].sub_market_id;
+        reqBody.request_code = 6;
+        reqBody.id = itemToEdit.id;
+
+        if (Object.keys(reqBody).length > 0) {
             axios({
                 method:'post',
                 url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
@@ -68,11 +71,9 @@ class AddProduct extends Component {
                 },
                 responseType:'json'
             }).then(function(response) {
-                localStorage.removeItem("itemToEdit")
-                let newReqBody= {};
-                newReqBody.category_id = reqBody.category_id;
-                newReqBody.unit_id = reqBody.unit_id;
-                self.setState({reqBody: newReqBody})
+                if (response.data && response.data.update_status) {
+                    window.location.href = window.location.origin + "/#/all_products";
+                }
             }).catch(function(error){
                 throw new Error(error);
             });
@@ -80,7 +81,8 @@ class AddProduct extends Component {
     }
 
     componentDidMount () {
-        let self = this;
+        let self = this,
+            itemToEdit = JSON.parse(localStorage.getItem("itemToEdit"));
         axios({
             method:'post',
             url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
@@ -101,6 +103,15 @@ class AddProduct extends Component {
                     unit_id: "1"
                 }
             };
+            if (itemToEdit) {
+                resObj = {
+                    ...resObj,
+                    reqBody: {
+                        ...resObj.reqBody,
+                        ...itemToEdit,
+                    }
+                }
+            }
             self.setState(resObj);
         }).catch(function(error){
             throw new Error(error);
@@ -121,7 +132,7 @@ class AddProduct extends Component {
         return (
             <div className="content">
                 <Grid fluid>
-                    <ChooseFilials title="Добавление товара" getByBranch={this.changeBranchId} filials={this.props.props.data.arr}  />
+                    <ChooseFilials title="Изменить товар" getByBranch={this.changeBranchId} filials={this.props.props.data.arr}  />
                     <Row>
                         <Col md={12}>
                             <Card
@@ -152,8 +163,8 @@ class AddProduct extends Component {
                                             <div className="add-product-sub-block2">
                                                 <div className="form-group first">
                                                     <label htmlFor="count-or-weight">Введите кол-во</label>
-                                                    <input className="form-control" type="number" name="count-or-weight"
-                                                           defaultValue={this.state.reqBody.price} placeholder="Вес или объем" onChange={this.collectReqBody("item_size")}
+                                                    <input defaultValue={this.state.reqBody.capacity} className="form-control" type="number" name="count-or-weight"
+                                                           placeholder="Вес или объем" onChange={this.collectReqBody("item_size")}
                                                            id="count-or-weight"/>
                                                 </div>
                                                 <div className="form-group">
@@ -192,7 +203,7 @@ class AddProduct extends Component {
                                             <div className="clearfix"/>
                                         </div>
                                         <hr className="custom-hr"/>
-                                        <UploadFile littleImgWidth={370} littleImgHeight={370} largeImgWidth={750} largeImgHeight={370} setLittleImg={this.setLittleImg} setLargeImg={this.setLargeImg} />
+                                        <UploadFile images={{logo_url: this.state.reqBody.icon_url, banner_url: this.state.reqBody.cover_url}} littleImgWidth={370} littleImgHeight={370} largeImgWidth={750} largeImgHeight={370} setLittleImg={this.setLittleImg} setLargeImg={this.setLargeImg} />
                                         <hr className="custom-hr"/>
                                         <button type="submit" onClick={this.sendProductData}
                                                 className="custom-violet-btn btn">Сохранить
@@ -208,4 +219,4 @@ class AddProduct extends Component {
     }
 }
 
-export default AddProduct;
+export default EditProduct;

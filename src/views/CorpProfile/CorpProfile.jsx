@@ -70,6 +70,16 @@ class CorpProfile extends Component {
         };
     }
 
+    openSaveFilialPopup () {
+        let popup = document.getElementById("save-filial-popup");
+        popup.className = popup.className + " open-popup";
+    }
+
+    closeSaveFilialPopup () {
+        let popup = document.getElementById("save-filial-popup");
+        popup.className = popup.className.replace(" open-popup", "");
+    }
+
     openRemoveFilialPopup (id) {
         return () => {
             let popup = document.getElementById("remove-filial-popup");
@@ -112,7 +122,8 @@ class CorpProfile extends Component {
     sendFilialData (e) {
         e.preventDefault();
         let self = this,
-            filials = this.state.filials;
+            filials = this.state.filials,
+            lastFilialNumber = 0;
         for (let i = 0; i < filials.length; ++i) {
             let currentFilial = filials[i],
                 reqObj = {
@@ -126,10 +137,11 @@ class CorpProfile extends Component {
                     mail: currentFilial.mail,
                     market_id: localStorage.getItem('market_id'),
                     mobile_number: currentFilial.mobile_number,
-                    sub_market_name: this.props.props.data.arr[0].sub_market_id,
+                    sub_market_name: currentFilial.name,
                     opening_time: currentFilial.opening_time,
                     request_code: 4
                 };
+
             axios({
                 method:'post',
                 url: "http://u0419737.cp.regruhosting.ru/kega/markets_controller.php",
@@ -139,7 +151,10 @@ class CorpProfile extends Component {
                 },
                 responseType:'json'
             }).then(function(response) {
-                // self.setState({filials: response.data})
+                ++lastFilialNumber;
+                if (response.data.add_status && lastFilialNumber === filials.length) {
+                    self.openSaveFilialPopup();
+                }
             }).catch(function(error){
                 throw new Error(error);
             });
@@ -160,19 +175,31 @@ class CorpProfile extends Component {
     }
 
     addFilial () {
-        let filials = this.state.filials,
+        let { filials, cities }= this.state,
             newFilialId = "-1",
-            newFilial = {id: newFilialId};
+            newFilial = {
+                id: newFilialId,
+                city_name: cities[0].city_name,
+                city_id: cities[0].id
+            };
         filials.push(newFilial);
         this.setState({filials: filials})
     }
 
     collectFilialReqBody (filialId, key) {
         return (e) => {
-            let filials = this.state.filials;
+            let { filials, cities } = this.state,
+                value = e.target.value;
             filials && filials.map(filial => {
                 if (filial.id === filialId) {
-                    filial[key] = e.target.value
+                    filial[key] = value;
+                    if (key === "city_name") {
+                        cities.map(item => {
+                            if (item.city_name === value) {
+                                filial["city_id"] = item.id;
+                            }
+                        });
+                    }
                 }
             });
             this.setState({filials});
@@ -249,7 +276,7 @@ class CorpProfile extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            self.setState({cities: response.data});
+            self.setState({cities: response.data, defaultCityId: response.data[0].id});
         }).catch(function(error){
             throw new Error(error);
         });
@@ -387,6 +414,13 @@ class CorpProfile extends Component {
                         <p>Удалить этот Филиал?</p>
                         <button className="btn" onClick={this.removeFilial}>Да</button>
                         <button className="btn" onClick={this.closeRemoveFilialPopup}>Нет</button>
+                    </div>
+                </div>
+                <div id="save-filial-popup" className="popup-block">
+                    <div className="popup-inner-delete">
+                        <span className="close-icon" onClick={this.closeSaveFilialPopup}>x</span>
+                        <p>Филиалы успешно сохранены</p>
+                        <button className="btn" onClick={this.closeSaveFilialPopup}>Ок</button>
                     </div>
                 </div>
             </div>

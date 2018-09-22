@@ -56,7 +56,7 @@ class Sidebar extends Component{
                         {
                             appRoutes.map((prop, index) => {
                                 if(!prop.redirect) {
-                                    if (prop.child && !this.state.dropDowned) {
+                                    if (prop.child && !this.state.dropDowned || prop.path === "/edit_product") {
                                         return null;
                                     }
                                     return (

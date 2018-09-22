@@ -49,7 +49,7 @@ class UploadFile extends Component {
                 <h4>визуальный образ</h4>
                 <Col md={6}>
                     <div className="img-block">
-                        <img src={this.props.images && this.props.images.logo_url} id="littleImg"/>
+                        <img src={this.props.images && this.props.images.logo_url } id="littleImg"/>
                     </div>
                     <div>
                         <p className="upload-img">Загрузите логотип</p>
@@ -66,7 +66,7 @@ class UploadFile extends Component {
                         <img src={this.props.images && this.props.images.banner_url} id="largeImg"/>
                     </div>
                     <div>
-                        <p className="upload-img">Загрузите логотип</p>
+                        <p className="upload-img">Загрузите обложку</p>
                         <label className="btn" htmlFor="my-file-selector2">
                             <input id="my-file-selector2" name="largeImg" type="file" accept=".jpg" onChange={this.showImg}/>
                             Загрузить

@@ -14,7 +14,7 @@ class Orders extends Component {
         super(props);
         this.openMoreDetails = this.openMoreDetails.bind(this);
         this.closeMoreDetails = this.closeMoreDetails.bind(this);
-        this.getOrdersByBranch = this.getOrdersByBranch.bind(this);
+        this.changeFililal = this.changeFililal.bind(this);
         this.removeChangedItem = this.removeChangedItem.bind(this);
         this.updateItem = this.updateItem.bind(this);
         this.onchangeDatePicker = this.onchangeDatePicker.bind(this);
@@ -23,8 +23,9 @@ class Orders extends Component {
             fromDate: Moment().subtract(1, 'months').format('YYYY-MM-DD'),
             response: null,
             openOrderMoreDetails: {
-                enabled: false,
-                itemId: null
+                enabled: localStorage.getItem("notificationEnabled"),
+                itemId: localStorage.getItem("notificationItemId"),
+                loadedItem: false
             },
             filteredResponse: [],
             filteredResponseByDate: [],
@@ -88,59 +89,16 @@ class Orders extends Component {
     }
 
     closeMoreDetails () {
-        this.setState({openOrderMoreDetails: {enabled: false, itemId: null}});
+        localStorage.removeItem("notificationItemId");
+        localStorage.removeItem("notificationEnabled");
+        this.setState({openOrderMoreDetails: {enabled: false, itemId: null, loadedItem: null}});
     }
 
-    // filterProducts () {
-    //     let flteredData = [];
-    //     if (this.refs.filter.value) {
-    //         flteredData = this.state.filteredResponse.filter(item => (
-    //             item.name.toLowerCase().includes(this.refs.filter.value.toLowerCase()) || item.manufacturer.toLowerCase().includes(this.refs.filter.value.toLowerCase())
-    //         ));
-    //     }
-    //     this.setState({filteredResponseByDate: flteredData, IsFilteredByDate: true});
-    // }
-
-    getOrdersByBranch (e) {
-        let value = null;
-        if (!e) {
-            value = this.props.props.data.arr[0].sub_market_name;
-        } else {
-            value = e.target.value;
-        }
-        let branchId = null;
-        this.props.props.data.arr.filter(item => {
-            if (item.sub_market_name === value && !branchId) {
-                branchId = item.sub_market_id;
-            }
-        });
-        let flteredData = this.state[`${(this.state.filteredResponse.length && this.state.IsFilteredByDate) ? "filteredResponse" : "response"}`].filter(item => item.category_id === branchId);
-        if (this.refs.filter) {
-            this.refs.filter.value = null;
-        }
-        this.setState({filteredResponse: flteredData, alreadyFilteredByBranch: true, filteredResponseByDate: []});
+    changeFililal (e) {
+        let value = e.target.value;
+        localStorage.setItem('sub_market_id', value);
+        this.setState({selectedFielialId: value});
     }
-
-    // getInfoForCertainPage () {
-    //     let certainPageInfo = [],
-    //         pageNumber = parseInt(localStorage.getItem("ordersPageNumber"));
-    //     if (!pageNumber) {
-    //         pageNumber = 0;
-    //     }
-    //     if (!this.state.alreadyFilteredByBranch) {
-    //         this.filterProductsByBranch();
-    //     }
-    //     for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-    //         if (this.state.filteredResponseByDate.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
-    //             if (this.state.filteredResponseByDate[i]) {
-    //                 certainPageInfo.push(this.state.filteredResponseByDate[i]);
-    //             }
-    //         } else if(this.state.filteredResponse[i]) {
-    //             certainPageInfo.push(this.state.filteredResponse[i]);
-    //         }
-    //     }
-    //     return certainPageInfo;
-    // }
 
     getInfoForCertainPage () {
         let certainPageInfo = [],
@@ -149,10 +107,6 @@ class Orders extends Component {
             pageNumber = 0;
         }
         for (let i = pageNumber * 15; i < (pageNumber + 1) * 15; ++i) {
-            // if (this.state.filteredResponse.length || (this.refs && this.refs.filter && this.refs.filter.value)) {
-            //     if (this.state.filteredResponse[i]) {
-            //         certainPageInfo.push(this.state.filteredResponse[i]);
-            //     }
             if (this.state.filteredByDate) {
                 if (this.state.filteredResponseByDate[i]) {
                     certainPageInfo.push(this.state.filteredResponseByDate[i]);
@@ -185,19 +139,35 @@ class Orders extends Component {
         return pages;
     }
 
-    // getPaginationInfo () {
-    //     let pages = [];
-    //     for (let i = 0; i < Math.ceil(this.state[`${this.state.filteredResponseByDate.length ? "filteredResponseByDate" : "filteredResponse"}`].length / 15); ++i) {
-    //         pages.push(i)
-    //     }
-    //
-    //     pages.length < 2 && localStorage.setItem('ordersPageNumber', 0);
-    //     return pages;
-    // }
-
     componentDidMount () {
         localStorage.setItem("allOrders", true);
+        let itemId = localStorage.getItem("notificationItemId");
+        if (itemId) {
+            this.getNotificationItem(itemId);
+        }
         this.getAllOrders();
+    }
+
+    getNotificationItem (itemId) {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
+            data: querystring.stringify({
+                request_code: 5,
+                order_id: itemId
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            let { openOrderMoreDetails } = self.state;
+            openOrderMoreDetails.loadedItem = response.data;
+            self.setState({openOrderMoreDetails});
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     getAllOrders () {
@@ -248,12 +218,32 @@ class Orders extends Component {
     }
 
     render () {
-        if (!this.state.response) {
+        let { response, openOrderMoreDetails } = this.state;
+        if (!response) {
             return (
                 <div>Loading...</div>
             )
-        } else if (this.state.openOrderMoreDetails.enabled) {
-            let itemToShow = this.state.response.filter(item => item.id === this.state.openOrderMoreDetails.itemId);
+        } else if (openOrderMoreDetails.enabled) {
+            let itemToShow = null,
+                itemId = localStorage.getItem("notificationItemId");
+            if (itemId) {
+                if (!openOrderMoreDetails.loadedItem) {
+                    return (
+                        <div>
+                            Loading...
+                        </div>
+                    )
+                } else {
+                    itemToShow = openOrderMoreDetails.loadedItem;
+                    localStorage.removeItem("notificationEnabled");
+                    localStorage.removeItem("notificationItemId");
+                    return (
+                        <Order item={itemToShow} updateItem={this.updateItem} closeMoreDetails={this.closeMoreDetails} />
+                    )
+                }
+            } else {
+                itemToShow = response.filter(item => item.id === openOrderMoreDetails.itemId);
+            }
             return (
                 <Order item={itemToShow[0]} updateItem={this.updateItem} closeMoreDetails={this.closeMoreDetails} />
             )
@@ -262,7 +252,7 @@ class Orders extends Component {
         return (
             <div className="content header-custom-block">
                 <Grid fluid>
-                    <ChooseFilials /*getByBranch={this.getOrdersByBranch}*/ title="Заказы" filials={this.props.props.data.arr} />
+                    <ChooseFilials getByBranch={this.changeFililal} title="Заказы" filials={this.props.props.data.arr} />
                     <div className="orders-block">
                         <div className="col-md-7">
                             {
