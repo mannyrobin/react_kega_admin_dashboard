@@ -11,7 +11,7 @@ class Header extends Component{
                     <Navbar.Toggle />
                 </Navbar.Header>
                 <Navbar.Collapse>
-                    <HeaderLinks props={this.props.props} />
+                    <HeaderLinks user={this.props.user} notCount={this.props.notCount} />
                 </Navbar.Collapse>
             </Navbar>
         );

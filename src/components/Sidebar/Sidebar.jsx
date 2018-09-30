@@ -65,7 +65,7 @@ class Sidebar extends Component{
                                             <NavLink to={prop.path} className={`nav-link ${prop.dropDown && this.state.dropDownArrow ? "open" : ""}`}
                                                      activeClassName="active">
                                                 <i className={prop.icon}></i>
-                                                <p className={`${prop.count ? "circle-number" : ""}`}>{prop.name}{prop.count ? <span>11</span> : null}</p>
+                                                <p className={`${prop.count ? "circle-number" : ""}`}>{prop.name}{prop.count ? <span>{this.props.orderCount}</span> : null}</p>
                                             </NavLink>
                                         </li>
                                     );

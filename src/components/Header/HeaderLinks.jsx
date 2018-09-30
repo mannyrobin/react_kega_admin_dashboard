@@ -89,9 +89,8 @@ class HeaderLinks extends Component{
         return (
             <div className="header-bottom">
                 <div className="nav navbar-nav navbar-right">
-                    <a onClick={this.toggleNotifications("icon-notification")} className="icon-notification circle-number remove-arrow"><span>{this.props && this.props.props && this.props.props.data && this.props.props.data.notification_count && this.props.props.data.notification_count}</span></a>
-                    {/*<a onClick={this.toggleNotMesifications("icon-messages")} className="icon-messages circle-number remove-arrow"><span>{this.props && this.props.props && this.props.props.data && this.props.props.data.message_count && this.props.props.data.message_count}</span></a>*/}
-                    <a className="user-icon"><img id="userIcon" src={this.props && this.props.props && this.props.props.data && this.props.props.data.icon_url && this.props.props.data.icon_url}/><span>{this.props && this.props.props && this.props.props.data && this.props.props.data.name && this.props.props.data.name}</span></a>
+                    <a onClick={this.toggleNotifications("icon-notification")} className="icon-notification circle-number remove-arrow"><span>{this.props.notCount}</span></a>
+                    <a className="user-icon"><img id="userIcon" src={this.props && this.props.user && this.props.user.data && this.props.user.data.icon_url && this.props.user.data.icon_url}/><span>{this.props && this.props.user && this.props.user.data && this.props.user.data.name && this.props.user.data.name}</span></a>
                 </div>
                 <div id="notMesPopup" className="custom-drop-down">
                     <div className="custom-drop-down-inner">
