@@ -110,7 +110,7 @@ class CorpProfile extends Component {
             responseType:'json'
         }).then(function(response) {
             let filials = self.state.filials.filter(filial => filial.id !== id);
-            if (response.data.change_status) {
+            if (response.data && response.data.change_status) {
                 self.closeRemoveFilialPopup();
                 self.setState({filials: filials})
             }

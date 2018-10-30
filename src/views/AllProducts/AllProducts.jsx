@@ -77,7 +77,7 @@ class AllProducts extends Component {
             responseType:'json'
         }).then(function(response) {
             let products = self.state.response.filter(product => product.id !== id);
-            if (response.data.change_status) {
+            if (response.data && response.data.change_status) {
                 self.closeDeletePopup();
                 self.setState({response: products})
             }
@@ -203,7 +203,7 @@ class AllProducts extends Component {
                 },
                 responseType:'json'
             }).then(function(response) {
-                if (response.data.change_status) {
+                if (response.data ** response.data.change_status) {
                     let changedResponse = self.state.response;
                     changedResponse[changedResponse.indexOf(item)].existing_status = 1 - parseInt(item.existing_status);
                     self.setState({response: changedResponse, callFromRender: true});

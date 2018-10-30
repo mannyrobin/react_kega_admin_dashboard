@@ -24,7 +24,7 @@ class Order extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            if (response.data.change_status) {
+            if (response.data && response.data.change_status) {
                 self.props.updateItem(self.props.item);
             }
         }).catch(function(error){

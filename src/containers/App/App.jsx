@@ -22,25 +22,25 @@ class App extends Component {
     }
 
     getCounts () {
-        if (this.state.loggedInUser) {
-            let self = this;
-            axios({
-                method:'post',
-                url: "http://u0419737.cp.regruhosting.ru/kega/notification_controller.php",
-                data: querystring.stringify({
-                    request_code: 3,
-                    market_id: localStorage.getItem('market_id')
-                }),
-                headers: {
-                    'Content-type': 'application/x-www-form-urlencoded'
-                },
-                responseType:'json'
-            }).then(function(response) {
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/notification_controller.php",
+            data: querystring.stringify({
+                request_code: 3,
+                market_id: localStorage.getItem('market_id')
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            if (response.data) {
                 self.setState({notCount: response.data.notification_count, orderCount: response.data.new_orders_count});
-            }).catch(function(error){
-                throw new Error(error);
-            });
-        }
+            }
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     componentWillReceiveProps () {
@@ -53,6 +53,7 @@ class App extends Component {
 
     doLogin (response) {
         localStorage.setItem("loggedInUser", JSON.stringify(response));
+        this.getCounts();
         this.setState({loggedInUser: response});
     }
 

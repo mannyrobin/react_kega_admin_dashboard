@@ -29,7 +29,7 @@ class HeaderLinks extends Component{
                 },
                 responseType:'json'
             }).then(function(response) {
-                if (response.data.change_status) {
+                if (response.data && response.data.change_status) {
                     let notifications = this.state.notification;
                     notifications.filter(item => item.id !== id);
                     this.setState({notifications});

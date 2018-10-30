@@ -28,7 +28,7 @@ class Info extends Component {
             },
             responseType:'json'
         }).then(function(response) {
-            if (response.data.change_status) {
+            if (response.data && response.data.change_status) {
                 if (localStorage.getItem("allOrders")) {
                     let changedItem = self.state.item;
                     changedItem.status = value;
