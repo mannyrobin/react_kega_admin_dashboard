@@ -86,22 +86,25 @@ class AddProduct extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
             data: querystring.stringify({
                 request_code: 1,
-                market_id: localStorage.getItem('market_id')
+                market_id: localStorage.getItem('market_id'),
+                sub_market_id: localStorage.getItem('sub_market_id'),
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
             },
             responseType:'json'
         }).then(function(response) {
-            let resObj = {
-                loaded: true,
-                categories: response.data,
-                reqBody: {
-                    category_id: response.data[0].id,
-                    unit_id: "1"
-                }
-            };
-            self.setState(resObj);
+            if (response.data) {
+                let resObj = {
+                    loaded: true,
+                    categories: response.data,
+                    reqBody: {
+                        category_id: response.data[0].id,
+                        unit_id: "1"
+                    }
+                };
+                self.setState(resObj);
+            }
         }).catch(function(error){
             throw new Error(error);
         });
@@ -152,7 +155,7 @@ class AddProduct extends Component {
                                             <div className="add-product-sub-block2">
                                                 <div className="form-group first">
                                                     <label htmlFor="count-or-weight">Введите кол-во</label>
-                                                    <input className="form-control" type="number" name="count-or-weight"
+                                                    <input className="form-control" type="number" min="0" step="0.1" name="count-or-weight"
                                                            defaultValue={this.state.reqBody.price} placeholder="Вес или объем" onChange={this.collectReqBody("item_size")}
                                                            id="count-or-weight"/>
                                                 </div>

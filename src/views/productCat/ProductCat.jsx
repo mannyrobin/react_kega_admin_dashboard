@@ -127,6 +127,7 @@ class ProductCat extends Component {
             data: querystring.stringify({
                 request_code: 3,
                 market_id: localStorage.getItem('market_id'),
+                sub_market_id: localStorage.getItem('sub_market_id'),
                 category_name: catName
             }),
             headers: {
