@@ -221,7 +221,7 @@ class AllProducts extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/item_controller.php",
             data: querystring.stringify({
                 request_code: 3,
-                sub_market_id: localStorage.getItem('market_id')
+                sub_market_id: localStorage.getItem('sub_market_id')
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'

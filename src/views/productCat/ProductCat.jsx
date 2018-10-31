@@ -53,7 +53,7 @@ class ProductCat extends Component {
                     url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
                     data: querystring.stringify({
                         request_code: 4,
-                        market_id: localStorage.getItem('market_id'),
+                        sub_market_id: localStorage.getItem('sub_market_id'),
                         category_id: id,
                         category_name: newName
                     }),
@@ -163,7 +163,7 @@ class ProductCat extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
             data: querystring.stringify({
                 request_code: 1,
-                market_id: localStorage.getItem('market_id')
+                sub_market_id: localStorage.getItem('sub_market_id')
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
