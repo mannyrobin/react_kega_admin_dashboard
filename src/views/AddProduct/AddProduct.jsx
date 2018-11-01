@@ -72,7 +72,8 @@ class AddProduct extends Component {
                 let newReqBody= {};
                 newReqBody.category_id = reqBody.category_id;
                 newReqBody.unit_id = reqBody.unit_id;
-                self.setState({reqBody: newReqBody})
+                self.setState({reqBody: newReqBody});
+                window.location.href = window.location.origin + "/#/all_products";
             }).catch(function(error){
                 throw new Error(error);
             });
@@ -195,7 +196,7 @@ class AddProduct extends Component {
                                             <div className="clearfix"/>
                                         </div>
                                         <hr className="custom-hr"/>
-                                        <UploadFile littleImgWidth={370} littleImgHeight={370} largeImgWidth={750} largeImgHeight={370} setLittleImg={this.setLittleImg} setLargeImg={this.setLargeImg} />
+                                        <UploadFile littleImgWidth={370} littleImgHeight={370} largeImgWidth={640} largeImgHeight={355} setLittleImg={this.setLittleImg} setLargeImg={this.setLargeImg} />
                                         <hr className="custom-hr"/>
                                         <button type="submit" onClick={this.sendProductData}
                                                 className="custom-violet-btn btn">Сохранить

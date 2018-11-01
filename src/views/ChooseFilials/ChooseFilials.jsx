@@ -1,6 +1,10 @@
 import React, {Component} from 'react';
 
 class ChooseFilials extends Component {
+    changeFilialId = (e) => {
+        localStorage.setItem("filials", )
+    }
+
     render() {
         let marketId = localStorage.getItem("sub_market_id"),
             { getByBranch } = this.props;

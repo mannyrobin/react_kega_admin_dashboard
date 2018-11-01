@@ -19,6 +19,7 @@ class App extends Component {
         this.doLogin = this.doLogin.bind(this);
         this.doLogOut = this.doLogOut.bind(this);
         this.getCounts = this.getCounts.bind(this);
+        this.updateUser = this.updateUser.bind(this);
     }
 
     getCounts () {
@@ -62,6 +63,10 @@ class App extends Component {
         this.setState({loggedInUser: null})
     }
 
+    updateUser (loggedInUser) {
+        this.setState({loggedInUser});
+    }
+
     render() {
         if (!this.state.loggedInUser) {
             return (
@@ -100,7 +105,7 @@ class App extends Component {
                                     );
                                 return (
                                     <Route path={prop.path} component={() => {
-                                        return <prop.component props={this.state.loggedInUser} />
+                                        return <prop.component updateUser={this.updateUser} props={this.state.loggedInUser} />
                                     }
                                     } key={key} />
                                 );

@@ -88,31 +88,33 @@ class EditProduct extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
             data: querystring.stringify({
                 request_code: 1,
-                market_id: localStorage.getItem('market_id')
+                sub_market_id: localStorage.getItem('sub_market_id')
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
             },
             responseType:'json'
         }).then(function(response) {
-            let resObj = {
-                loaded: true,
-                categories: response.data,
-                reqBody: {
-                    category_id: response.data[0].id,
-                    unit_id: "1"
-                }
-            };
-            if (itemToEdit) {
-                resObj = {
-                    ...resObj,
+            if (response.data) {
+                let resObj = {
+                    loaded: true,
+                    categories: response.data,
                     reqBody: {
-                        ...resObj.reqBody,
-                        ...itemToEdit,
+                        category_id: response.data[0].id,
+                        unit_id: "1"
+                    }
+                };
+                if (itemToEdit) {
+                    resObj = {
+                        ...resObj,
+                        reqBody: {
+                            ...resObj.reqBody,
+                            ...itemToEdit,
+                        }
                     }
                 }
+                self.setState(resObj);
             }
-            self.setState(resObj);
         }).catch(function(error){
             throw new Error(error);
         });

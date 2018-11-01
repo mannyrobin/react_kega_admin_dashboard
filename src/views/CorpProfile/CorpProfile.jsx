@@ -123,7 +123,8 @@ class CorpProfile extends Component {
         e.preventDefault();
         let self = this,
             filials = this.state.filials,
-            lastFilialNumber = 0;
+            lastFilialNumber = 0,
+            subMarkets =  JSON.parse(localStorage.getItem("loggedInUser"));
         for (let i = 0; i < filials.length; ++i) {
             let currentFilial = filials[i],
                 reqObj = {
@@ -141,6 +142,7 @@ class CorpProfile extends Component {
                     opening_time: currentFilial.opening_time,
                     request_code: 4
                 };
+            subMarkets.data.arr[i].sub_market_name = currentFilial.name;
 
             axios({
                 method:'post',
@@ -154,6 +156,8 @@ class CorpProfile extends Component {
                 ++lastFilialNumber;
                 if (response.data.add_status && lastFilialNumber === filials.length) {
                     self.openSaveFilialPopup();
+                    localStorage.setItem("loggedInUser", JSON.stringify(subMarkets));
+                    self.props.updateUser(subMarkets);
                 }
             }).catch(function(error){
                 throw new Error(error);
