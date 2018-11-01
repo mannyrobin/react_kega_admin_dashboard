@@ -22,7 +22,23 @@ class ProductCat extends Component {
     changeBranchId (e) {
         let value = e.target.value;
         localStorage.setItem('sub_market_id', value);
-        this.setState({selectedFielialId: value});
+        let self = this;
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
+            data: querystring.stringify({
+                request_code: 1,
+                sub_market_id: value
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({response: response.data});
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     closeRemoveCategoryPopup () {
@@ -62,7 +78,7 @@ class ProductCat extends Component {
                     },
                     responseType:'json'
                 }).then(function(response) {
-                    if (response.data.delete_status) {
+                    if (response.data && response.data.delete_status) {
                         let currentRes = self.state.response;
                         currentRes = currentRes.filter(item => {
                             if (item.id === id) {
@@ -96,7 +112,7 @@ class ProductCat extends Component {
                     url: "http://u0419737.cp.regruhosting.ru/kega/categories_controller.php",
                     data: querystring.stringify({
                         request_code: 2,
-                        market_id: localStorage.getItem('market_id'),
+                        sub_market_id: localStorage.getItem('sub_market_id'),
                         category_id: id
                     }),
                     headers: {
@@ -104,7 +120,7 @@ class ProductCat extends Component {
                     },
                     responseType:'json'
                 }).then(function(response) {
-                    if (response.data.delete_status) {
+                    if (response.data && response.data.delete_status) {
                         let currentRes = self.state.response;
                         currentRes = currentRes.filter(item => item.id !== id);
                         self.setState({response: currentRes});

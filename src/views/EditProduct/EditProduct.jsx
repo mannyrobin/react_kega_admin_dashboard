@@ -184,7 +184,7 @@ class EditProduct extends Component {
                                                 </div>
                                                 <div className="form-group">
                                                     <label htmlFor="alcohol">Алкоголь, %</label>
-                                                    <input className="form-control" type="number" name="alcohol" onChange={this.collectReqBody("alchohol_percent")}
+                                                    <input className="form-control" type="number" step="0.1" name="alcohol" onChange={this.collectReqBody("alchohol_percent")}
                                                            defaultValue={this.state.reqBody.alchohol_percent}
                                                            id="alcohol"/>
                                                 </div>

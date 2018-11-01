@@ -66,7 +66,7 @@ class Orders extends Component {
                     data: querystring.stringify({
                         request_code: 2,
                         status: self.state.buttons.indexOf(name),
-                        market_id: self.state.selectedFielialId
+                        sub_market_id: localStorage.getItem('sub_market_id')
                     }),
                     headers: {
                         'Content-type': 'application/x-www-form-urlencoded'
@@ -95,9 +95,25 @@ class Orders extends Component {
     }
 
     changeFililal (e) {
-        let value = e.target.value;
+        let value = e.target.value,
+            self = this;
         localStorage.setItem('sub_market_id', value);
-        this.setState({selectedFielialId: value});
+        axios({
+            method:'post',
+            url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
+            data: querystring.stringify({
+                request_code: 1,
+                sub_market_id: localStorage.getItem('sub_market_id')
+            }),
+            headers: {
+                'Content-type': 'application/x-www-form-urlencoded'
+            },
+            responseType:'json'
+        }).then(function(response) {
+            self.setState({response: response.data, activeButton: "Все заказы"});
+        }).catch(function(error){
+            throw new Error(error);
+        });
     }
 
     getInfoForCertainPage () {
@@ -177,7 +193,7 @@ class Orders extends Component {
             url: "http://u0419737.cp.regruhosting.ru/kega/orders_controller.php",
             data: querystring.stringify({
                 request_code: 1,
-                market_id: self.state.selectedFielialId
+                sub_market_id: localStorage.getItem('sub_market_id')
             }),
             headers: {
                 'Content-type': 'application/x-www-form-urlencoded'
